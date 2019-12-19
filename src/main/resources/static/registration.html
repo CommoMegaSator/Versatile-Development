@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+    <meta charset="UTF-8">
+    <title>Versatile Development</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="images/Versatile.ico" />
+</head>
+
+<body>
+<div class="logimage"><img src="images/Versatile.ico" alt=""></div>
+<div id="boxForm">
+    <h2 id="title">Nice to meet u)</h2>
+    <form>
+        <div class="logpass">
+            <input type="text"  	class='sign-text' id="firstname"  required placeholder="Enter your firstname" autocomplete="off">
+            <input type="text"      class='sign-text' id="lastname"   required placeholder="Enter your lastname"  autocomplete="off">
+            <input type="text"      class='sign-text' id="nickname"   required placeholder="Enter your nickname"  autocomplete="off">
+            <input type="email"     class='sign-text' id="email"      required placeholder="Enter your email"     autocomplete="off">
+            <input type="number"    class='sign-text' id="age"        required placeholder="Enter your age"       autocomplete="off" min="12" max="99" >
+            <input type="password"  class='sign-text' id="password"   required placeholder="Enter your password"  autocomplete="off" minlength="6" maxlength="23"red>
+        </div>
+
+        <div class="buttons">
+            <input class='sing_submit shake' type='button' value='Get acquainted' id="btn-register">
+            <input class='familiar shake'    type='button' value='<- Back' onclick="location.href='login.html';">
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/global.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+</body>
+
+</html>
