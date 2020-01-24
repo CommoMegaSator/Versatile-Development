@@ -13,41 +13,6 @@ body
     background-color:rgba(255, 203, 96, 0.5);
 }
 
-.item-attributes{
-    width: 20%;
-}
-
-.items-menu{
-    width: 100%;
-    display:flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    background-color:rgba(255, 203, 96, 0.5);
-}
-
-.item-wrapper{
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-.main-item-wrapper{
-    margin: 8px;
-    width: 80%;
-    display:flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-}
-
-.items-menu{
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-
 .logimage{
     display: block;
     z-index: 99999;
@@ -135,7 +100,7 @@ form label
     font-size: 12px;
 }
 
-.sing_submit, .familiar, .buy{
+.sing_submit, .familiar{
     padding: 10px;
     width: 150px;
     border-radius: 20px;
@@ -240,7 +205,6 @@ form label
     display: block;
     position: absolute;
     top: 0;
-    align-items: left;
     height: 20px;
     width: 20px;
     background-color: #eee;
@@ -287,67 +251,4 @@ form label
 
 input[placeholder] {
     text-align: center;
-}
-
-
-.item-form{
-    margin-top: 80px;
-}
-
-
-.descr{
-    display: -webkit-box;
-    font-size: 16px;
-    text-align: left;
-    margin: 15px 20px 0px;
-    font-family: 'Playfair Display', serif;
-    text-indent: 1em;
-    text-overflow: ellipsis;
-    color: rgb(128, 0, 128);
-    text-align: justify;
-    overflow: hidden;
-    -webkit-line-clamp: 10;
-    -webkit-box-orient: vertical;
-}
-
-div.item img{
-    height: 300px;
-    width: auto;
-    max-width: 300px;
-    background: 50% no-repeat;
-    background-size: cover;
-}
-
-.buy-buttons{
-    display: inline-flex;
-    justify-content: space-around;
-    margin: 10px;
-    width: 250px;
-}
-
-.shopping-cart{
-    background-image: url(../images/shopping-cart.png);
-    width: 50px;
-    height: 50px;
-    background-color: rgb(255,175,75);
-    background-size: cover;
-    border-radius: 30%;
-    border: none;
-    outline: none;
-    border-style:none;
-    box-shadow: 1px 1px rgba(244, 102, 27,1);
-    cursor:pointer;
-}
-.shopping-cart:hover{
-    background-color: yellow;
-}
-div#boxForm.item-form{
-
-    width: 600px;
-    top: -80px;
-    border-radius: 25%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    text-align:center;
 }

@@ -1,12 +1,14 @@
 package App.controller;
 
-import App.utils.ObjectMapperUtils;
-import App.entity.UserEntity;
+import App.domain.UserDTO;
 import App.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class LoginController {
@@ -14,37 +16,41 @@ public class LoginController {
     @Autowired
     UserService userService;
 
-//    @Autowired
-//    private ObjectMapperUtils modelMapper;
-
-    public boolean isUserExists(UserEntity userEntity){
-        for(UserEntity user : userService.findAllUsers()){
-            if (user.getEmail().equals(userEntity.getEmail()) || user.getNickname().equals(userEntity.getNickname()))return true;
-        }return false;
-    }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @PostMapping("/registration")
-    public ResponseEntity<?> registration(@RequestBody UserEntity userEntity){
-        //UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
-        if (isUserExists(userEntity)){
+    public ResponseEntity<?> registration(@RequestBody UserDTO userDTO){
+        if (isUserExists(userDTO)){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         else{
-            userService.createUser(userEntity);
+            userService.createUser(userDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> signUp(@RequestParam("login") String nickname, @RequestParam("password") String password){
-        UserEntity userEntity = userService.findUserByNickname(nickname);
+    public ResponseEntity<?> signUp(@RequestParam("login") String login, @RequestParam("password") String password){
+        UserDTO userDTO = userService.findUserByNickname(login);
 
-        if (userEntity == null){
-            userEntity = userService.findByEmail(nickname);
+        if (userDTO == null){
+            userDTO = userService.findByEmail(login);
         }
-        if (userEntity != null && userEntity.getPassword().equals(password)){
+        if (userDTO != null && userDTO.getPassword().equals(passwordEncoder.encode(password))){
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
         else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/all")
+    public List<UserDTO> getAllUsers(){
+        return userService.findAllUsers();
+    }
+
+    public boolean isUserExists(UserDTO userDTO){
+        for(UserDTO user : userService.findAllUsers()){
+            if (user.getEmail().equals(userDTO.getEmail()) || user.getNickname().equals(userDTO.getNickname()))return true;
+        }return false;
     }
 }

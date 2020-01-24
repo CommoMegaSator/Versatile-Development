@@ -1,0 +1,66 @@
+    body{
+        background-color:rgba(255, 203, 96, 0.5);
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .item{
+        background-color:rgb(255, 203, 96);
+        position:relative;
+        box-shadow:1px 1px 8px rgba(244, 102, 27,1);
+        margin: 10px;
+    }
+
+    .userProfile{
+        display: flex;
+        flex-direction: row;
+    }
+
+    .profileInformation{
+        width: 70%;
+        font-size: 18px;
+        color: #005cbf;
+        font-weight: bold;
+        align-items: center;
+        align-content: center;
+        text-align: center;
+    }
+
+    .userPicture{
+        width: 30%;
+    }
+
+    .userPicture img{
+        max-height: 100%;
+        max-width: 100%;
+    }
+
+    .userFields{
+        color: #e83e8c;
+    }
+
+    span#name{
+        font-size: 32px;
+    }
+
+    .menu-bar{
+        height: 60px;
+        text-align: center;
+        font-size: 48px;
+    }
+
+    .menu-bar a{
+        text-decoration: none;
+        color: #e83e8c;
+        font-weight: bold;
+    }
+
+    .menu-bar a:hover{
+        text-decoration: none;
+        color: darkblue;
+        font-weight: bold;
+    }
+
+    .stone{
+        min-height: 310px;
+    }

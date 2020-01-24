@@ -24,6 +24,9 @@ function signUp(){
         method: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(userForLogining),
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        },
         complete: function(){
             console.log('serverResponse');
         }

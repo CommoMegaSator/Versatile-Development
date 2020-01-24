@@ -1,5 +1,6 @@
 package App.repository;
 
+import App.domain.UserDTO;
 import App.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
