@@ -15,23 +15,29 @@ import java.util.List;
 @Table(name = "usr")
 public class UserEntity extends BaseEntity{
 
-    @Column(name = "firstname", nullable = false)
+    @Column(name = "email", length = 25, nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "firstname", length = 25, nullable = false)
     private String firstname;
 
-    @Column(name = "lastname", nullable = false)
+    @Column(name = "lastname", length = 25, nullable = false)
     private String lastname;
 
-    @Column(name = "nickname", nullable = false, unique = true)
+    @Column(name = "nickname", length = 25, nullable = false, unique = true)
     private String nickname;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password", length = 60, nullable = false)
     private String password;
 
     @Column(name = "age")
     private int age;
 
-    @Column(nullable = false, unique = true)
-    private String email;
+    @Column(name = "activated", columnDefinition = "boolean default false")
+    private boolean activated;
+
+    @Column(name = "confirmation_token")
+    private String confirmationToken;
 
     @OneToMany(mappedBy = "user")
     private List<ArticleEntity> article;

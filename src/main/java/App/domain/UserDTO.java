@@ -16,20 +16,20 @@ public class UserDTO {
         private Long id;
 
         @NotNull(message = "Field 'firstname' can not be NULL")
-        @Size(min = 4, max = 15)
+        @Size(min = 4, max = 25)
         private String firstname;
 
         @NotNull(message = "Field 'lastname' can not be NULL")
-        @Size(min = 4, max = 15)
+        @Size(min = 4, max = 25)
         private String lastname;
 
         @NotNull(message = "Field 'nickname' can not be NULL")
-        @Size(min = 4, max = 15)
+        @Size(min = 4, max = 25)
         private String nickname;
 
         @NotNull(message = "Field 'email' can not be NULL")
         @Email
-        @Size(min = 4, max = 15)
+        @Size(min = 4, max = 25)
         private String email;
 
         @NotNull(message = "Field 'age' can not be NULL")
@@ -38,8 +38,12 @@ public class UserDTO {
         private int age;
 
         @NotNull(message = "Field 'password' can not be NULL")
-        @Size(min = 8, max = 23)
+        @Size(min = 8, max = 25)
         private String password;
+
+        private boolean activated;
+
+        private String confirmationToken;
 
         private List<ArticleEntity> article;
 }

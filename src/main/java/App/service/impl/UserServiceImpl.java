@@ -44,28 +44,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO findUserByNickname(String nickname) {
-        UserEntity userEntity = userRepository.findUserByNicknameIgnoreCase(nickname);
-        UserDTO userDTO = entityToDTOMapper(userEntity);
-        return userDTO;
-    }
-
-    @Override
     public UserDTO findByEmail(String email){
         return entityToDTOMapper(userRepository.findByEmailIgnoreCase(email));
     }
 
     @Override
-    public boolean emailExist(String email) {
-        if (userRepository.findByEmailIgnoreCase(email) != null)
-            return true;
-        else return false;
+    public boolean userExists(UserDTO userDTO) {
+        return userRepository.existsByEmailIgnoreCase(userDTO.getEmail()) || userRepository.existsByNickname(userDTO.getNickname());
+    }
+
+    @Override
+    public UserDTO findByConfirmationToken(String confirmationToken) {
+        return entityToDTOMapper(userRepository.findByConfirmationToken(confirmationToken));
+    }
+
+    @Override
+    public void updateUser(UserDTO userToUpdate) {
+        if(findByEmail(userToUpdate.getEmail()) != null){
+            userRepository.save(DTOToEntityMapper(userToUpdate));
+        }
     }
 
     public UserDTO entityToDTOMapper(UserEntity userEntity){
-        UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
-        userDTO.setId(userEntity.getId());
-        return userDTO;
+        try{
+            UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
+            userDTO.setId(userEntity.getId());
+            return userDTO;
+        }catch (IllegalArgumentException iae){
+            return null;
+        }
     }
 
     public UserEntity DTOToEntityMapper(UserDTO userDTO){

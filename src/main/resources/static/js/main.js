@@ -13,7 +13,7 @@ function signUp(){
     let userLogin = $('#userLogin').val();
     let userPassword = $('#userPassword').val();
     let userForLogining = {
-        name: userLogin,
+        login: userLogin,
         password: userPassword
     };
 
@@ -27,8 +27,8 @@ function signUp(){
         headers: {
             'Access-Control-Allow-Origin': '*'
         },
-        complete: function(){
-            console.log('serverResponse');
+        complete: function(serverResponse){
+            if (serverResponse.status == 400)alert("Your login or password is incorrect");
         }
     });
 }
@@ -57,13 +57,15 @@ function register(){
         contentType: 'application/json',
         data: JSON.stringify(userForRegistration),
         complete: function(serverResponse){
-            console.log('serverResponse');
             if(serverResponse.status == 201){
                 alert("Registered Successfully");
                 window.location.href = "login.html";
             }
-            if(serverResponse.status == 400){
+            if(serverResponse.status == 409){
                 alert("This user already exists")
+            }
+            if(serverResponse.status == 400){
+                alert("Please complete all fields")
             }
         }
     });

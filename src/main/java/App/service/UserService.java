@@ -1,17 +1,19 @@
 package App.service;
 
 import App.domain.UserDTO;
-import App.entity.UserEntity;
 import java.util.List;
 
 public interface UserService {
 
     void createUser(UserDTO userDTO);
-    List<UserDTO> findAllUsers();
 
-    UserDTO findUserByNickname(String nickname);
+    List<UserDTO> findAllUsers();
 
     UserDTO findByEmail(String email);
 
-    boolean emailExist(String email);
+    UserDTO findByConfirmationToken(String confirmationToken);
+
+    void updateUser(UserDTO userToUpdate);
+
+    boolean userExists(UserDTO userDTO);
 }
