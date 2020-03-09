@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Profile</title>
+    <link rel="shortcut icon" href="../static/images/Versatile.ico"/>
+    <title th:text="${user} + '`s profile'">Profile</title>
 </head>
 <body>
-<h1>Profile</h1>
+<h1 th:text = "'Hello ' + ${user} + '!'"/>
+<p>
+    You have some roles, such as:
+</p>
+<ul>
+    <li th:each="role : ${roles}" th:text="${role}"></li>
+</ul>
 <form method="get" action="/logout">
     <button type="submit">Logout</button>
 </form>
