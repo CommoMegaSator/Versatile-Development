@@ -42,6 +42,15 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Column(name = "confirmation_token")
     private String confirmationToken;
 
+    @Column(name = "token_expiration")
+    private Date tokenExpiration;
+
+    @Column(name = "creation_date")
+    private Date creationDate;
+
+    @Column(name = "birthday")
+    private Date birthday;
+
     @OneToMany(mappedBy = "user")
     private List<ArticleEntity> article;
 

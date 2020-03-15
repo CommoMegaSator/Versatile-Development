@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Controller
 @RequestMapping("/")
 public class TemplateController {
@@ -50,8 +53,16 @@ public class TemplateController {
     @GetMapping("profile")
     @PreAuthorize("hasAnyAuthority('ADMIN, USER')")
     public String getProfileView(@AuthenticationPrincipal UserEntity user, Model model){
-        model.addAttribute("user", user.getNickname());
-        model.addAttribute("roles", user.getAuthorities());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy");
+        String currentDate = simpleDateFormat.format(new Date());
+        model.addAttribute("date", currentDate);
+        model.addAttribute("user", user);
         return "profile";
+    }
+
+    @GetMapping("settings")
+    @PreAuthorize("hasAnyAuthority('ADMIN, USER')")
+    public String getSettings(@AuthenticationPrincipal UserEntity user, Model model){
+        return "settings";
     }
 }

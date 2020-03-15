@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Versatile Development</title>
+    <title>Sign in</title>
     <link rel="stylesheet" href="../static/css/style.css">
     <link rel="shortcut icon" href="../static/images/Versatile.ico" />
 </head>
@@ -12,9 +12,9 @@
 <div class="logimage"><img src="../static/images/Versatile.ico" alt=""></div>
 <div id="boxForm">
     <h2 id="title"><span class="Versatile">Versatile</span> is waiting for u)</h2>
-    <form method="post" action="/login">
+    <form action="/login" method="post">
         <div class="logpass">
-            <input class='sign-text' type='text'        name="username"     id='userLogin'      placeholder='Username'     required minlength="4" maxlength="25" autocomplete="off" autofocus>
+            <input class='sign-text' type='text'        name="username"     id='userLogin'      placeholder='Username'  required minlength="4" maxlength="25" autocomplete="off" autofocus>
             <input class='sign-text' type='password'    name="password"     id='userPassword'   placeholder='Password' 	required minlength="8" maxlength="25">
             <label class="container"><span class="remember">Can we remember u?</span>
                 <input type="checkbox" id="rememberMe" name="remember-me">

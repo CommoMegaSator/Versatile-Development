@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -46,7 +47,13 @@ public class UserDTO {
 
         private String confirmationToken;
 
+        private Date tokenExpiration;
+
         private Set<Role> roles;
+
+        private Date creationDate;
+
+        private Date birthday;
 
         private List<ArticleEntity> article;
 }

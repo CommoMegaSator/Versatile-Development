@@ -30,7 +30,7 @@ function register(){
         data: JSON.stringify(userForRegistration),
         complete: function(serverResponse){
             if(serverResponse.status == 201){
-                alert("To complete the registration, go to the URL that was sent to you!");
+                alert("To complete the registration, go to the URL that was sent on your email!");
                 window.location.href = "login";
             }
             if(serverResponse.status == 409){

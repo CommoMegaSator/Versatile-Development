@@ -18,8 +18,8 @@
     <properties>
         <java.version>1.8</java.version>
         <modelmapper.version>2.3.5</modelmapper.version>
-        <jsonwebtoken.version>0.9.1</jsonwebtoken.version>
-        <spring-security-jwt.version>1.1.0.RELEASE</spring-security-jwt.version>
+        <redis.version>2.2.5.RELEASE</redis.version>
+        <packaging>war</packaging>
     </properties>
 
     <dependencies>
@@ -62,16 +62,6 @@
             <version>${modelmapper.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-jwt</artifactId>
-            <version>${spring-security-jwt.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>${jsonwebtoken.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
@@ -90,8 +80,13 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>${redis.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session-jdbc</artifactId>
+            <artifactId>spring-session-data-redis</artifactId>
         </dependency>
     </dependencies>
 

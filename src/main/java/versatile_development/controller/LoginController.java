@@ -33,6 +33,10 @@ public class LoginController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         else{
+            Date creationDate = new Date();
+
+            userDTO.setCreationDate(creationDate);
+            userDTO.setTokenExpiration(new Date(creationDate.getTime() + (1000 * 60 * 60 * 24)));
             userDTO.setEmail(userDTO.getEmail().toLowerCase());
             userDTO.setActivated(false);
             userDTO.setConfirmationToken(UUID.randomUUID().toString());
@@ -40,7 +44,6 @@ public class LoginController {
             userService.createUser(userDTO);
 
             String message = String.format(Constants.EMAIL_MESSAGE, userDTO.getNickname(), hostUrl, userDTO.getConfirmationToken());
-
             emailService.sendEmail(userDTO.getEmail(), userDTO.getConfirmationToken(), message);
 
             return new ResponseEntity<>(HttpStatus.CREATED);
