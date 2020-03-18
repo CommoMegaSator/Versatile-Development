@@ -4,41 +4,28 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="shortcut icon" href="../static/images/Versatile.ico"/>
-    <title th:text="${user.getNickname()} + '`s profile'">Profile</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <title th:text="${user.getNickname()}">Profile</title>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Profile <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/settings">Settings</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#"  tabindex="-1" aria-disabled="true">Articles</a>
-            </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </div>
-</nav>
+<div th:replace="general.html :: nav"> </div>
 
-<h1 class="ml-2" th:text = "'Hi, ' + ${user.getNickname()} + '!'"/>
-<p class="ml-2">You have some roles, such as:</p>
+<h1 class="ml-2" th:text = "#{hi-message} + ', ' + ${user.getNickname()} + '!'"/>
+<p class="ml-2" th:text="#{you-have-some-roles-such-as}"/>
+
 <ul>
     <li th:each="role : ${user.getAuthorities()}" th:text="${role}"></li>
 </ul>
+
+<hr>
+    <p th:text="${date}"/>
+<hr>
+
 <form action="/logout" method="get">
-    <button class="btn btn-outline-success ml-3" type="submit">Logout</button>
+    <button class="btn btn-outline-success ml-3" type="submit" th:text="#{logout}"/>
 </form>
-<p class="align-middle" th:text="${date}"/>
+
+<script src="../static/js/main.js"></script>
 </body>
 </html>

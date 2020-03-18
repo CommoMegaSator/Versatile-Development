@@ -43,3 +43,9 @@ function register(){
     });
 }
 
+function languageSelector() {
+        let selectedOption = $('#locales').val();
+        if (selectedOption != ''){
+            window.location.replace(location.pathname + '?lang=' + selectedOption);
+    }
+}

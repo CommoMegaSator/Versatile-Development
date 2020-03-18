@@ -19,6 +19,7 @@
         <java.version>1.8</java.version>
         <modelmapper.version>2.3.5</modelmapper.version>
         <redis.version>2.2.5.RELEASE</redis.version>
+        <jedis.version>2.8.1</jedis.version>
         <packaging>war</packaging>
     </properties>
 
@@ -87,6 +88,11 @@
         <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${jedis.version}</version>
         </dependency>
     </dependencies>
 

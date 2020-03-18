@@ -62,7 +62,7 @@ public class TemplateController {
 
     @GetMapping("settings")
     @PreAuthorize("hasAnyAuthority('ADMIN, USER')")
-    public String getSettings(@AuthenticationPrincipal UserEntity user, Model model){
+    public String getSettings(){
         return "settings";
     }
 }

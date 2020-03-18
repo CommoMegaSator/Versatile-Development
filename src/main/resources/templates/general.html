@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headerfiles">
+    <meta charset="UTF-8" />
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body>
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a th:class="${#httpServletRequest.requestURI=='/'}?'nav-link active':'nav-link'" href="/" th:text="#{home}"/>
+                </li>
+                <li class="nav-item">
+                    <a th:class="${#httpServletRequest.requestURI=='/profile'}?'nav-link active':'nav-link'" href="/profile" th:text="#{profile}"/>
+                </li>
+                <li class="nav-item">
+                    <a th:class="${#httpServletRequest.requestURI=='/settings'}?'nav-link active':'nav-link'" href="/settings" th:text="#{settings}"/>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#"  tabindex="-1" aria-disabled="true" th:text="#{articles}"/>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <select id="locales" class="mr-2" onchange="languageSelector()">
+                    <option value="" th:text="#{lang.chooser}"/>
+                    <option value="en_US" th:text="#{lang.eng}"/>
+                    <option value="uk_UA" th:text="#{lang.ua}"/>
+                </select>
+                <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" th:text="#{search}"/>
+            </form>
+        </div>
+    </nav>
+</div>
+</body>
+</html>
