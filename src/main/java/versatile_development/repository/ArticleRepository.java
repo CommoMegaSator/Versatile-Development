@@ -1,7 +1,9 @@
 package versatile_development.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import versatile_development.entity.ArticleEntity;
-import org.springframework.data.repository.CrudRepository;
 
-public interface ArticleRepository extends CrudRepository<ArticleEntity, Long> {
+@Repository
+public interface ArticleRepository extends JpaRepository<ArticleEntity, Long> {
 }

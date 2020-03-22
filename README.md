@@ -3,7 +3,7 @@ This project is developed for training and should not be used for commercial pur
 
 To use it, you should to change some settings in the application.properties file.
 
-Now this site uses Redis for saving user Session.
+Now this site uses Redis for saving user Session and also user locale.
 
 csrf token is disabled temporary.
 

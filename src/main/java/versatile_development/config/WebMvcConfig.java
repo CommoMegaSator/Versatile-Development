@@ -28,9 +28,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Bean
     public LocaleResolver localeResolver() {
-        ApplicationLocaleResolver alr = new ApplicationLocaleResolver();
-        return alr;
+        return new ApplicationLocaleResolver();
     }
+
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();

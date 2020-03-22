@@ -1,6 +1,5 @@
 package versatile_development.controller;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import versatile_development.constants.Constants;
 import versatile_development.domain.Role;
 import versatile_development.domain.UserDTO;
@@ -48,11 +47,5 @@ public class LoginController {
 
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
-    }
-
-    @GetMapping("/all")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public List<UserDTO> getAllUsers(){
-        return userService.findAllUsers();
     }
 }

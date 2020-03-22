@@ -12,9 +12,12 @@
 
 <div th:replace="general.html :: nav"> </div>
 
-<form action="/settings" method="PATCH">
+<a href="/all" class="ml-3" th:text="#{all-users}" th:hidden="${isAdmin}?false:true" />
+
+<form th:action="@{/settings}" th:method="post">
     <button type="submit" class="btn btn-outline-danger ml-3" th:text="#{delete-account}"/>
 </form>
+
 
 <script src="../static/js/main.js"></script>
 </body>

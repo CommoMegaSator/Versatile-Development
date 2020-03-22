@@ -28,7 +28,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleDTO> findAllArticles() {
-        List<ArticleEntity> listOfArticles = (List<ArticleEntity>) articleRepository.findAll();
+        List<ArticleEntity> listOfArticles = articleRepository.findAll();
         List<ArticleDTO> articleDTOs = new ArrayList<>();
 
         for (ArticleEntity articleEntity : listOfArticles){

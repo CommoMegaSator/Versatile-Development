@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" >
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -27,6 +28,9 @@
             <input class='familiar shake' type='button' value='Not familiar?' onclick="location.href='/registration';">
         </div>
     </form>
+</div>
+<div th:if="${param.error}">
+    <script>alert("Bad credentials");</script>
 </div>
 </body>
 
