@@ -16,7 +16,7 @@ then just start an application.
 You can see my task progress in a table(ukrainian): 
 https://trello.com/b/j08mhCbw/versatile-development
 
-#####In application.properties you can also use: 
+##### In application.properties you can also use: 
 * for postgres in docker: spring.datasource.url=jdbc:postgresql://localhost:3001/versatile
 * for redis in docker: spring.redis.port=3002
 * for writing logs in custom file: logging.file=your_file_path
