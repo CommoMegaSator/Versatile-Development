@@ -4,11 +4,14 @@
     <meta charset="UTF-8" />
     <link th:href="@{/css/styles.css}" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/custom-style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
+
+<!--Header Menu-->
 <div th:fragment="header">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
+    <nav class="navbar navbar-expand-lg navbar-versatile mb-2">
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
@@ -18,10 +21,13 @@
                     <a th:class="${#httpServletRequest.requestURI=='/profile'}?'nav-link active':'nav-link'" href="/profile" th:text="#{profile}"/>
                 </li>
                 <li class="nav-item">
-                    <a th:class="${#httpServletRequest.requestURI=='/settings'}?'nav-link active':'nav-link'" href="/settings" th:text="#{settings}"/>
+                    <a th:class="${#httpServletRequest.requestURI=='/messages'}?'nav-link active':'nav-link'" href="/messages" th:text="#{messages}"/>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#"  tabindex="-1" aria-disabled="true" th:text="#{articles}"/>
+                    <a th:class="${#httpServletRequest.requestURI=='/friends'}?'nav-link active':'nav-link'" href="/friends" th:text="#{friends}"/>
+                </li>
+                <li class="nav-item">
+                    <a th:class="${#httpServletRequest.requestURI=='/settings'}?'nav-link active':'nav-link'" href="/settings" th:text="#{settings}"/>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -30,11 +36,51 @@
                     <option value="en_US" th:text="#{lang.eng}"/>
                     <option value="uk_UA" th:text="#{lang.ua}"/>
                 </select>
-                <input class="form-control mr-sm-2" type="search" placeholder="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" th:text="#{search}"/>
+                <button id="exitButton" class="btn btn-success ml-3" type="submit" th:text="#{logout}"/>
             </form>
         </div>
     </nav>
 </div>
+
+<!--Redirect Modal-->
+<div th:fragment="redirectModal">
+    <div class="modal fade" id="redirectingModal" tabindex="-1" role="dialog" aria-labelledby="redirectingModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="redirectingModalTitle" th:text="#{modal.redirect.title}"/>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" th:text="#{modal.redirect.confirm-message}"/>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal" th:text="#{modal.redirect.button.no}"/>
+                    <button id="redirecter" type="button" class="btn btn-danger" th:text="#{modal.redirect.button.yes}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exitingModal" tabindex="-1" role="dialog" aria-labelledby="exitingModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exitingModalTitle" th:text="#{modal.exit.title}"/>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" th:text="#{modal.exit.confirm-message}"/>
+                <div class="modal-footer">
+                    <form action="/logout" method="get">
+                        <button type="button" class="btn btn-success" data-dismiss="modal" th:text="#{modal.delete.button.no}"/>
+                        <button id="exiter" type="submit" class="btn btn-danger" th:text="#{modal.delete.button.yes}" onclick="exit()"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

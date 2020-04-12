@@ -1,6 +1,6 @@
 package versatile_development.service;
 
-import versatile_development.domain.ArticleDTO;
+import versatile_development.domain.dto.ArticleDTO;
 
 import java.util.List;
 

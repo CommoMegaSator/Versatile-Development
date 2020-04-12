@@ -36,6 +36,30 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Column(name = "age")
     private int age;
 
+    @Column(name = "creation_date")
+    private Date creationDate;
+
+    @Column(name = "birthday")
+    private Date birthday;
+
+    @Column(name = "gender", length = 15)
+    private String gender;
+
+    @Column(name = "nationality")
+    private String nationality;
+
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "friendsNumber", columnDefinition = "INT default 0")
+    private Integer friendsNumber;
+
+    @Column(name = "aboutUser")
+    private String aboutUser;
+
+    @Column(name = "reports", columnDefinition = "INT default 0")
+    private Integer reports;
+
     @Column(name = "activated", columnDefinition = "boolean default false")
     private boolean activated;
 
@@ -44,12 +68,6 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
     @Column(name = "token_expiration")
     private Date tokenExpiration;
-
-    @Column(name = "creation_date")
-    private Date creationDate;
-
-    @Column(name = "birthday")
-    private Date birthday;
 
     @OneToMany(mappedBy = "user")
     private List<ArticleEntity> article;

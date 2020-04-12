@@ -21,8 +21,6 @@ function register(){
         password: password
     };
 
-    console.log(JSON.stringify(userForRegistration));
-
     $.ajax({
         url: serverHost + 'registration',
         method: 'POST',
@@ -49,3 +47,50 @@ function languageSelector() {
             window.location.replace(location.pathname + '?lang=' + selectedOption);
     }
 }
+
+function parseUrl(url) {
+    var m = url.match(/^(([^:\/?#]+:)?(?:\/\/((?:([^\/?#:]*):([^\/?#:]*)@)?([^\/?#:]*)(?::([^\/?#:]*))?)))?([^?#]*)(\?[^#]*)?(#.*)?$/),
+        r = {
+            hash: m[10] || "",
+            host: m[3] || "",
+            hostname: m[6] || "",
+            href: m[0] || "",
+            origin: m[1] || "",
+            pathname: m[8] || (m[1] ? "/" : ""),
+            port: m[7] || "",
+            protocol: m[2] || "",
+            search: m[9] || "",
+            username: m[4] || "",
+            password: m[5] || ""
+        };
+    if (r.protocol.length == 2) {
+        r.protocol = "file:///" + r.protocol.toUpperCase();
+        r.origin = r.protocol + "//" + r.host;
+    }
+    r.href = r.origin + r.pathname + r.search + r.hash;
+    return r;
+};
+
+
+$('a').click(function(event) {
+    let userURL = $(this).attr('href');
+    let uri = parseUrl(userURL);
+    let myServerHost = parseUrl(serverHost);
+
+    if (myServerHost.host != uri.host && uri.host != "") {
+        event.preventDefault();
+        $('#redirectingModal').modal('show');
+        $('#redirecter').click(function(){window.location.href = userURL});
+    }
+});
+
+
+$('#deleteAccount').click(function(event){
+    event.preventDefault();
+    $('#deleteAccountModal').modal('show');
+});
+
+$('#exitButton').click(function(event){
+    event.preventDefault();
+    $('#exitingModal').modal('show');
+});

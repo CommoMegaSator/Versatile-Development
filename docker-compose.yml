@@ -1,0 +1,22 @@
+version: "3.5"
+
+services:
+  postgresql:
+    image: postgres:11.7
+    container_name: postgresql
+    volumes:
+      - /opt/postgres-data:/var/lib/postgresql/data
+    ports:
+      - 3001:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=versatile
+    expose:
+      - 3001
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - 3002:6379

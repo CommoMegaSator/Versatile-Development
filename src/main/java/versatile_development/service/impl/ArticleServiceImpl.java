@@ -1,6 +1,6 @@
 package versatile_development.service.impl;
 
-import versatile_development.domain.ArticleDTO;
+import versatile_development.domain.dto.ArticleDTO;
 import versatile_development.entity.ArticleEntity;
 import versatile_development.repository.ArticleRepository;
 import versatile_development.service.ArticleService;

@@ -1,4 +1,4 @@
-package versatile_development.domain;
+package versatile_development.domain.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -2,29 +2,80 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="shortcut icon" href="../static/images/Versatile.ico"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/custom-style.css">
+    <script src="../static/js/global.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <title th:text="${user.getNickname()}">Profile</title>
 </head>
 <body>
 
-<div th:replace="general.html :: nav"> </div>
+<div th:replace="general.html :: header"/>
+<div th:replace="general.html :: redirectModal"/>
 
-<h1 class="ml-2" th:text = "#{hi-message} + ', ' + ${user.getNickname()} + '!'"/>
-<p class="ml-2" th:text="#{you-have-some-roles-such-as}"/>
+<div class="container">
+    <div class="row">
+        <div class="col-md-7 ">
 
-<ul>
-    <li th:each="role : ${user.getAuthorities()}" th:text="${role}"></li>
-</ul>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="box box-info">
+                        <div class="box-body">
+                            <div class="col-sm-6">
+                                <div  align="center"> <img alt="User Pic" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" id="profile-image1" class="img-circle img-responsive">
+                                    <input id="profile-image-upload" class="hidden" type="file">
+                                    <div style="color:#999;" >click here to change profile image</div>
+                                </div>
+                                <br>
+                            </div>
+                            <div class="col-sm-6">
+                                <h4 style="color:#00b1b1;" th:text="${user.getNickname()}"/></span>
+                            </div>
+                            <div class="clearfix"></div>
+                            <hr style="margin:5px 0 5px 0;">
 
-<hr>
-    <p th:text="${date}"/>
-<hr>
+                            <div class="col-sm-5 col-xs-6 tital " th:text="#{user.lastname}"/><div class="col-sm-7 col-xs-6 " th:text="${user.getLastname()}"/>
+                            <div class="clearfix"></div>
+                            <div class="bot-border"></div>
 
-<form action="/logout" method="get">
-    <button class="btn btn-outline-success ml-3" type="submit" th:text="#{logout}"/>
-</form>
+                            <div class="col-sm-5 col-xs-6 tital " th:text="#{user.firstname}"/><div class="col-sm-7" th:text="${user.getFirstname()}"/>
+                            <div class="clearfix"></div>
+                            <div class="bot-border"></div>
+
+                            <div class="col-sm-5 col-xs-6 tital "th:text="#{user.created}"/><div class="col-sm-7" th:text="${user.getCreationDate()}"/>
+
+                            <div class="clearfix"></div>
+                            <div class="bot-border"></div>
+
+                            <div class="col-sm-5 col-xs-6 tital " th:text="#{user.birthday}"/><div class="col-sm-7" th:text="(${user.getBirthday()}==null)?#{empty.data}:${user.getBirthday()}"/>
+
+                            <div class="clearfix"></div>
+                            <div class="bot-border"></div>
+
+                            <div class="col-sm-5 col-xs-6 tital" >Roles:</div><div class="col-sm-7"><span th:each="role : ${user.getAuthorities()}" th:text="${role} + ' '"/></div>
+
+                            <div class="clearfix"></div>
+                            <div class="bot-border"></div>
+
+                            <div class="col-sm-5 col-xs-6 tital " th:text="${date}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(function() {
+                $('#profile-image1').on('click', function() {
+                    $('#profile-image-upload').click();
+                });
+            });
+        </script>
+    </div>
+</div>
 
 <script src="../static/js/main.js"></script>
 </body>

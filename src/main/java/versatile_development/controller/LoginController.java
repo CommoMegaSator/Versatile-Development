@@ -2,7 +2,7 @@ package versatile_development.controller;
 
 import versatile_development.constants.Constants;
 import versatile_development.domain.Role;
-import versatile_development.domain.UserDTO;
+import versatile_development.domain.dto.UserDTO;
 import versatile_development.service.EmailService;
 import versatile_development.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

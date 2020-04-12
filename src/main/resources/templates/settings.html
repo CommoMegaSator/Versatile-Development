@@ -2,23 +2,139 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="../static/images/Versatile.ico"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/custom-style.css">
+    <script src="../static/js/global.js"></script>
+    <script src="../static/js/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <title th:text="#{settings}"/>
 </head>
 <body>
 
-<div th:replace="general.html :: nav"> </div>
+<div th:replace="general.html :: header"/>
+<div th:replace="general.html :: redirectModal"/>
 
-<a href="/all" class="ml-3" th:text="#{all-users}" th:hidden="${isAdmin}?false:true" />
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 ">
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action active" th:text="#{setting.title.profile-settings}"/>
+                <a href="#" class="list-group-item list-group-item-action disabled" th:text="#{setting.title.permission}"/>
+                <a href="#" class="list-group-item list-group-item-action disabled" th:text="#{setting.title.connected-services}"/>
+                <a href="#" class="list-group-item list-group-item-action disabled" th:text="#{setting.title.reports}"/>
+                <a href="#" class="list-group-item list-group-item-action disabled" th:text="#{setting.title.blacklist}"/>
+                <a href="#" class="list-group-item list-group-item-action disabled" th:text="#{setting.title.other-settings}"/>
+                <a href="/all" class="list-group-item list-group-item-action" th:text="#{all-users}" th:hidden="${isAdmin}?false:true" />
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 th:text="#{profile-editing}"/>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form>
+                                <div class="form-group row">
+                                    <label for="nickname" class="col-4 col-form-label" th:text="#{user.nickname}"/>
+                                    <div class="col-8">
+                                        <input id="nickname" name="nickname" th:placeholder="#{user.nickname}" class="form-control here" autocomplete="off" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="firstname" class="col-4 col-form-label" th:text="#{user.firstname}"/>
+                                    <div class="col-8">
+                                        <input id="firstname" name="firstname" th:placeholder="#{user.firstname}" class="form-control here" autocomplete="off" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="lastname" class="col-4 col-form-label" th:text="#{user.lastname}"/>
+                                    <div class="col-8">
+                                        <input id="lastname" name="lastname" th:placeholder="#{user.lastname}" class="form-control here" autocomplete="off" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="birthday" class="col-4 col-form-label" th:text="#{user.birthday}"/>
+                                    <div class="col-8">
+                                        <input id="birthday" name="birthday" class="form-control here" type="date">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="email" class="col-4 col-form-label" th:text="#{user.email}"/>
+                                    <div class="col-8">
+                                        <input id="email" name="email" th:placeholder="#{user.email}" class="form-control here" autocomplete="off" type="text">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="about-me" class="col-4 col-form-label" th:text="#{user.about-me}"/>
+                                    <div class="col-8">
+                                        <textarea id="about-me" name="about-me" cols="40" rows="4" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="newpass" class="col-4 col-form-label" th:text="#{new-password}"/>
+                                    <div class="col-8">
+                                        <input id="newpass" name="newpass" th:placeholder="#{new-password}" class="form-control here" type="password">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="offset-4 col-8">
+                                        <button name="submit" type="submit" class="btn btn-outline-primary" th:text="#{profile-updating}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="offset-4 col-8">
+                                        <button id="deleteAccount" type="submit" class="btn btn-outline-danger" th:text="#{delete-account}"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<form th:action="@{/settings}" th:method="post">
-    <button type="submit" class="btn btn-outline-danger ml-3" th:text="#{delete-account}"/>
-</form>
-
-
+<!-- Modal -->
+<div class="modal fade" id="deleteAccountModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModal" th:text="#{modal.delete.title}"/>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" th:text="#{modal.delete.confirm-message}"/>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" th:text="#{modal.delete.button.no}"/>
+                <button id="deleteAccountButton" type="button" class="btn btn-danger" th:text="#{modal.delete.button.yes}"/>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    $('#deleteAccountButton').on('click', function () {
+        let deleteMessage = [[#{delete-message}]];
+        $.ajax({
+            url: serverHost + 'settings',
+            type: 'DELETE',
+            success: function () {
+                alert(deleteMessage);
+                window.location.href = serverHost + 'logout';
+            }
+        });
+    });
+</script>
 <script src="../static/js/main.js"></script>
 </body>
 </html>

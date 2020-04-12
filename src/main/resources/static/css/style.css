@@ -189,7 +189,6 @@ form label
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    margin-top: 12px;
 }
 
 .container input {
@@ -246,9 +245,17 @@ form label
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    margin: 10px;
+    margin: 0px 10px 10px 10px;
 }
 
 input[placeholder] {
     text-align: center;
+}
+
+.fa{
+    position: relative;
+    font-size: 18px;
+    top: -33px;
+    left: 700%;
+    color: #f4661b;
 }

@@ -4,7 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import versatile_development.domain.UserDTO;
+import org.springframework.transaction.annotation.Transactional;
+import redis.clients.jedis.Jedis;
+import versatile_development.constants.Constants;
+import versatile_development.domain.dto.UserDTO;
 import versatile_development.entity.UserEntity;
 import versatile_development.repository.UserRepository;
 import versatile_development.service.UserService;
@@ -87,6 +90,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserEntity DTOToEntityMapper(UserDTO userDTO){
         if (userDTO == null)return null;
         else return modelMapper.map(userDTO, UserEntity.class);
+    }
+
+    @Override
+    @Transactional
+    public void deleteAccountByNickname(String nickname) {
+        Jedis jedis = new Jedis();
+        if (jedis.get(nickname + Constants.USER_LOCALE_EXTENSION) != null)jedis.del(nickname + Constants.USER_LOCALE_EXTENSION);
+        userRepository.deleteByNickname(nickname);
     }
 
     @Override

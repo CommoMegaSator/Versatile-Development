@@ -1,5 +1,6 @@
-package versatile_development.domain;
+package versatile_development.domain.dto;
 
+import versatile_development.domain.Role;
 import versatile_development.entity.ArticleEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

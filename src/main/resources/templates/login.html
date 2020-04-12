@@ -7,6 +7,7 @@
     <title>Sign in</title>
     <link rel="stylesheet" href="../static/css/style.css">
     <link rel="shortcut icon" href="../static/images/Versatile.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -17,6 +18,9 @@
         <div class="logpass">
             <input class='sign-text' type='text'        name="username"     id='userLogin'      placeholder='Username'  required minlength="4" maxlength="25" autocomplete="off" autofocus>
             <input class='sign-text' type='password'    name="password"     id='userPassword'   placeholder='Password' 	required minlength="8" maxlength="25">
+            <span>
+			    <i class="fa fa-eye" aria-hidden="true" id="eye" onclick="toggle()"></i>
+		    </span>
             <label class="container"><span class="remember">Can we remember u?</span>
                 <input type="checkbox" id="rememberMe" name="remember-me">
                 <span class="checkmark"></span>
@@ -33,5 +37,21 @@
     <script>alert("Bad credentials");</script>
 </div>
 </body>
+
+<script>
+    let state= false;
+    function toggle(){
+        if(state){
+            document.getElementById("userPassword").setAttribute("type","password");
+            document.getElementById("eye").style.color='#f4661b';
+            state = false;
+        }
+        else{
+            document.getElementById("userPassword").setAttribute("type","text");
+            document.getElementById("eye").style.color='#800080';
+            state = true;
+        }
+    }
+</script>
 
 </html>
