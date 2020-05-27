@@ -1,8 +1,6 @@
 package versatile_development.domain.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -10,6 +8,8 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class ArticleDTO {
     private Long id;
 

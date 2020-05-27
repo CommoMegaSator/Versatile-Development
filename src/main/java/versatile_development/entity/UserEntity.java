@@ -1,5 +1,6 @@
 package versatile_development.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,11 +9,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import versatile_development.domain.Role;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 
 @Entity
 @Table(name = "usr")

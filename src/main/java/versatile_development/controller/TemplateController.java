@@ -1,14 +1,17 @@
 package versatile_development.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import versatile_development.domain.dto.UserDTO;
 import versatile_development.entity.UserEntity;
 import versatile_development.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -18,8 +21,12 @@ import java.util.Locale;
 @RequestMapping("/")
 public class TemplateController {
 
-    @Autowired
     UserService userService;
+
+    @Autowired
+    TemplateController(@Qualifier(value = "userServiceImpl") UserService userService){
+        this.userService = userService;
+    }
 
     @GetMapping("login")
     public String getLoginView(@AuthenticationPrincipal UserEntity userEntity){

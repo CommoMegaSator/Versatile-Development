@@ -5,4 +5,5 @@ public class Constants {
                                                 "To confirm your e-mail address, please click the link below:\n" +
                                                 "%s/confirm?token=%s";
     public static final String USER_LOCALE_EXTENSION = "_locale_tag";
+    public static final int DAY = (1000 * 60 * 60 * 24);
 }

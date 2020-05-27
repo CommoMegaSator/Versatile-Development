@@ -24,7 +24,7 @@ https://trello.com/b/j08mhCbw/versatile-development
 ##### Technology stack:
 * HTML, CSS, JS/JQuery, Thymeleaf;
 * Java 8, Hibernate, Spring(Boot, MVC, Data, Security);
-* JUnit/Mockito;
+* JUnit, Mockito;
 * PostgreSQL, Redis.
 
-Created by CommoMegaSator.
+Created by `CommoMegaSator`.

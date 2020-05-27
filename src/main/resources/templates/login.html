@@ -32,14 +32,15 @@
             <input class='familiar shake' type='button' value='Not familiar?' onclick="location.href='/registration';">
         </div>
     </form>
-</div>
-<div th:if="${param.error}">
-    <script>alert("Bad credentials");</script>
+
+    <div th:if="${param.error}">
+        <script>alert("Bad credentials");</script>
+    </div>
 </div>
 </body>
 
 <script>
-    let state= false;
+    let state = false;
     function toggle(){
         if(state){
             document.getElementById("userPassword").setAttribute("type","password");

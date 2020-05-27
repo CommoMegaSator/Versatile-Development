@@ -56,7 +56,7 @@
                             <div class="clearfix"></div>
                             <div class="bot-border"></div>
 
-                            <div class="col-sm-5 col-xs-6 tital" >Roles:</div><div class="col-sm-7"><span th:each="role : ${user.getAuthorities()}" th:text="${role} + ' '"/></div>
+                            <div class="col-sm-5 col-xs-6 tital" th:text="#{user.roles} + ':'"/><div class="col-sm-7"><span th:each="role : ${user.getAuthorities()}" th:text="${role} + ' '"/></div>
 
                             <div class="clearfix"></div>
                             <div class="bot-border"></div>

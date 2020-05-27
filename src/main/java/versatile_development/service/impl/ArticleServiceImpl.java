@@ -1,12 +1,13 @@
 package versatile_development.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 import versatile_development.domain.dto.ArticleDTO;
 import versatile_development.entity.ArticleEntity;
 import versatile_development.repository.ArticleRepository;
 import versatile_development.service.ArticleService;
 import versatile_development.utils.ObjectMapperUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +15,16 @@ import java.util.List;
 @Service
 public class ArticleServiceImpl implements ArticleService {
 
-    @Autowired
-    ArticleRepository articleRepository;
+    private ArticleRepository articleRepository;
+
+    private ObjectMapperUtils modelMapper;
 
     @Autowired
-    private ObjectMapperUtils modelMapper;
+    ArticleServiceImpl(@Qualifier(value = "articleRepository") ArticleRepository articleRepository,
+                       @Qualifier(value = "objectMapperUtils") ObjectMapperUtils modelMapper){
+        this.articleRepository = articleRepository;
+        this.modelMapper = modelMapper;
+    }
 
     @Override
     public void createArticle(ArticleDTO articleDTO) {

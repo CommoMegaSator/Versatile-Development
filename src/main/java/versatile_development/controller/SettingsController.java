@@ -1,6 +1,7 @@
 package versatile_development.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,8 +19,12 @@ import versatile_development.service.UserService;
 @RequestMapping("/settings")
 public class SettingsController {
 
-    @Autowired
     UserService userService;
+
+    @Autowired
+    SettingsController(@Qualifier(value = "userServiceImpl") UserService userService){
+        this.userService = userService;
+    }
 
     @GetMapping
     @PreAuthorize("hasAnyAuthority('ADMIN, USER')")

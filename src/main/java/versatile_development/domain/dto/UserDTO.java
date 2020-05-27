@@ -1,12 +1,11 @@
 package versatile_development.domain.dto;
 
+import lombok.*;
 import versatile_development.domain.Role;
 import versatile_development.entity.ArticleEntity;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -14,7 +13,10 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserDTO {
+@EqualsAndHashCode
+@AllArgsConstructor
+@Builder
+public class UserDTO implements Serializable {
 
         private Long id;
 
@@ -57,4 +59,23 @@ public class UserDTO {
         private Date birthday;
 
         private List<ArticleEntity> article;
+
+        @Override
+        public String toString() {
+                return "UserDTO{" +
+                        "firstname='" + firstname + '\'' +
+                        ", lastname='" + lastname + '\'' +
+                        ", nickname='" + nickname + '\'' +
+                        ", email='" + email + '\'' +
+                        ", age=" + age +
+                        ", password='" + password + '\'' +
+                        ", activated=" + activated +
+                        ", confirmationToken='" + confirmationToken + '\'' +
+                        ", tokenExpiration=" + tokenExpiration +
+                        ", roles=" + roles +
+                        ", creationDate=" + creationDate +
+                        ", birthday=" + birthday +
+                        ", article=" + article +
+                        '}';
+        }
 }
