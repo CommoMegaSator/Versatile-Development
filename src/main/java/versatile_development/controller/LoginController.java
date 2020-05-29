@@ -44,7 +44,6 @@ public class LoginController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         else{
-            try {
             Date creationDate = new Date();
 
             userDTO.setCreationDate(creationDate);
@@ -61,8 +60,6 @@ public class LoginController {
             log.info(String.format(userDTO.getNickname() + " activation link: " + "%s/confirm?token=%s", hostUrl, userDTO.getConfirmationToken()));
 
             return new ResponseEntity<>(HttpStatus.CREATED);
-            }catch(Exception e){log.error("Email is not working properly");}
         }
-        return null;
     }
 }

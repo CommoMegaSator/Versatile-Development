@@ -104,7 +104,7 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Deleting Account Modal -->
 <div class="modal fade" id="deleteAccountModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -116,8 +116,8 @@
             </div>
             <div class="modal-body" th:text="#{modal.delete.confirm-message}"/>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" th:text="#{modal.delete.button.no}"/>
-                <button id="deleteAccountButton" type="button" class="btn btn-danger" th:text="#{modal.delete.button.yes}"/>
+                <button type="button" class="btn btn-success" data-dismiss="modal" th:text="#{modal.button.no}"/>
+                <button id="deleteAccountButton" type="button" class="btn btn-danger" th:text="#{modal.button.yes}"/>
             </div>
         </div>
     </div>
@@ -126,11 +126,11 @@
     $('#deleteAccountButton').on('click', function () {
         let deleteMessage = [[#{delete-message}]];
         $.ajax({
-            url: serverHost + 'settings',
+            url: document.location.href,
             type: 'DELETE',
             success: function () {
                 alert(deleteMessage);
-                window.location.href = serverHost + 'logout';
+                window.location.href = document.location.protocol + "//" + document.location.host + '/logout';
             }
         });
     });

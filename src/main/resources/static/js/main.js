@@ -1,6 +1,8 @@
 $(document).ready(function(){
 
     $('#btn-register').on('click', function(){
+        document.body.style.cursor = "progress";
+        $(this).hide();
         register();
     });
 });
@@ -22,19 +24,22 @@ function register(){
     };
 
     $.ajax({
-        url: serverHost + 'registration',
+        url: document.location.href,
         method: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(userForRegistration),
         complete: function(serverResponse){
-            if(serverResponse.status == 201){
+            document.body.style.cursor = "auto";
+            if(serverResponse.status == 409){
+                $('#btn-register').show();
+                alert("This user already exists!")
+            }
+            else if(serverResponse.status == 201){
                 alert("To complete the registration, go to the URL that was sent on your email!");
                 window.location.href = "login";
             }
-            if(serverResponse.status == 409){
-                alert("This user already exists!")
-            }
-            if(serverResponse.status == 400){
+            else if(serverResponse.status == 400){
+                $('#btn-register').show();
                 alert("Credentials is not valid!")
             }
         }
@@ -69,13 +74,13 @@ function parseUrl(url) {
     }
     r.href = r.origin + r.pathname + r.search + r.hash;
     return r;
-};
+}
 
 
 $('a').click(function(event) {
     let userURL = $(this).attr('href');
     let uri = parseUrl(userURL);
-    let myServerHost = parseUrl(serverHost);
+    let myServerHost = parseUrl(document.location.href);
 
     if (myServerHost.host != uri.host && uri.host != "") {
         event.preventDefault();

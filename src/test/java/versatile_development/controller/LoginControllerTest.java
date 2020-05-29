@@ -2,7 +2,7 @@ package versatile_development.controller;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ class LoginControllerTest {
     private MockMvc mvc;
 
     @Test
-    @Ignore
+    @Disabled
     @SneakyThrows
     public void registrationExpectsCreatedStatus(){
         this.mvc.perform(post("/registration")

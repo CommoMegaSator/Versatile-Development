@@ -1,5 +1,6 @@
 package versatile_development.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +18,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+@Slf4j
 @Controller
 @RequestMapping("/")
 public class TemplateController {
@@ -47,6 +49,8 @@ public class TemplateController {
             userDTO.setActivated(true);
             userDTO.setConfirmationToken(null);
             userService.updateUser(userDTO);
+
+            log.info(userDTO.getNickname() + " confirmed registration.");
         }
         return "redirect:/login";
     }

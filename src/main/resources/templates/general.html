@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="headerfiles">
     <meta charset="UTF-8" />
     <link th:href="@{/css/styles.css}" rel="stylesheet">
@@ -31,13 +32,14 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <select id="locales" class="mr-2" onchange="languageSelector()">
+                <select sec:authorize="isAuthenticated()" id="locales" class="mr-2" onchange="languageSelector()">
                     <option value="" th:text="#{lang.chooser}"/>
                     <option value="en_US" th:text="#{lang.eng}"/>
                     <option value="uk_UA" th:text="#{lang.ua}"/>
                 </select>
-                <button id="exitButton" class="btn btn-success ml-3" type="submit" th:text="#{logout}"/>
             </form>
+            <button sec:authorize="isAuthenticated()" id="exitButton" class="btn btn-success ml-3" type="submit" th:text="#{logout}"/>
+            <button sec:authorize="isAnonymous()" id="loginButton" class="btn btn-success ml-3" onclick="window.location = 'login';" th:text="#{login}"/>
         </div>
     </nav>
 </div>
@@ -61,6 +63,8 @@
             </div>
         </div>
     </div>
+
+<!--Logout Modal-->
     <div class="modal fade" id="exitingModal" tabindex="-1" role="dialog" aria-labelledby="exitingModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -73,8 +77,8 @@
                 <div class="modal-body" th:text="#{modal.exit.confirm-message}"/>
                 <div class="modal-footer">
                     <form action="/logout" method="get">
-                        <button type="button" class="btn btn-success" data-dismiss="modal" th:text="#{modal.delete.button.no}"/>
-                        <button id="exiter" type="submit" class="btn btn-danger" th:text="#{modal.delete.button.yes}" onclick="exit()"/>
+                        <button type="button" class="btn btn-success" data-dismiss="modal" th:text="#{modal.button.no}"/>
+                        <button id="exiter" type="submit" class="btn btn-danger" th:text="#{modal.button.yes}" onclick="exit()"/>
                     </form>
                 </div>
             </div>

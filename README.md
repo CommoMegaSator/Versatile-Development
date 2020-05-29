@@ -1,6 +1,7 @@
 ## Versatile Development
 #### About
 This project is developed for training and should not be used for commercial purposes!
+You can see this project here: http://ec2-3-10-140-76.eu-west-2.compute.amazonaws.com:8081
 
 ##### Ways to use
 * Install docker, run 'sudo docker-compose up --build',
@@ -13,7 +14,7 @@ then just start an application.
 * Now this site can work with databases which is in docker, but I have some problems with taking whole project in a container.
 * csrf token is disabled temporary.
 
-You can see my task progress in a table(ukrainian): 
+You can see my task progress in a table: 
 https://trello.com/b/j08mhCbw/versatile-development
 
 ##### In application.properties you can also use: 
