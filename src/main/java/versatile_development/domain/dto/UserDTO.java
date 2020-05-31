@@ -37,13 +37,12 @@ public class UserDTO implements Serializable {
         @Size(min = 4, max = 25)
         private String email;
 
-        @NotNull(message = "Field 'age' can not be NULL")
         @Min(12)
         @Max(99)
         private int age;
 
         @NotNull(message = "Field 'password' can not be NULL")
-        @Size(min = 6, max = 25)
+        @Size(min = 8, max = 25)
         private String password;
 
         private boolean activated;

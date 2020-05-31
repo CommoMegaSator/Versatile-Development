@@ -2,7 +2,6 @@ $(document).ready(function(){
 
     $('#btn-register').on('click', function(){
         document.body.style.cursor = "progress";
-        $(this).hide();
         register();
     });
 });
@@ -11,39 +10,65 @@ function register(){
     let firstname = $('#firstname').val();
     let lastname = $('#lastname').val();
     let nickname = $('#nickname').val();
-    let email = $('#email').val();
-    let age = $('#age').val();
+    let email = $('#email').val().toLowerCase();
     let password = $('#password').val();
     let userForRegistration = {
         firstname: firstname,
         lastname: lastname,
         nickname: nickname,
         email: email,
-        age: age,
         password: password
     };
 
-    $.ajax({
-        url: document.location.href,
-        method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(userForRegistration),
-        complete: function(serverResponse){
-            document.body.style.cursor = "auto";
-            if(serverResponse.status == 409){
-                $('#btn-register').show();
-                alert("This user already exists!")
+    if (registrationFormValidation(userForRegistration)){
+        $('#btn-register').hide();
+        $.ajax({
+            url: document.location.href,
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(userForRegistration),
+            complete: function(serverResponse){
+                document.body.style.cursor = "auto";
+                if(serverResponse.status == 409){
+                    $('#btn-register').show();
+                    alert("This user already exists!")
+                }
+                else if(serverResponse.status == 201){
+                    alert("To complete the registration, go to the URL that was sent on your email!");
+                    window.location.href = "login";
+                }
+                else if(serverResponse.status == 400){
+                    $('#btn-register').show();
+                    alert("Credentials is not valid!")
+                }
             }
-            else if(serverResponse.status == 201){
-                alert("To complete the registration, go to the URL that was sent on your email!");
-                window.location.href = "login";
-            }
-            else if(serverResponse.status == 400){
-                $('#btn-register').show();
-                alert("Credentials is not valid!")
-            }
-        }
-    });
+        });
+    }
+}
+
+function registrationFormValidation(form) {
+    let confirm = $('#confirm').val();
+
+    if (form.firstname.length === 0 || form.lastname.length === 0 || form.nickname.length === 0 || form.email.length === 0 ||
+        form.password.length === 0 || confirm.length === 0) {
+        alert("All fields should be filled!");return false;}
+
+    else if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(form.email)){
+        if (form.firstname.length < 4 || form.firstname.length > 25){
+            alert("Firstname should consist 4-25 symbols!");return false;}
+        else if (form.lastname.length < 4 || form.lastname.length > 25) {
+            alert("Lastname should consist 4-25 symbols!");return false;}
+        else if (form.nickname.length < 4 || form.nickname.length > 25) {
+            alert("Nickname should consist 4-25 symbols!");return false;}
+        else if (form.email.length < 4 || form.email.length > 25) {
+            alert("Email should consist 4-25 symbols!");return false;}
+        else if (form.password.length < 8 || form.password.length > 25 || confirm.length < 8 || confirm.length > 25) {
+            alert("Password should consist 8-25 symbols!");return false;}
+        else if (form.password !== confirm){
+            alert("Passwords do not match!");return false;}
+        return true;}
+
+    else {alert("You have entered an invalid email address!");return false;}
 }
 
 function languageSelector() {
