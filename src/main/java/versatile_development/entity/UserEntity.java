@@ -25,10 +25,10 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Column(name = "email", length = 25, nullable = false, unique = true)
     private String email;
 
-    @Column(name = "firstname", length = 25, nullable = false)
+    @Column(name = "firstname", length = 25)
     private String firstname;
 
-    @Column(name = "lastname", length = 25, nullable = false)
+    @Column(name = "lastname", length = 25)
     private String lastname;
 
     @Column(name = "nickname", length = 25, nullable = false, unique = true)

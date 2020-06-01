@@ -1,13 +1,12 @@
 .navbar-versatile{
     background-color: rgb(255, 203, 96);
     box-shadow: 1px 1px 8px rgba(244, 102, 27,1);
-    color: rgb(128, 0, 128) !important;
+    color: rgb(128, 0, 128);
 }
 
 .active{
-    border-radius: 10px !important;
-    background-color: rgb(255, 203, 96) !important;
-    box-shadow: 1px 1px 8px rgba(244, 102, 27,1) !important;
+    border-radius: 10px;
+    box-shadow: 1px 1px 8px rgba(244, 102, 27,1);
 }
 
 .active a{
@@ -15,17 +14,19 @@
 }
 
 body{
-    background: rgba(255, 203, 96, 0.5);
+    background-color: black;
+    background-image: url(../images/universe-16.jpg);
     font-size: 15px;
-    color: #690369;
+    color: yellow;
 }
 
 nav a{
     color: rgb(244, 102, 27);
+    color: #F89B43;
 }
 
 nav a:hover{
-     color: rgb(244, 102, 27);
+    color: #F89B43;
 }
 
 .list-group-item-action{
@@ -39,9 +40,22 @@ input.hidden {
 
 #profile-image1 {
     cursor: pointer;
-
     width: 100px;
     height: 100px;
-    border:2px solid #03b1ce ;}
+    border:2px solid #03b1ce;
+    margin-left: 3.5%;
+}
+
 .tital{ font-size:16px; font-weight:500;}
+
 .bot-border{ border-bottom:1px #f8f8f8 solid;  margin:5px 0  5px 0}
+
+.list-group-item.active{
+    border-radius: 10px !important;
+    background-color: rgb(255, 203, 96) !important;
+    box-shadow: 1px 1px 8px rgba(244, 102, 27,1) !important;
+}
+
+.card-body{
+    color: rgb(244, 102, 27);
+}

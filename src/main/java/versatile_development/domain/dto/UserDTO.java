@@ -4,7 +4,9 @@ import lombok.*;
 import versatile_development.domain.Role;
 import versatile_development.entity.ArticleEntity;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -20,11 +22,9 @@ public class UserDTO implements Serializable {
 
         private Long id;
 
-        @NotNull(message = "Field 'firstname' can not be NULL")
         @Size(min = 4, max = 25)
         private String firstname;
 
-        @NotNull(message = "Field 'lastname' can not be NULL")
         @Size(min = 4, max = 25)
         private String lastname;
 
@@ -37,8 +37,6 @@ public class UserDTO implements Serializable {
         @Size(min = 4, max = 25)
         private String email;
 
-        @Min(12)
-        @Max(99)
         private int age;
 
         @NotNull(message = "Field 'password' can not be NULL")

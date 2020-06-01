@@ -11,6 +11,7 @@ body
     justify-content: space-between;
     align-items: center;
     background-color:rgba(255, 203, 96, 0.5);
+    background-image: url(../images/universe-16.jpg);
 }
 
 .logimage{

@@ -7,14 +7,10 @@ $(document).ready(function(){
 });
 
 function register(){
-    let firstname = $('#firstname').val();
-    let lastname = $('#lastname').val();
     let nickname = $('#nickname').val();
     let email = $('#email').val().toLowerCase();
     let password = $('#password').val();
     let userForRegistration = {
-        firstname: firstname,
-        lastname: lastname,
         nickname: nickname,
         email: email,
         password: password
@@ -49,16 +45,11 @@ function register(){
 function registrationFormValidation(form) {
     let confirm = $('#confirm').val();
 
-    if (form.firstname.length === 0 || form.lastname.length === 0 || form.nickname.length === 0 || form.email.length === 0 ||
-        form.password.length === 0 || confirm.length === 0) {
+    if (form.nickname.length === 0 || form.email.length === 0 || form.password.length === 0 || confirm.length === 0) {
         alert("All fields should be filled!");return false;}
 
     else if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(form.email)){
-        if (form.firstname.length < 4 || form.firstname.length > 25){
-            alert("Firstname should consist 4-25 symbols!");return false;}
-        else if (form.lastname.length < 4 || form.lastname.length > 25) {
-            alert("Lastname should consist 4-25 symbols!");return false;}
-        else if (form.nickname.length < 4 || form.nickname.length > 25) {
+        if (form.nickname.length < 4 || form.nickname.length > 25) {
             alert("Nickname should consist 4-25 symbols!");return false;}
         else if (form.email.length < 4 || form.email.length > 25) {
             alert("Email should consist 4-25 symbols!");return false;}

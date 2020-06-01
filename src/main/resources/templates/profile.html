@@ -17,65 +17,31 @@
 <div th:replace="general.html :: header"/>
 <div th:replace="general.html :: redirectModal"/>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-7 ">
-
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="box box-info">
-                        <div class="box-body">
-                            <div class="col-sm-6">
-                                <div  align="center"> <img alt="User Pic" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" id="profile-image1" class="img-circle img-responsive">
-                                    <input id="profile-image-upload" class="hidden" type="file">
-                                    <div style="color:#999;" >click here to change profile image</div>
-                                </div>
-                                <br>
-                            </div>
-                            <div class="col-sm-6">
-                                <h4 style="color:#00b1b1;" th:text="${user.getNickname()}"/></span>
-                            </div>
-                            <div class="clearfix"></div>
-                            <hr style="margin:5px 0 5px 0;">
-
-                            <div class="col-sm-5 col-xs-6 tital " th:text="#{user.lastname}"/><div class="col-sm-7 col-xs-6 " th:text="${user.getLastname()}"/>
-                            <div class="clearfix"></div>
-                            <div class="bot-border"></div>
-
-                            <div class="col-sm-5 col-xs-6 tital " th:text="#{user.firstname}"/><div class="col-sm-7" th:text="${user.getFirstname()}"/>
-                            <div class="clearfix"></div>
-                            <div class="bot-border"></div>
-
-                            <div class="col-sm-5 col-xs-6 tital "th:text="#{user.created}"/><div class="col-sm-7" th:text="${user.getCreationDate()}"/>
-
-                            <div class="clearfix"></div>
-                            <div class="bot-border"></div>
-
-                            <div class="col-sm-5 col-xs-6 tital " th:text="#{user.birthday}"/><div class="col-sm-7" th:text="(${user.getBirthday()}==null)?#{empty.data}:${user.getBirthday()}"/>
-
-                            <div class="clearfix"></div>
-                            <div class="bot-border"></div>
-
-                            <div class="col-sm-5 col-xs-6 tital" th:text="#{user.roles} + ':'"/><div class="col-sm-7"><span th:each="role : ${user.getAuthorities()}" th:text="${role} + ' '"/></div>
-
-                            <div class="clearfix"></div>
-                            <div class="bot-border"></div>
-
-                            <div class="col-sm-5 col-xs-6 tital " th:text="${date}"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script>
-            $(function() {
-                $('#profile-image1').on('click', function() {
-                    $('#profile-image-upload').click();
-                });
-            });
-        </script>
+<div align="left">
+    <div><img alt="Avatar" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" id="profile-image1" class="img-circle img-responsive">
+         <input disabled id="profile-image-upload" class="hidden" type="file">
+        <div style="color:#999;">click here to change profile image</div>
     </div>
+
+    <div class="col-sm-6">
+        <h4 style="color:#00b1b1;" th:text="${user.getNickname()}"/></span>
+    </div>
+
+    <div class="col-sm-6" align="left" th:text="#{user.lastname} + ' : ' + ((${user.getLastname()} == null)?#{empty.data}:${user.getLastname()})"/>
+    <div class="col-sm-6" align="left" th:text="#{user.firstname} + ' : ' + ((${user.getFirstname()}==null)?#{empty.data}:${user.getFirstname()})"/>
+    <div class="col-sm-6" align="left" th:text="#{user.created} + ' : ' + ${user.getCreationDate()}"/>
+    <div class="col-sm-6" align="left" th:text="#{user.birthday} + ' : ' + ((${user.getBirthday()}==null)?#{empty.data}:${user.getBirthday()})"/>
+
+    <div align="center" style="top: 97%;left:47%;z-index: 1111; position: fixed;" th:text="${date}"/>
 </div>
+
+<script>
+    $(function() {
+        $('#profile-image1').on('click', function() {
+            $('#profile-image-upload').click();
+        });
+    });
+</script>
 
 <script src="../static/js/main.js"></script>
 </body>
