@@ -15,9 +15,10 @@
 
 body{
     background-color: black;
-    background-image: url(../images/universe-16.jpg);
+    background-image: url(../images/universe.jpg);
+    background-attachment: fixed;
     font-size: 15px;
-    color: yellow;
+    color: yellow !important;
 }
 
 nav a{
@@ -48,7 +49,6 @@ input.hidden {
 
 .tital{ font-size:16px; font-weight:500;}
 
-.bot-border{ border-bottom:1px #f8f8f8 solid;  margin:5px 0  5px 0}
 
 .list-group-item.active{
     border-radius: 10px !important;
@@ -58,4 +58,30 @@ input.hidden {
 
 .card-body{
     color: rgb(244, 102, 27);
+}
+
+.modal{
+    color: black;
+}
+
+.main-div{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    padding: 5px 0;
+}
+
+#NASA{
+    margin-right: 10px;
+    width: 40%;
+    height: 100%;
+}
+
+@media screen and (max-width: 900px){
+    .main-div{
+        flex-direction: column;
+    }
+    #NASA{
+        width: 100%;
+    }
 }

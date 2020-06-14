@@ -12,9 +12,14 @@
 
 <!--Header Menu-->
 <div th:fragment="header">
-    <nav class="navbar navbar-expand-lg mb-2">
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="/">Versatile</a>
+        <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div align="center" class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a th:class="${#httpServletRequest.requestURI=='/'}?'nav-link active':'nav-link'" href="/" th:text="#{home}"/>
                 </li>
@@ -25,14 +30,14 @@
                     <a th:class="${#httpServletRequest.requestURI=='/messages'}?'nav-link active':'nav-link'" href="/messages" th:text="#{messages}"/>
                 </li>
                 <li class="nav-item">
-                    <a th:class="${#httpServletRequest.requestURI=='/friends'}?'nav-link active':'nav-link'" href="/friends" th:text="#{friends}"/>
+                    <a th:class="${#httpServletRequest.requestURI=='/picture-of-day'}?'nav-link active':'nav-link'" href="/picture-of-day" th:text="#{nasa}"/>
                 </li>
                 <li class="nav-item">
                     <a th:class="${#httpServletRequest.requestURI=='/settings'}?'nav-link active':'nav-link'" href="/settings" th:text="#{settings}"/>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <select sec:authorize="isAuthenticated()" id="locales" class="mr-2" onchange="languageSelector()">
+                <select sec:authorize="isAuthenticated()" id="locales" class="mr-2" onchange="languageSelector()">-->
                     <option value="" th:text="#{lang.chooser}"/>
                     <option value="en_US" th:text="#{lang.eng}"/>
                     <option value="uk_UA" th:text="#{lang.ua}"/>
@@ -42,6 +47,7 @@
             <button sec:authorize="isAnonymous()" id="loginButton" class="btn btn-success ml-3" onclick="window.location = 'login';" th:text="#{login}"/>
         </div>
     </nav>
+    <div align="center" style="top: 97%;left:47%;z-index: 1111; position: fixed;" th:text="${#dates.format(#dates.createNow(),'dd:MM:YYYY')}"/>
 </div>
 
 <!--Redirect Modal-->

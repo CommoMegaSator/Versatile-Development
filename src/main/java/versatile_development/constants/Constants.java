@@ -8,4 +8,6 @@ public class Constants {
     public static final int DAY = (1000 * 60 * 60 * 24);
     public static final String EMAIL_MESSAGE_CONTENT = "text/html";
     public static final String REGISTRATION_EMAIL_SUBJECT = "Registration Confirmation";
+    public static final String PICTURE_OF_DAY = "https://api.nasa.gov/planetary/apod?";
+    public static final String API_KEY_PARAM = "api_key=";
 }

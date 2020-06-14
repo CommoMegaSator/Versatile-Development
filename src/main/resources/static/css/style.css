@@ -5,13 +5,14 @@
 
 body
 {
-    margin: 0px;
+    margin: 0;
+    background-color: black;
+    background-image: url(../images/universe.jpg);
+    background-attachment: fixed;
     display:flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    background-color:rgba(255, 203, 96, 0.5);
-    background-image: url(../images/universe-16.jpg);
 }
 
 .logimage{
@@ -118,7 +119,8 @@ form label
     outline: none;
     box-shadow: 1px 1px rgba(244, 102, 27,1);
     cursor:pointer;
-    font-family: 'Montserrat', sans-serif;color:white;
+    font-family: 'Montserrat', sans-serif;
+    color:white;
     font-weight: bold;
 }
 
