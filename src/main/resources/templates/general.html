@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <link th:href="@{/css/styles.css}" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="../static/css/custom-style.css">
+    <link rel="stylesheet" href="../static/css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
@@ -36,18 +36,17 @@
                     <a th:class="${#httpServletRequest.requestURI=='/settings'}?'nav-link active':'nav-link'" href="/settings" th:text="#{settings}"/>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <select sec:authorize="isAuthenticated()" id="locales" class="mr-2" onchange="languageSelector()">-->
+            <form class="my-2 my-lg-0">
+                <select sec:authorize="isAuthenticated()" id="locales" class="mr-2" onchange="languageSelector()">
                     <option value="" th:text="#{lang.chooser}"/>
                     <option value="en_US" th:text="#{lang.eng}"/>
                     <option value="uk_UA" th:text="#{lang.ua}"/>
                 </select>
             </form>
-            <button sec:authorize="isAuthenticated()" id="exitButton" class="btn btn-success ml-3" type="submit" th:text="#{logout}"/>
-            <button sec:authorize="isAnonymous()" id="loginButton" class="btn btn-success ml-3" onclick="window.location = 'login';" th:text="#{login}"/>
+            <button sec:authorize="isAuthenticated()" id="exitButton" class="btn btn-success" type="submit" th:text="#{logout}"/>
+            <button sec:authorize="isAnonymous()" id="loginButton" class="btn btn-success" onclick="window.location = 'login';" th:text="#{login}"/>
         </div>
     </nav>
-    <div align="center" style="top: 97%;left:47%;z-index: 1111; position: fixed;" th:text="${#dates.format(#dates.createNow(),'dd:MM:YYYY')}"/>
 </div>
 
 <!--Redirect Modal-->

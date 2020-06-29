@@ -115,3 +115,29 @@ $('#exitButton').click(function(event){
     event.preventDefault();
     $('#exitingModal').modal('show');
 });
+
+$('#cancel-deleting').click(function (event) {
+    event.preventDefault();
+    location.reload();
+});
+
+function deleteUser(nickname) {
+    $('#deleteAccountModal').modal('show');
+
+    $('#deleteAccountButton').on('click', function () {
+        let deleteMessage = 'Deleted Successfully';
+        let nicknameAsJson =  JSON.stringify({nickname : nickname, token: deleteToken});
+
+        $.ajax({
+            url: document.location.href,
+            type: 'DELETE',
+            data: nicknameAsJson,
+            contentType: "application/json; charset=utf-8",
+            complete: function (serverResponse) {
+                if (serverResponse.status == 400){alert("Something went wrong.");window.location.href = document.location.protocol + "//" + document.location.host + '/all';}
+                if (serverResponse.status == 409){alert("You can`t delete your own account here!");window.location.href = document.location.protocol + "//" + document.location.host + '/all';}
+                if (serverResponse.status == 200){alert(deleteMessage);window.location.href = document.location.protocol + "//" + document.location.host + '/all';}
+            }
+        });
+    });
+}

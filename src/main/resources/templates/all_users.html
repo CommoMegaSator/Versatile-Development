@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="../static/images/Versatile.ico"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="../static/css/custom-style.css">
+    <link rel="stylesheet" href="../static/css/style.css">
     <script src="../static/js/global.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="../static/js/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <title th:text="#{all-users}"/>
@@ -34,17 +34,36 @@
     <tbody>
         <tr th:each="user : ${users}">
             <td th:text="${userStat.count}"/>
-            <td th:text="${user.getNickname()}"/>
-            <td th:text="${user.getFirstname()}"/>
-            <td th:text="${user.getLastname()}"/>
+            <td id="userNickname" th:text="${user.getNickname()}"/>
+            <td th:text="(${user.getFirstname()}==null)?#{empty.data}:${user.getFirstname()}"/>
+            <td th:text="(${user.getLastname()}==null)?#{empty.data}:${user.getLastname()}"/>
             <td th:text="${user.getEmail()}"/>
             <td th:text="(${user.getBirthday()}==null)?#{empty.data}:${user.getBirthday()}"/>
-            <td th:text="${user.getAge()}"/>
+            <td th:text="(${user.getAge()}==0)?'-':${user.getAge()}"/>
             <td th:text="${user.isActivated()}"/>
             <td th:text="${user.getCreationDate()}"/>
+            <td><a href="#" id="deleteUser" th:value="${user.getNickname()}" onclick="deleteUser(this.getAttribute('value'));">X</a></td>
         </tr>
     </tbody>
 </table>
+
+<div class="modal fade" id="deleteAccountModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModal" th:text="#{modal.delete.title}"/>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" th:text="#{modal.delete.confirm-message}"/>
+            <div class="modal-footer">
+                <button id="cancel-deleting" type="button" class="btn btn-success" data-dismiss="modal" th:text="#{modal.button.no}"/>
+                <button id="deleteAccountButton" type="button" class="btn btn-danger" th:text="#{modal.button.yes}"/>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="../static/js/main.js"></script>
 </body>

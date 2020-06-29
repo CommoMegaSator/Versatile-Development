@@ -11,30 +11,32 @@
 </head>
 
 <body>
-<div class="logimage"><img src="../static/images/Versatile.ico" alt=""></div>
-<div id="boxForm">
-    <h2 id="title"><span class="Versatile">Versatile</span> is waiting for u)</h2>
-    <form action="/login" method="post">
-        <div class="logpass">
-            <input class='sign-text' type='text'        name="username"     id='userLogin'      placeholder='Username'  required minlength="4" maxlength="25" autocomplete="off" autofocus>
-            <input class='sign-text' type='password'    name="password"     id='userPassword'   placeholder='Password' 	required minlength="8" maxlength="25">
-            <span>
-			    <i class="fa fa-eye" aria-hidden="true" id="eye" onclick="toggle()"></i>
-		    </span>
-            <label class="container"><span class="remember">Can we remember u?</span>
-                <input type="checkbox" id="rememberMe" name="remember-me">
-                <span class="checkmark"></span>
-            </label>
-        </div>
+<div class="login-wrapper">
+    <div class="logimage"><img src="../static/images/Versatile.ico" alt=""></div>
+    <div id="boxForm">
+        <h2 id="title"><span class="Versatile">Versatile</span> is waiting for u)</h2>
+        <form action="/login" method="post">
+            <div class="logpass">
+                <input class='sign-text' type='text'        name="username"     id='userLogin'      placeholder='Username'  required minlength="4" maxlength="25" autocomplete="off" autofocus>
+                <input class='sign-text' type='password'    name="password"     id='userPassword'   placeholder='Password' 	required minlength="8" maxlength="25">
+                <span>
+                    <i class="fa fa-eye" aria-hidden="true" id="eye" onclick="toggle()"></i>
+                </span>
+                <label class="container"><span class="remember">Can we remember u?</span>
+                    <input type="checkbox" id="rememberMe" name="remember-me">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
 
-        <div class="buttons">
-            <input class='sing_submit shake' type='submit' value='Come in' id="btn-login">
-            <input class='familiar shake' type='button' value='Not familiar?' onclick="location.href='/registration';">
-        </div>
-    </form>
+            <div class="buttons">
+                <input class='sing_submit shake' type='submit' value='Come in' id="btn-login">
+                <input class='familiar shake' type='button' value='Not familiar?' onclick="location.href='/registration';">
+            </div>
+        </form>
 
-    <div th:if="${param.error}">
-        <script>alert("Bad credentials");</script>
+        <div th:if="${param.error}">
+            <script>alert("Bad credentials");</script>
+        </div>
     </div>
 </div>
 </body>

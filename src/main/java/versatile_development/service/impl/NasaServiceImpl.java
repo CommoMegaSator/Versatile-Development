@@ -25,17 +25,17 @@ public class NasaServiceImpl implements NasaService {
     @Value("${integration.nasa.api-key}")
     private String apiKey;
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 0 * * * *")
     public void requestForPictureOfDay(){
         String nasaPictureOfDayUrl = PICTURE_OF_DAY + API_KEY_PARAM + apiKey;
         ResponseEntity<PictureOfDay> pictureOfDayResponse = restTemplate.getForEntity(nasaPictureOfDayUrl, PictureOfDay.class);
 
         if (pictureOfDayResponse.getStatusCodeValue() == 200) {
             jedis.set("pictureOfDay", gson.toJson(pictureOfDayResponse.getBody()));
-            log.info("Picture of day scheduled successfully");
+            log.info("Picture of day updated successfully");
         }
         else {
-            log.error("Too many requests to NASA!");
+            log.error("Something went wrong with Nasa");
         }
     }
 }

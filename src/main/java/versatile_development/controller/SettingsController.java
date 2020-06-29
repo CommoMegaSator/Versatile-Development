@@ -1,5 +1,6 @@
 package versatile_development.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import versatile_development.domain.Role;
 import versatile_development.entity.UserEntity;
 import versatile_development.service.UserService;
 
+@Slf4j
 @Controller
 @RequestMapping("/settings")
 public class SettingsController {
@@ -38,6 +40,7 @@ public class SettingsController {
     @DeleteMapping
     public ResponseEntity deleteAccount(@AuthenticationPrincipal UserEntity userEntity){
         userService.deleteAccountByNickname(userEntity.getNickname());
+        log.info(userEntity.getNickname() + " account was deleted by himself.");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -3,6 +3,7 @@ package versatile_development.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -96,8 +97,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         if (jedis.get(nickname + Constants.USER_LOCALE_EXTENSION) != null)jedis.del(nickname + Constants.USER_LOCALE_EXTENSION);
         userRepository.deleteByNickname(nickname);
+    }
 
-        log.info(nickname + " account was deleted.");
+    @Scheduled(cron = "0 0 * * * *")
+    @Transactional
+    public void deleteAllUsersWithExpiredActivation(){
+        List<UserEntity> users = userRepository.findAllByTokenExpirationLessThanCurrentTime();
+        log.info("Starting deleting all non activated accounts:");
+
+        for (UserEntity user: users) {
+            if (!user.isActivated())
+                deleteAccountByNickname(user.getNickname());
+        }
+        log.info("All non activated accounts were deleted successfully.");
     }
 
     @Override

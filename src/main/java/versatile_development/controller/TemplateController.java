@@ -3,13 +3,15 @@ package versatile_development.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import versatile_development.constants.Constants;
+import versatile_development.domain.dto.IntermediateUser;
 import versatile_development.domain.dto.UserDTO;
 import versatile_development.entity.UserEntity;
 import versatile_development.service.UserService;
@@ -48,6 +50,7 @@ public class TemplateController {
         if (userDTO != null) {
             userDTO.setActivated(true);
             userDTO.setConfirmationToken(null);
+            userDTO.setTokenExpiration(null);
             userService.updateUser(userDTO);
 
             log.info(userDTO.getNickname() + " confirmed registration.");
@@ -76,6 +79,21 @@ public class TemplateController {
     public String getAllUsers(Model model){
         model.addAttribute("users", userService.findAllUsers());
         return "all_users";
+    }
+
+    @DeleteMapping("/all")
+    public ResponseEntity deleteUser(@RequestBody IntermediateUser user, @AuthenticationPrincipal UserEntity adminThatDeleting){
+        if (user.getNickname().equals(adminThatDeleting.getNickname())){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        if (user.getNickname() == null || !user.getToken().equals(Constants.DELETING_USER_TOKEN) || user.getNickname().equals(Constants.CREATOR_NICKNAME)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if (user.getNickname() != null){
+            userService.deleteAccountByNickname(user.getNickname());
+        }
+        log.info(user.getNickname() + "`s account was deleted by " + adminThatDeleting.getNickname());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/messages")
