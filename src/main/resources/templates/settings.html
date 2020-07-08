@@ -22,13 +22,13 @@
     <div class="row">
         <div class="col-md-3 ">
             <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action active" th:text="#{setting.title.profile-settings}"/>
+                <a href="#" class="list-group-item list-group-item-action first-item-from-group active" th:text="#{setting.title.profile-settings}"/>
                 <a href="#" class="list-group-item list-group-item-action disabled" th:text="#{setting.title.permission}"/>
                 <a href="#" class="list-group-item list-group-item-action disabled" th:text="#{setting.title.connected-services}"/>
                 <a href="#" class="list-group-item list-group-item-action disabled" th:text="#{setting.title.reports}"/>
                 <a href="#" class="list-group-item list-group-item-action disabled" th:text="#{setting.title.blacklist}"/>
                 <a href="#" class="list-group-item list-group-item-action disabled" th:text="#{setting.title.other-settings}"/>
-                <a href="/all" class="list-group-item list-group-item-action" th:text="#{all-users}" th:hidden="${isAdmin}?false:true" />
+                <a href="/all" class="list-group-item list-group-item-action last-item-from-group" th:text="#{all-users}" th:hidden="${isAdmin}?false:true" />
             </div>
         </div>
         <div class="col-md-9">
@@ -44,21 +44,38 @@
                         <div class="col-md-12">
                             <form>
                                 <div class="form-group row">
-                                    <label for="nickname" class="col-4 col-form-label" th:text="#{user.nickname}"/>
-                                    <div class="col-8">
-                                        <input id="nickname" name="nickname" th:placeholder="#{user.nickname}" class="form-control here" autocomplete="off" type="text">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
                                     <label for="firstname" class="col-4 col-form-label" th:text="#{user.firstname}"/>
                                     <div class="col-8">
-                                        <input id="firstname" name="firstname" th:placeholder="#{user.firstname}" class="form-control here" autocomplete="off" type="text">
+                                        <input id="firstname" th:value="${user.getFirstname()}" name="firstname" th:placeholder="#{user.firstname}" class="form-control here" autocomplete="off" type="text" minlength="4" maxlength="25">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="lastname" class="col-4 col-form-label" th:text="#{user.lastname}"/>
                                     <div class="col-8">
-                                        <input id="lastname" name="lastname" th:placeholder="#{user.lastname}" class="form-control here" autocomplete="off" type="text">
+                                        <input id="lastname" th:value="${user.getLastname()}" name="lastname" th:placeholder="#{user.lastname}" class="form-control here" autocomplete="off" type="text" minlength="4" maxlength="25">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="email" class="col-4 col-form-label" th:text="#{user.email}"/>
+                                    <div class="col-8">
+                                        <input id="email" name="email" th:value="${user.getEmail()}" th:placeholder="#{user.email}" class="form-control here" autocomplete="off" type="text" minlength="4" maxlength="25">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="gender" class="col-4 col-form-label" th:text="#{user.gender}"/>
+                                    <div class="col-8">
+                                        <select id="gender" name="gender" th:placeholder="#{user.gender}" class="form-control here" autocomplete="off" type="text">
+                                            <option></option>
+                                            <option value="male" th:text="#{user.gender.male}"/>
+                                            <option value="female" th:text="#{user.gender.female}"/>
+                                            <option value="another" th:text="#{user.gender.another}"/>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="nationality" class="col-4 col-form-label" th:text="#{user.nationality}"/>
+                                    <div class="col-8">
+                                        <input id="nationality" th:value="${user.getNationality()}" name="nationality" th:placeholder="#{user.nationality}" class="form-control here" autocomplete="off" type="text" minlength="4" maxlength="25">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -68,34 +85,28 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="email" class="col-4 col-form-label" th:text="#{user.email}"/>
-                                    <div class="col-8">
-                                        <input id="email" name="email" th:placeholder="#{user.email}" class="form-control here" autocomplete="off" type="text">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
                                     <label for="about-me" class="col-4 col-form-label" th:text="#{user.about-me}"/>
                                     <div class="col-8">
-                                        <textarea id="about-me" name="about-me" cols="40" rows="4" class="form-control"></textarea>
+                                        <textarea id="about-me" th:text="${user.getAboutUser()}" name="about-me" cols="40" rows="4" class="form-control" maxlength="255"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="newpass" class="col-4 col-form-label" th:text="#{new-password}"/>
                                     <div class="col-8">
-                                        <input id="newpass" name="newpass" th:placeholder="#{new-password}" class="form-control here" type="password">
+                                        <input id="newpass" name="newpass" th:placeholder="#{new-password}" class="form-control here" type="password" minlength="8" maxlength="25">
                                     </div>
+                                </div><div class="form-group row">
+                                <label for="retypedPass" class="col-4 col-form-label" th:text="#{new-password-confirm}"/>
+                                <div class="col-8">
+                                    <input id="retypedPass" name="retypedPass" th:placeholder="#{new-password-confirm}" class="form-control here" type="password" minlength="8" maxlength="25">
                                 </div>
-                                <div class="form-group row">
-                                    <div class="offset-4 col-8">
-                                        <button name="submit" type="submit" class="btn btn-outline-primary disabled" th:text="#{profile-updating}"/>
+                            </div>
+                                <div align="center" class="form-group">
+                                        <button id="updateAccountData" name="submit" type="button" class="btn btn-primary" th:text="#{profile-updating}"/>
+                                        <button id="deleteAccount" type="submit" class="btn btn-danger" th:text="#{delete-account}"/>
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="offset-4 col-8">
-                                        <button id="deleteAccount" type="submit" class="btn btn-outline-danger" th:text="#{delete-account}"/>
-                                    </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

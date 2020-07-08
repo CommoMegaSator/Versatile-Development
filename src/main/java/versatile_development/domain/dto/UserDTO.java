@@ -55,6 +55,12 @@ public class UserDTO implements Serializable {
 
         private Date birthday;
 
+        private String gender;
+
+        private String nationality;
+
+        private String aboutUser;
+
         private List<ArticleEntity> article;
 
         @Override
@@ -72,6 +78,9 @@ public class UserDTO implements Serializable {
                         ", roles=" + roles +
                         ", creationDate=" + creationDate +
                         ", birthday=" + birthday +
+                        ", gender='" + gender + '\'' +
+                        ", nationality='" + nationality + '\'' +
+                        ", aboutUser='" + aboutUser + '\'' +
                         ", article=" + article +
                         '}';
         }

@@ -44,7 +44,7 @@ body{
     justify-content: space-between;
     text-align:center;
     background-color:rgb(255, 203, 96);
-    width:400px;
+    min-width:400px;
     position:relative;
     box-shadow:1px 1px 8px rgba(244, 102, 27,1);
 }
@@ -339,10 +339,56 @@ input.hidden {
     max-height: 500px;
 }
 
+.friends-container{
+    margin: 3vh 0;
+    border: inset #fd7e14;
+    max-width: 300px;
+    background: darkgreen;
+}
+
+.friends-column-wrapper{
+    display: flex;
+    flex-direction:column;
+    margin: 0;
+}
+
+.friends-row-wrapper{
+    display: flex;
+    flex-direction:row;
+    margin: 0;
+}
+
+.friend-field{
+    padding: 10px;
+}
+
+.friend-image{
+    border-radius: 80%;
+    height: 4rem;
+}
+
+.friend-nickname{
+    margin-bottom: 0;
+}
+
+.friend-title{
+    background: #fd7e14;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    font-size: 18px;
+}
+
 @media screen and (max-width: 991px){
     body{
         background-image: url(https://wallpapers.party/media/2018/06/Fondo-pantalla.jpg);
     }
     .login-wrapper{
+    }
+}
+
+@media screen and (max-width: 720px){
+    .login-wrapper{
+        width: 90%;
     }
 }

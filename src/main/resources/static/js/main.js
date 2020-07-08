@@ -141,3 +141,34 @@ function deleteUser(nickname) {
         });
     });
 }
+
+$('#updateAccountData').click(function () {
+    if ($('#newpass').val() !== $('#retypedPass').val())alert("Passwords is not same");
+    else {
+        let userData = {
+            firstname: $('#firstname').val(),
+            lastname: $('#lastname').val(),
+            email: $('#email').val(),
+            gender: $('#gender').val(),
+            birthday: $('#birthday').val(),
+            nationality: $('#nationality').val().toLowerCase(),
+            aboutUser: $('#about-me').val(),
+            password: $('#newpass').val()
+        };
+
+        $.ajax({
+            url: document.location.href,
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(userData),
+            complete: function (serverResponse) {
+                if (serverResponse.status == 200) {
+                    alert("Account was updated successfully");
+                    location.reload();
+                } else if (serverResponse.status == 204) {
+                    alert("User data is empty!")
+                }
+            }
+        });
+    }
+});

@@ -14,6 +14,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     boolean existsByNickname(String data);
     UserEntity findByConfirmationToken(String confirmationToken);
     UserEntity findByNickname(String nickname);
+    UserEntity findByNicknameIgnoreCase(String nickname);
     void deleteByNickname(String nickname);
 
     @Query(value = "SELECT e FROM UserEntity e WHERE e.tokenExpiration < CURRENT_DATE")

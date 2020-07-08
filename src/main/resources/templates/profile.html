@@ -29,7 +29,7 @@
     <div class="col-sm-6" align="left" th:text="#{user.lastname} + ' : ' + ((${user.getLastname()} == null)?#{empty.data}:${user.getLastname()})"/>
     <div class="col-sm-6" align="left" th:text="#{user.firstname} + ' : ' + ((${user.getFirstname()}==null)?#{empty.data}:${user.getFirstname()})"/>
     <div class="col-sm-6" align="left" th:text="#{user.created} + ' : ' + ${user.getCreationDate()}"/>
-    <div class="col-sm-6" align="left" th:text="#{user.birthday} + ' : ' + ((${user.getBirthday()}==null)?#{empty.data}:${user.getBirthday()})"/>
+    <div class="col-sm-6" align="left" th:text="#{user.birthday} + ' : ' + ((${user.getBirthday()}==null)?#{empty.data}:${userBirthday})"/>
 </div>
 
 <script>

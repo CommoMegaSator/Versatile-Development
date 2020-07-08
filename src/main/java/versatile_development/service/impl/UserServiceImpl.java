@@ -1,6 +1,9 @@
 package versatile_development.service.impl;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.time.DateTime;
+import org.joda.time.Years;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -13,12 +16,16 @@ import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.Jedis;
 import versatile_development.constants.Constants;
 import versatile_development.domain.dto.UserDTO;
+import versatile_development.domain.dto.UserForUpdating;
 import versatile_development.entity.UserEntity;
+import versatile_development.exception.EmptyUserDataException;
 import versatile_development.repository.UserRepository;
 import versatile_development.service.UserService;
 import versatile_development.utils.ObjectMapperUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -79,7 +86,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDTO findByNickname(String nickname) {
-        return entityToDTOMapper(userRepository.findByNickname(nickname));
+        return entityToDTOMapper(userRepository.findByNicknameIgnoreCase(nickname));
     }
 
     @Override
@@ -88,6 +95,33 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if(findByEmail(userToUpdate.getEmail()) != null){
             userRepository.save(DTOToEntityMapper(userToUpdate));
         }
+    }
+
+    @SneakyThrows
+    @Override
+    public void updateUserInformationFromSettings(UserForUpdating user, String nickname) {
+        if (user == null) throw new EmptyUserDataException();
+        UserDTO userToUpdate = entityToDTOMapper(userRepository.findByNickname(nickname));
+        SimpleDateFormat DateFor = new SimpleDateFormat("yyyy-MM-dd");
+
+        if (user.getFirstname() != null && user.getFirstname() != "")userToUpdate.setFirstname(user.getFirstname());
+        if (user.getLastname() != null && user.getLastname() != "")userToUpdate.setLastname(user.getLastname());
+        if (user.getEmail() != null && user.getEmail() != "")userToUpdate.setEmail(user.getEmail());
+        if (user.getPassword() != null && user.getPassword() != "")userToUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (user.getGender() != null && user.getGender() != "")userToUpdate.setGender(user.getGender());
+        if (user.getNationality() != null && user.getNationality() != "")userToUpdate.setNationality(user.getNationality());
+        if (user.getAboutUser() != null && user.getAboutUser() != "")userToUpdate.setAboutUser(user.getAboutUser());
+        if (user.getBirthday() != null && user.getBirthday() != ""){
+            userToUpdate.setBirthday(DateFor.parse(user.getBirthday()));
+
+            Date now = new Date();
+            DateTime d1 = new DateTime(DateFor.parse(user.getBirthday()));
+            DateTime d2 = new DateTime(now);
+            int age = Math.abs(Years.yearsBetween(d2, d1).getYears());
+            userToUpdate.setAge(age);
+        }
+
+        updateUser(userToUpdate);
     }
 
     @Override
@@ -103,7 +137,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     public void deleteAllUsersWithExpiredActivation(){
         List<UserEntity> users = userRepository.findAllByTokenExpirationLessThanCurrentTime();
-        log.info("Starting deleting all non activated accounts:");
+        log.info("Starting deleting all non activated accounts...");
 
         for (UserEntity user: users) {
             if (!user.isActivated())
@@ -114,7 +148,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username){
-        UserEntity user = userRepository.findByNickname(username);
+        UserEntity user = userRepository.findByNicknameIgnoreCase(username);
 
         if (user == null)throw new UsernameNotFoundException("No such user.");
         else return user;

@@ -11,12 +11,12 @@ This project is developed for training and should not be used for commercial pur
 
 ##### Ways to use
 * Create database 'versatile' in PostgreSQL.
-* Compile via `mvn clean install` command
+* Compile via `mvn clean install` command.
 * Start via - `java -jar target/versatile-development.jar` command.
 
 ##### Important information
 * For using locally change profile to dev:
-Go to Edit Configuration and change program arguments to --spring.profiles.active=dev.
+Go to Edit Configuration and change program arguments to `--spring.profiles.active=dev`.
 * Redis saves user Session and also user locale.
 * csrf token is disabled temporary.
 
@@ -28,6 +28,14 @@ https://trello.com/b/j08mhCbw/versatile-development
 * Java 8, Hibernate, Spring(Boot, MVC, Data, Security);
 * JUnit, Mockito;
 * PostgreSQL, Redis.
+
+##### Installing Java on Linux
+* Download jdk-8.
+* Install maven via `sudo apt install maven`
+* Set JAVA_HOME:
+   1) `export $JAVA_HOME/=Path into JDK directory`
+   2) `export PATH=$PATH:$JAVA_HOME/bin`
+   3) `source /etc/environment`
 
 ##### Installing PostgreSQL on Linux
 * `sudo su -`

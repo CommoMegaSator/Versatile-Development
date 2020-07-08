@@ -16,9 +16,7 @@ import versatile_development.domain.dto.UserDTO;
 import versatile_development.entity.UserEntity;
 import versatile_development.service.UserService;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.text.SimpleDateFormat;
 
 @Slf4j
 @Controller
@@ -65,12 +63,19 @@ public class TemplateController {
 
     @GetMapping("profile")
     @PreAuthorize("hasAnyAuthority('ADMIN, USER')")
-    public String getProfileView(@AuthenticationPrincipal UserEntity user, Model model, Locale locale){
-        DateFormat dateFormatter = DateFormat.getDateInstance(DateFormat.LONG, locale);
-        String currentDate = dateFormatter.format(new Date());
-
-        model.addAttribute("date", currentDate);
-        model.addAttribute("user", user);
+    public String getProfileView(@AuthenticationPrincipal UserEntity user, @RequestParam(name = "nickname", required = false) String nickname, Model model){
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd.MM.yyyy");
+        UserDTO userDTO;
+        if (nickname != null) {
+            userDTO = userService.findByNickname(nickname);
+            if (userDTO != null)
+                model.addAttribute("user", userDTO);
+        }
+        else {
+            userDTO = userService.findByNickname(user.getNickname());
+            model.addAttribute("user", userDTO);
+        }
+        if (userDTO.getBirthday() != null)model.addAttribute("userBirthday", DateFor.format(userDTO.getBirthday()));
         return "profile";
     }
 

@@ -54,13 +54,28 @@ input.hidden {
 
 
 .list-group-item.active{
-    border-radius: 10px !important;
-    background-color: rgb(255, 203, 96) !important;
+    border-color: transparent;
+    color: yellow !important;
+    background-color: darkgreen;
     box-shadow: 1px 1px 8px rgba(244, 102, 27,1) !important;
 }
 
+.first-item-from-group{
+    border-radius: 25px 25px 0 0 !important;
+}
+
+.last-item-from-group{
+    border-radius: 0 0 25px 25px !important;
+}
+
+.card{
+    background-color: darkgreen;
+    border-radius: 5%;
+}
+
 .card-body{
-    color: rgb(244, 102, 27);
+    color: yellow;
+    padding-bottom: 0;
 }
 
 .modal{

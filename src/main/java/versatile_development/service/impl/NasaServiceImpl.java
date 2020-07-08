@@ -25,7 +25,7 @@ public class NasaServiceImpl implements NasaService {
     @Value("${integration.nasa.api-key}")
     private String apiKey;
 
-    @Scheduled(cron = "0 0 * * * *")
+    @Scheduled(cron = "0 0 4,8 * * *")
     public void requestForPictureOfDay(){
         String nasaPictureOfDayUrl = PICTURE_OF_DAY + API_KEY_PARAM + apiKey;
         ResponseEntity<PictureOfDay> pictureOfDayResponse = restTemplate.getForEntity(nasaPictureOfDayUrl, PictureOfDay.class);
