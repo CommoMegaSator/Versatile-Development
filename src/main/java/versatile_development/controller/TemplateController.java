@@ -63,7 +63,8 @@ public class TemplateController {
 
     @GetMapping("profile")
     @PreAuthorize("hasAnyAuthority('ADMIN, USER')")
-    public String getProfileView(@AuthenticationPrincipal UserEntity user, @RequestParam(name = "nickname", required = false) String nickname, Model model){
+    public String getProfileView(@AuthenticationPrincipal UserEntity user,
+                                 @RequestParam(name = "nickname", required = false) String nickname, Model model){
         SimpleDateFormat DateFor = new SimpleDateFormat("dd.MM.yyyy");
         UserDTO userDTO;
         if (nickname != null) {

@@ -38,11 +38,15 @@
             <td th:text="(${user.getFirstname()}==null)?#{empty.data}:${user.getFirstname()}"/>
             <td th:text="(${user.getLastname()}==null)?#{empty.data}:${user.getLastname()}"/>
             <td th:text="${user.getEmail()}"/>
-            <td th:text="(${user.getBirthday()}==null)?#{empty.data}:${user.getBirthday()}"/>
+            <td th:text="(${user.getBirthday()}==null)?#{empty.data}:${#dates.format(user.getBirthday(), 'dd.MM.yyyy')}"/>
             <td th:text="(${user.getAge()}==0)?'-':${user.getAge()}"/>
             <td th:text="${user.isActivated()}"/>
             <td th:text="${user.getCreationDate()}"/>
-            <td><a href="#" id="deleteUser" th:value="${user.getNickname()}" onclick="deleteUser(this.getAttribute('value'));">X</a></td>
+            <td>
+                <a href="#" id="deleteUser" th:value="${user.getNickname()}" onclick="deleteUser(this.getAttribute('value'));">
+                    <img class="all-user-controller" src="../static/images/button_delete.svg" alt="" style="height: 20px;">
+                </a>
+            </td>
         </tr>
     </tbody>
 </table>

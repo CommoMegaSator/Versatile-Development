@@ -5,7 +5,7 @@
 
 body{
     background-color: black;
-    background-image: url(https://images2.alphacoders.com/439/439562.jpg);
+    background-image: url(https://i.pinimg.com/originals/9c/f0/3e/9cf03e13ac9bc3a5b0b62b4c71b8acd6.jpg);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -391,4 +391,16 @@ input.hidden {
     .login-wrapper{
         width: 90%;
     }
+}
+
+.all-user-controller{
+    height: 5%;
+}
+.table td, .table th{
+    padding: .5rem;
+}
+.create-article{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }

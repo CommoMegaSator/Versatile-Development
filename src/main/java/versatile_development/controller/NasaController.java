@@ -20,7 +20,7 @@ public class NasaController {
     NasaService nasaService;
 
     Jedis jedis = new Jedis();
-    Gson gson = new Gson();;
+    Gson gson = new Gson();
 
     @GetMapping("/picture-of-day")
     public String getPictureOfDayFromNasa(Model model){

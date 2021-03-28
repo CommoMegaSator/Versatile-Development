@@ -64,8 +64,8 @@
                                 <div class="form-group row">
                                     <label for="gender" class="col-4 col-form-label" th:text="#{user.gender}"/>
                                     <div class="col-8">
-                                        <select id="gender" name="gender" th:placeholder="#{user.gender}" class="form-control here" autocomplete="off" type="text">
-                                            <option></option>
+                                        <select id="gender" name="gender" th:placeholder="#{user.gender}" class="form-control here" autocomplete="off" type="text" th:selected="${user.getGender()}">
+                                            <option disabled selected th:text="#{user.gender.select-message}"></option>
                                             <option value="male" th:text="#{user.gender.male}"/>
                                             <option value="female" th:text="#{user.gender.female}"/>
                                             <option value="another" th:text="#{user.gender.another}"/>
@@ -81,7 +81,7 @@
                                 <div class="form-group row">
                                     <label for="birthday" class="col-4 col-form-label" th:text="#{user.birthday}"/>
                                     <div class="col-8">
-                                        <input id="birthday" name="birthday" class="form-control here" type="date">
+                                        <input id="birthday" name="birthday" class="form-control here" type="date" th:value="${#dates.format(user.getBirthday(), 'yyyy-MM-dd')}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -95,12 +95,13 @@
                                     <div class="col-8">
                                         <input id="newpass" name="newpass" th:placeholder="#{new-password}" class="form-control here" type="password" minlength="8" maxlength="25">
                                     </div>
-                                </div><div class="form-group row">
-                                <label for="retypedPass" class="col-4 col-form-label" th:text="#{new-password-confirm}"/>
-                                <div class="col-8">
-                                    <input id="retypedPass" name="retypedPass" th:placeholder="#{new-password-confirm}" class="form-control here" type="password" minlength="8" maxlength="25">
                                 </div>
-                            </div>
+                                <div class="form-group row">
+                                    <label for="retypedPass" class="col-4 col-form-label" th:text="#{new-password-confirm}"/>
+                                    <div class="col-8">
+                                        <input id="retypedPass" name="retypedPass" th:placeholder="#{new-password-confirm}" class="form-control here" type="password" minlength="8" maxlength="25">
+                                    </div>
+                                </div>
                                 <div align="center" class="form-group">
                                         <button id="updateAccountData" name="submit" type="button" class="btn btn-primary" th:text="#{profile-updating}"/>
                                         <button id="deleteAccount" type="submit" class="btn btn-danger" th:text="#{delete-account}"/>
@@ -134,6 +135,14 @@
     </div>
 </div>
 <script th:inline="javascript">
+
+    $( document ).ready( () => {
+        const gender = [[${user.getGender()}]];
+        if (gender !== null) {
+            $('#gender').val(gender);
+        }
+    })
+
     $('#deleteAccountButton').on('click', function () {
         let deleteMessage = [[#{delete-message}]];
         $.ajax({

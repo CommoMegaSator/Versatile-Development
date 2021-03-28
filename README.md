@@ -50,4 +50,8 @@ https://trello.com/b/j08mhCbw/versatile-development
 * Change supervised to 'systemd'.
 * `sudo systemctl restart redis.service`
 
+##### Testing application for any user
+    1) Login: Default
+    2) Password: DefaultChecker
+    
 Created by `CommoMegaSator`.

@@ -23,13 +23,14 @@
     </div>
 
     <div class="col-sm-6">
-        <h4 style="color:#00b1b1;" th:text="${user.getNickname()}"/></span>
+        <h4 style="color:#00b1b1;" th:text="${user.getNickname()}"/>
     </div>
 
     <div class="col-sm-6" align="left" th:text="#{user.lastname} + ' : ' + ((${user.getLastname()} == null)?#{empty.data}:${user.getLastname()})"/>
     <div class="col-sm-6" align="left" th:text="#{user.firstname} + ' : ' + ((${user.getFirstname()}==null)?#{empty.data}:${user.getFirstname()})"/>
-    <div class="col-sm-6" align="left" th:text="#{user.created} + ' : ' + ${user.getCreationDate()}"/>
+    <div class="col-sm-6" align="left" th:text="#{user.age} + ' : ' + (${user.getAge()}==null?#{empty.data}:${user.getAge()})"/>
     <div class="col-sm-6" align="left" th:text="#{user.birthday} + ' : ' + ((${user.getBirthday()}==null)?#{empty.data}:${userBirthday})"/>
+    <div class="col-sm-6" align="left" th:text="#{user.about-me} + ' : ' + ((${user.getAboutUser()}==null)?#{empty.data}:${user.getAboutUser()})"/>
 </div>
 
 <script>
