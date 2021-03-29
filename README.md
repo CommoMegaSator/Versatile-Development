@@ -25,8 +25,8 @@ https://trello.com/b/j08mhCbw/versatile-development
 
 ##### Technology stack:
 * HTML, CSS, Bootstrap, JS/JQuery, Thymeleaf;
-* Java 8, Hibernate, Spring(Boot, MVC, Data, Security);
-* JUnit, Mockito;
+* Java 11, Hibernate, Spring(Boot, MVC, Data, Security);
+* JUnit 5, Mockito;
 * PostgreSQL, Redis.
 
 ##### Installing Java on Linux

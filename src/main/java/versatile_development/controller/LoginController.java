@@ -57,7 +57,7 @@ public class LoginController {
             String message = String.format(Constants.EMAIL_MESSAGE, userDTO.getNickname(), hostUrl, userDTO.getConfirmationToken());
             emailService.sendEmail(userDTO.getEmail(), userDTO.getConfirmationToken(), message);
 
-            log.info(String.format(userDTO.getNickname() + " activation link: " + "%s/confirm?token=%s", hostUrl, userDTO.getConfirmationToken()));
+            log.info(String.format(userDTO.getNickname() + " activation link: " + "%sconfirm?token=%s", hostUrl, userDTO.getConfirmationToken()));
 
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
