@@ -6,6 +6,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Years;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -57,8 +58,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public List<UserDTO> findAllUsers() {
-        List<UserEntity> userEntities = userRepository.findAll();
+    public List<UserDTO> findAllUsers(Sort sort) {
+        List<UserEntity> userEntities = userRepository.findAll(sort);
         List<UserDTO> userDTOs = new ArrayList<>();
 
         for (UserEntity userEntity : userEntities){

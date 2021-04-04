@@ -2,15 +2,14 @@ package versatile_development.service.impl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import versatile_development.repository.UserRepository;
 import versatile_development.service.UserService;
 import versatile_development.utils.ObjectMapperUtils;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -33,7 +32,7 @@ class UserServiceImplTest {
 
     @Test
     void verifyMethodFindAllUsersUsed() {
-        userService.findAllUsers();
-        verify(userRepository).findAll();
+        userService.findAllUsers(Sort.by("id"));
+        verify(userRepository).findAll(Sort.by("id"));
     }
 }

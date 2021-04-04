@@ -1,5 +1,6 @@
 package versatile_development.service;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import versatile_development.domain.dto.UserDTO;
 import versatile_development.domain.dto.UserForUpdating;
@@ -13,7 +14,7 @@ public interface UserService extends UserDetailsService {
     void updateUser(UserDTO userToUpdate);
     void updateUserInformationFromSettings(UserForUpdating user, String nickname);
 
-    List<UserDTO> findAllUsers();
+    List<UserDTO> findAllUsers(Sort sort);
     UserDTO findByEmail(String email);
     UserDTO findByConfirmationToken(String confirmationToken);
     UserDTO findByNickname(String nickname);

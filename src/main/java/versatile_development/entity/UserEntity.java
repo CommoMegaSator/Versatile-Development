@@ -38,7 +38,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
     private String password;
 
     @Column(name = "age")
-    private int age;
+    private Integer age;
 
     @Column(name = "creation_date")
     private Date creationDate;

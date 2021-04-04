@@ -3,6 +3,7 @@ package versatile_development.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -83,7 +84,7 @@ public class TemplateController {
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String getAllUsers(Model model){
-        model.addAttribute("users", userService.findAllUsers());
+        model.addAttribute("users", userService.findAllUsers(Sort.by("id")));
         return "all_users";
     }
 

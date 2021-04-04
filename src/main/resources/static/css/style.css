@@ -303,6 +303,7 @@ input.hidden {
 }
 
 #profile-image1 {
+    border-radius: 80%;
     cursor: pointer;
     width: 100px;
     height: 100px;

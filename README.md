@@ -1,10 +1,10 @@
 ## Versatile Development
 #### About
-This project is developed for training and should not be used for commercial purposes!
+This project is develop for training and should not be used for commercial purposes!
 <br>You can see this project <a href=http://versatile-development.xyz/>here.</a>
 
 ##### Software that you need
-* Java 8.
+* Java 11.
 * Maven.
 * PostgreSQL.
 * Redis.
@@ -17,8 +17,8 @@ This project is developed for training and should not be used for commercial pur
 ##### Important information
 * For using locally change profile to dev:
 Go to Edit Configuration and change program arguments to `--spring.profiles.active=dev`.
-* Redis saves user Session and also user locale.
-* csrf token is disabled temporary.
+* Redis saves user Session and user locale.
+* csrf token disabled temporary.
 
 You can see my task progress in a table: 
 https://trello.com/b/j08mhCbw/versatile-development
@@ -27,10 +27,10 @@ https://trello.com/b/j08mhCbw/versatile-development
 * HTML, CSS, Bootstrap, JS/JQuery, Thymeleaf;
 * Java 11, Hibernate, Spring(Boot, MVC, Data, Security);
 * JUnit 5, Mockito;
-* PostgreSQL, Redis.
+* PostgreSQL, Redis, Flyway.
 
 ##### Installing Java on Linux
-* Download jdk-8.
+* Download jdk-11.
 * Install maven via `sudo apt install maven`
 * Set JAVA_HOME:
    1) `export $JAVA_HOME/=Path into JDK directory`
@@ -51,7 +51,7 @@ https://trello.com/b/j08mhCbw/versatile-development
 * `sudo systemctl restart redis.service`
 
 ##### Testing application for any user
-    1) Login: Default
-    2) Password: DefaultChecker
+* Login: `Default`
+* Password: `DefaultChecker`
     
 Created by `CommoMegaSator`.
