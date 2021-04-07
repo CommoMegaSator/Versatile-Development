@@ -10,7 +10,7 @@ This project is develop for training and should not be used for commercial purpo
 * Redis.
 
 ##### Ways to use
-* Create database 'versatile' in PostgreSQL.
+* Create database 'versatile' with schema 'main' in PostgreSQL.
 * Compile via `mvn clean install` command.
 * Start via - `java -jar target/versatile-development.jar` command.
 
