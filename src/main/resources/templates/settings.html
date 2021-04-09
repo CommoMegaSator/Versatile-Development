@@ -81,7 +81,7 @@
                                 <div class="form-group row">
                                     <label for="birthday" class="col-4 col-form-label" th:text="#{user.birthday}"/>
                                     <div class="col-8">
-                                        <input id="birthday" name="birthday" class="form-control here" type="date" th:value="${#dates.format(user.getBirthday(), 'yyyy-MM-dd')}">
+                                        <input id="birthday" name="birthday" class="form-control here" type="date" th:value="${#dates.format(user.getBirthday(), 'yyyy-MM-dd')}" th:min="${startDateLimit}" th:max="${endDateLimit}">
                                     </div>
                                 </div>
                                 <div class="form-group row">

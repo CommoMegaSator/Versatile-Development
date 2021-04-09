@@ -17,6 +17,11 @@ import versatile_development.entity.UserEntity;
 import versatile_development.exception.EmptyUserDataException;
 import versatile_development.service.UserService;
 
+import java.util.Calendar;
+
+import static versatile_development.constants.Constants.MIN_YEARS_OLD_MINUS;
+import static versatile_development.constants.Constants.START_DATE_LIMIT;
+
 @Slf4j
 @Controller
 @RequestMapping("/settings")
@@ -35,6 +40,12 @@ public class SettingsController {
         UserDTO userDTO = userService.findByNickname(user.getNickname());
         boolean isAdmin = user.getAuthorities().contains(Role.ADMIN);
 
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR) - MIN_YEARS_OLD_MINUS;
+        String endDateLimit = year + "-12-31";
+
+        model.addAttribute("startDateLimit", START_DATE_LIMIT);
+        model.addAttribute("endDateLimit", endDateLimit);
         model.addAttribute("isAdmin", isAdmin);
         model.addAttribute("user", userDTO);
         return "settings";

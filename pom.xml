@@ -159,6 +159,7 @@
                 <configuration>
                     <finalName>versatile-development</finalName>
                 </configuration>
+
             </plugin>
         </plugins>
     </build>

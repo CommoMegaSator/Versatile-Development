@@ -12,4 +12,6 @@ public class Constants {
     public static final String PICTURE_OF_DAY = "https://api.nasa.gov/planetary/apod?";
     public static final String API_KEY_PARAM = "api_key=";
     public static final String CREATOR_NICKNAME = "CommoMegaSator";
+    public static final Integer MIN_YEARS_OLD_MINUS = 6;
+    public static final String START_DATE_LIMIT = "1950-01-01";
 }
