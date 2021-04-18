@@ -29,7 +29,7 @@
                 <a href="#" class="list-group-item list-group-item-action disabled" th:text="#{setting.title.connected-services}"/>
                 <a href="#" class="list-group-item list-group-item-action disabled" th:text="#{setting.title.reports}"/>
                 <a href="#" class="list-group-item list-group-item-action disabled" th:text="#{setting.title.blacklist}"/>
-                <a href="#" class="list-group-item list-group-item-action disabled" th:text="#{setting.title.other-settings}"/>
+                <a href="#" th:text="#{setting.title.other-settings}" th:class="${!isAdmin}?'list-group-item list-group-item-action disabled last-item-from-group':'list-group-item list-group-item-action disabled'"/>
                 <a href="/all" class="list-group-item list-group-item-action last-item-from-group" th:text="#{all-users}" th:hidden="${isAdmin}?false:true" />
             </div>
         </div>

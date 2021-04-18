@@ -19,7 +19,6 @@ This project is develop for training and should not be used for commercial purpo
 &emsp;Go to Edit Configuration and change program arguments to \
 &emsp;`--spring.profiles.active=dev`.
 * Redis saves user Session and user locale.
-* csrf token disabled temporary.
 
 You can see my task progress in a table: 
 https://trello.com/b/j08mhCbw/versatile-development
