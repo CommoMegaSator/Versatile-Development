@@ -32,6 +32,9 @@
                 <input class='sing_submit shake' type='submit' value='Come in' id="btn-login">
                 <input class='familiar shake' type='button' value='Not familiar?' onclick="location.href='/registration';">
             </div>
+
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
         </form>
 
         <div th:if="${param.error}">

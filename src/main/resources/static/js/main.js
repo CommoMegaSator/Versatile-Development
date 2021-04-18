@@ -18,11 +18,18 @@ function register(){
 
     if (registrationFormValidation(userForRegistration)){
         $('#btn-register').hide();
+
+        let token = $('#_csrf').attr('content');
+        let header = $('#_csrf_header').attr('content');
+
         $.ajax({
             url: document.location.href,
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(userForRegistration),
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+            },
             complete: function(serverResponse){
                 document.body.style.cursor = "auto";
                 if(serverResponse.status == 409){
@@ -127,12 +134,17 @@ function deleteUser(nickname) {
     $('#deleteAccountButton').on('click', function () {
         let deleteMessage = 'Deleted Successfully';
         let nicknameAsJson =  JSON.stringify({nickname : nickname, token: deleteToken});
+        let token = $('#_csrf').attr('content');
+        let header = $('#_csrf_header').attr('content');
 
         $.ajax({
             url: document.location.href,
             type: 'DELETE',
             data: nicknameAsJson,
             contentType: "application/json; charset=utf-8",
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+            },
             complete: function (serverResponse) {
                 if (serverResponse.status == 400){alert("Something went wrong.");window.location.href = document.location.protocol + "//" + document.location.host + '/all';}
                 if (serverResponse.status == 409){alert("You can`t delete your own account here!");window.location.href = document.location.protocol + "//" + document.location.host + '/all';}
@@ -155,12 +167,17 @@ $('#updateAccountData').click(function () {
             aboutUser: $('#about-me').val(),
             password: $('#newpass').val()
         };
+        let token = $('#_csrf').attr('content');
+        let header = $('#_csrf_header').attr('content');
 
         $.ajax({
             url: document.location.href,
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(userData),
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+            },
             complete: function (serverResponse) {
                 if (serverResponse.status == 200) {
                     alert("Account was updated successfully");

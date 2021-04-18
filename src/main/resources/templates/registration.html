@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Registration</title>
     <link rel="stylesheet" href="../static/css/style.css">
     <link rel="shortcut icon" href="../static/images/Versatile.ico" />

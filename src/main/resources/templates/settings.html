@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link rel="shortcut icon" href="../static/images/Versatile.ico"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/custom-style.css">
@@ -145,9 +147,16 @@
 
     $('#deleteAccountButton').on('click', function () {
         let deleteMessage = [[#{delete-message}]];
+        let token = $('#_csrf').attr('content');
+        let header = $('#_csrf_header').attr('content');
+        console.log(token + " header:" + header);
+
         $.ajax({
             url: document.location.href,
             type: 'DELETE',
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+            },
             success: function () {
                 alert(deleteMessage);
                 window.location.href = document.location.protocol + "//" + document.location.host + '/logout';

@@ -31,8 +31,6 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf()
-                    .disable()
                 .authorizeRequests()
                 .antMatchers("/","/registration", "/confirm", "/static/**", "/reset").permitAll()
                 .anyRequest().authenticated()
@@ -50,7 +48,7 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                     .logoutUrl("/logout")
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))  //to delete if csrf is enabled
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
                     .clearAuthentication(true)
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID", "remember-me")

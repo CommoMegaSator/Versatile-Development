@@ -15,8 +15,9 @@ This project is develop for training and should not be used for commercial purpo
 * Start via - `java -jar target/versatile-development.jar` command.
 
 ##### Important information
-* For using locally change profile to dev:
-Go to Edit Configuration and change program arguments to `--spring.profiles.active=dev`.
+* For using locally change profile to dev:\
+&emsp;Go to Edit Configuration and change program arguments to \
+&emsp;`--spring.profiles.active=dev`.
 * Redis saves user Session and user locale.
 * csrf token disabled temporary.
 
