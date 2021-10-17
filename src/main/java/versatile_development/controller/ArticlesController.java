@@ -33,8 +33,8 @@ public class ArticlesController {
 
     @PostMapping
     public String createArticle(@AuthenticationPrincipal UserDTO user,
-                                        @RequestParam("title") String articleTitle,
-                                        @RequestParam("text") String articleText){
+                                @RequestParam("title") String articleTitle,
+                                @RequestParam("text") String articleText){
         ArticleDTO article = new ArticleDTO();
         article.setCreation_date(new Date());
         article.setTitle(articleTitle);

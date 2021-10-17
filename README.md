@@ -1,13 +1,16 @@
 ## Versatile Development
+
+[![Versatile license](https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat-square)](LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
+
 #### About
 This project is develop for training and should not be used for commercial purposes!
-<br>You can see this project <a href=http://versatile-development.xyz/>here.</a>
+<br>You can see this project [here](http://versatile-development.xyz)(not available for now).
 
 ##### Software that you need
-* Java 11.
-* Maven.
-* PostgreSQL.
-* Redis.
+* Java 17.
+* Maven 3.8.3.
+* PostgreSQL 14.
+* Redis 5.0.7.
 
 ##### Ways to use
 * Create database 'versatile' in PostgreSQL.
@@ -20,17 +23,16 @@ This project is develop for training and should not be used for commercial purpo
 &emsp;`--spring.profiles.active=dev`.
 * Redis saves user Session and user locale.
 
-You can see my task progress in a table: 
-https://trello.com/b/j08mhCbw/versatile-development
+You can see my task progress in a [table](https://trello.com/b/j08mhCbw/versatile-development):
 
 ##### Technology stack:
 * HTML, CSS, Bootstrap, JS/JQuery, Thymeleaf;
-* Java 11, Hibernate, Spring(Boot, MVC, Data, Security);
+* Java 17, Hibernate, Spring(Boot, MVC, Data, Security);
 * JUnit 5, Mockito;
 * PostgreSQL, Redis, Flyway.
 
 ##### Installing Java on Linux
-* Download jdk-11.
+* Download jdk-17.
 * Install maven via `sudo apt install maven`
 * Set JAVA_HOME:
    1) `export $JAVA_HOME/=Path into JDK directory`
@@ -53,5 +55,9 @@ https://trello.com/b/j08mhCbw/versatile-development
 ##### Testing application for any user
 * Login: `Default`
 * Password: `DefaultChecker`
-    
+
+##### Testing application for administrators
+* Login: `Adminus`
+* Password: `Administrator1!`
+
 Created by `CommoMegaSator`.

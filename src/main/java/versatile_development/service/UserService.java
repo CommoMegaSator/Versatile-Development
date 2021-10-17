@@ -1,6 +1,7 @@
 package versatile_development.service;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import versatile_development.domain.dto.UserDTO;
 import versatile_development.domain.dto.UserForUpdating;
@@ -10,7 +11,6 @@ import java.util.List;
 
 public interface UserService extends UserDetailsService {
 
-    void createUser(UserDTO userDTO);
     void updateUser(UserDTO userToUpdate);
     void updateUserInformationFromSettings(UserForUpdating user, String nickname);
 
@@ -25,4 +25,5 @@ public interface UserService extends UserDetailsService {
     UserEntity DTOToEntityMapper(UserDTO userDTO);
 
     void deleteAccountByNickname(String nickname);
+    HttpStatus register(UserDTO userDTO);
 }

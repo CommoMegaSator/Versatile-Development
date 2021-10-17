@@ -31,6 +31,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
         return new ApplicationLocaleResolver();
     }
 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(localeChangeInterceptor());
+    }
+
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
@@ -44,10 +49,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
         messageSource.setBasename("classpath:locale/Language");
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
-    }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(localeChangeInterceptor());
     }
 }

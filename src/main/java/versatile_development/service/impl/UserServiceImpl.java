@@ -6,7 +6,10 @@ import org.joda.time.DateTime;
 import org.joda.time.Years;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.mail.MailException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,45 +18,39 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.Jedis;
 import versatile_development.constants.Constants;
+import versatile_development.domain.Role;
 import versatile_development.domain.dto.UserDTO;
 import versatile_development.domain.dto.UserForUpdating;
 import versatile_development.entity.UserEntity;
 import versatile_development.exception.EmptyUserDataException;
 import versatile_development.repository.UserRepository;
+import versatile_development.service.EmailService;
 import versatile_development.service.UserService;
 import versatile_development.utils.ObjectMapperUtils;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
+    @Value("${host.url}")
+    String hostUrl;
     private UserRepository userRepository;
-
+    private EmailService emailService;
     private PasswordEncoder passwordEncoder;
-
     private ObjectMapperUtils modelMapper;
 
     @Autowired
     UserServiceImpl(@Qualifier(value = "userRepository") UserRepository userRepository,
+                    @Qualifier(value = "emailServiceImpl") EmailService emailService,
                     @Qualifier(value = "encoder") PasswordEncoder passwordEncoder,
                     @Qualifier(value = "objectMapperUtils") ObjectMapperUtils modelMapper){
         this.userRepository = userRepository;
+        this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
         this.modelMapper = modelMapper;
-    }
-
-    @Override
-    public void createUser(UserDTO userDTO) {
-        UserEntity userEntity = DTOToEntityMapper(userDTO);
-        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-        userRepository.save(userEntity);
-
-        log.info(userDTO.getNickname() + " has registered.");
     }
 
     @Override
@@ -152,5 +149,33 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserEntity DTOToEntityMapper(UserDTO userDTO){
         if (userDTO == null)return null;
         else return modelMapper.map(userDTO, UserEntity.class);
+    }
+
+    @Transactional
+    public HttpStatus register(UserDTO userDTO) {
+        try{
+            Date creationDate = new Date();
+
+            userDTO.setCreationDate(creationDate);
+            userDTO.setTokenExpiration(new Date(creationDate.getTime() + Constants.DAY));
+            userDTO.setEmail(userDTO.getEmail().toLowerCase());
+            userDTO.setActivated(false);
+            userDTO.setConfirmationToken(UUID.randomUUID().toString());
+            userDTO.setRoles(Collections.singleton(Role.USER));
+
+            UserEntity userEntity = DTOToEntityMapper(userDTO);
+            userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+            userRepository.save(userEntity);
+
+            log.info(userDTO.getNickname() + " has registered.");
+
+            String message = String.format(Constants.EMAIL_MESSAGE, userDTO.getNickname(), hostUrl, userDTO.getConfirmationToken());
+            emailService.sendEmail(userDTO.getEmail(), userDTO.getConfirmationToken(), message);
+
+            log.info(String.format(userDTO.getNickname() + " activation link: " + "%sconfirm?token=%s", hostUrl, userDTO.getConfirmationToken()));
+            return HttpStatus.CREATED;
+        } catch (MailException ex) {
+            return HttpStatus.CONFLICT;
+        }
     }
 }

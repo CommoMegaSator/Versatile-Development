@@ -1,24 +1,21 @@
 package versatile_development.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import versatile_development.entity.UserEntity;
 import versatile_development.repository.UserRepository;
+import versatile_development.service.EmailService;
 import versatile_development.service.UserService;
 import versatile_development.utils.ObjectMapperUtils;
 
-import java.util.Collections;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.Mockito.*;
 
 @Slf4j
 class UserServiceImplTest {
@@ -27,20 +24,36 @@ class UserServiceImplTest {
     private UserRepository userRepository;
     @Autowired
     private UserService userService;
-    @Autowired
+    @Mock
+    private EmailService emailService;
+    @Mock
     private PasswordEncoder passwordEncoder;
-    @Autowired
+    @Mock
     private ObjectMapperUtils modelMapper;
 
     @BeforeEach
     void initService() {
+        MockitoAnnotations.initMocks(this);
         userRepository = mock(UserRepository.class);
-        userService = new UserServiceImpl(userRepository, passwordEncoder, modelMapper);
+        userService = new UserServiceImpl(userRepository, emailService, passwordEncoder, modelMapper);
     }
 
     @Test
     void verifyMethodFindAllUsersUsed() {
         userService.findAllUsers(Sort.by("id"));
         verify(userRepository).findAll(Sort.by("id"));
+    }
+
+    @Test
+    void findByEmailTest() {
+        userService.findByEmail(anyString());
+        verify(userRepository, times(1)).findByEmailIgnoreCase(anyString());
+    }
+
+    @Test
+    public void testEmptyUserExists() {
+        when(this.userRepository.existsByNickname(anyString())).thenReturn(true);
+        when(this.userRepository.existsByEmailIgnoreCase(anyString())).thenReturn(false);
+        assertFalse(this.userService.userExists(null));
     }
 }

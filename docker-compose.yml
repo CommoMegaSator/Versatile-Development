@@ -1,6 +1,19 @@
 version: "3.5"
 
 services:
+  versatile:
+    image: 'versatile-development:latest'
+    build:
+      context: .
+    container_name: versatile
+    depends_on:
+      - postgresql
+      - redis
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/versatile
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_DATASOURCE_HIKARI_SCHEMA=main
   postgresql:
     image: postgres:11.7
     container_name: postgresql
@@ -12,6 +25,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=versatile
+      - POSTGRES_SCHEMA=main
     expose:
       - 3001
 
