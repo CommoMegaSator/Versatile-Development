@@ -1,5 +1,7 @@
 package versatile_development.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,6 +27,7 @@ import static versatile_development.constants.Constants.START_DATE_LIMIT;
 @Slf4j
 @Controller
 @RequestMapping("/settings")
+@Tag(name="Settings Controller", description="Контроллер для налаштування акаунта")
 public class SettingsController {
 
     UserService userService;
@@ -36,6 +39,7 @@ public class SettingsController {
 
     @GetMapping
     @PreAuthorize("hasAnyAuthority('ADMIN, USER')")
+    @Operation(summary = "Отримання сторінки", description = "Дозволяє отримати сторінку налаштувань")
     public String getSettings(@AuthenticationPrincipal UserEntity user, Model model){
         UserDTO userDTO = userService.findByNickname(user.getNickname());
         boolean isAdmin = user.getAuthorities().contains(Role.ADMIN);
@@ -52,6 +56,7 @@ public class SettingsController {
     }
 
     @DeleteMapping
+    @Operation(summary = "Видалення акаунта", description = "Видаляє акаунт")
     public ResponseEntity deleteAccount(@AuthenticationPrincipal UserEntity userEntity){
         userService.deleteAccountByNickname(userEntity.getNickname());
         log.info(userEntity.getNickname() + " account was deleted by himself.");
@@ -60,6 +65,7 @@ public class SettingsController {
 
     @PostMapping
     @PreAuthorize("hasAnyAuthority('ADMIN, USER')")
+    @Operation(summary = "Оновлення профілю", description = "Оновлює налаштування користувача")
     public ResponseEntity updateUserInfo(@RequestBody UserForUpdating user, @AuthenticationPrincipal UserEntity userEntity){
         try {
             userService.updateUserInformationFromSettings(user, userEntity.getNickname());

@@ -5,6 +5,7 @@
 #### About
 This project is develop for training and should not be used for commercial purposes!
 <br>You can see this project [here](http://versatile-development.xyz)(not available for now).
+<br>You can find api details use: http://localhost:8081/swagger-ui.html (Authorization needed)
 
 ##### Software that you need
 * Java 17.
@@ -29,7 +30,7 @@ You can see my task progress in a [table](https://trello.com/b/j08mhCbw/versatil
 * HTML, CSS, Bootstrap, JS/JQuery, Thymeleaf;
 * Java 17, Hibernate, Spring(Boot, MVC, Data, Security);
 * JUnit 5, Mockito;
-* PostgreSQL, Redis, Flyway.
+* PostgreSQL, Redis, Flyway, Swagger 3.
 
 ##### Installing Java on Linux
 * Download jdk-17.

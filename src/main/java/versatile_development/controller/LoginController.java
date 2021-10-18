@@ -1,5 +1,7 @@
 package versatile_development.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +17,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @RestController
+@Tag(name="Login Controller", description="Контроллер для авторизації")
 public class LoginController {
 
     private UserService userService;
@@ -25,6 +28,7 @@ public class LoginController {
     }
 
     @PostMapping("/registration")
+    @Operation(summary = "Реєстрація користувача", description = "Дозволяє зареєструватися")
     public ResponseEntity<?> registration(@Valid @RequestBody UserDTO userDTO){
         if (userService.userExists(userDTO)){
             return new ResponseEntity<>(HttpStatus.CONFLICT);

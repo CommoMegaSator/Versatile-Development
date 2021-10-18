@@ -32,7 +32,8 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/","/registration", "/confirm", "/static/**", "/reset").permitAll()
+                .antMatchers("/", "/registration", "/confirm", "/static/**", "/reset",
+                        "/swagger-resources/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

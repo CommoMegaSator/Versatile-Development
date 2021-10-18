@@ -1,6 +1,8 @@
 package versatile_development.controller;
 
 import com.google.gson.Gson;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import versatile_development.service.NasaService;
 @Slf4j
 @NoArgsConstructor
 @Controller
+@Tag(name="Nasa Controller", description="Контроллер інтеграції з НАСА")
 public class NasaController {
 
     @Autowired
@@ -23,6 +26,7 @@ public class NasaController {
     Gson gson = new Gson();
 
     @GetMapping("/picture-of-day")
+    @Operation(summary = "Отримання картинки дня з НАСА", description = "Дозволяє отримати дані про картинку дня в JSON")
     public String getPictureOfDayFromNasa(Model model){
         String json = jedis.get("pictureOfDay");
 

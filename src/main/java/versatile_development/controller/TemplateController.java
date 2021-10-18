@@ -1,5 +1,7 @@
 package versatile_development.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,6 +24,7 @@ import java.text.SimpleDateFormat;
 @Slf4j
 @Controller
 @RequestMapping("/")
+@Tag(name="Template Controller", description="Контроллер для видачі генерованих HTML сторінок")
 public class TemplateController {
 
     UserService userService;
@@ -32,18 +35,21 @@ public class TemplateController {
     }
 
     @GetMapping("login")
+    @Operation(summary = "Логін панель", description = "Повертає сторінку авторизації")
     public String getLoginView(@AuthenticationPrincipal UserEntity userEntity){
         if (userEntity != null)return "redirect:/profile";
         return "login";
     }
 
     @GetMapping("registration")
+    @Operation(summary = "Панель реєстрації", description = "Повертає сторінку реєстрації")
     public String getRegistrationView(@AuthenticationPrincipal UserEntity userEntity){
         if (userEntity != null)return "redirect:/profile";
         return "registration";
     }
 
     @GetMapping("confirm")
+    @Operation(summary = "Активація акаунта", description = "Активовує акаунт")
     public String activateAccount(@RequestParam String token){
         UserDTO userDTO = userService.findByConfirmationToken(token);
         if (userDTO != null) {
@@ -58,12 +64,14 @@ public class TemplateController {
     }
 
     @GetMapping
+    @Operation(summary = "Головна сторінка", description = "Повертає головну сторінку")
     public String getMainPageView(){
         return "main";
     }
 
     @GetMapping("profile")
     @PreAuthorize("hasAnyAuthority('ADMIN, USER')")
+    @Operation(summary = "Профіль користувача", description = "Повертає сторінку користувача")
     public String getProfileView(@AuthenticationPrincipal UserEntity user,
                                  @RequestParam(name = "nickname", required = false) String nickname, Model model){
         SimpleDateFormat DateFor = new SimpleDateFormat("dd.MM.yyyy");
@@ -83,12 +91,14 @@ public class TemplateController {
 
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('ADMIN')")
+    @Operation(summary = "Сторінка користувачів", description = "Повертає сторінку з даними всіх користувачів")
     public String getAllUsers(Model model){
         model.addAttribute("users", userService.findAllUsers(Sort.by("id")));
         return "all_users";
     }
 
     @DeleteMapping("/all")
+    @Operation(summary = "Видалення користувача", description = "Видаляє акаунт обраного користувача")
     public ResponseEntity deleteUser(@RequestBody IntermediateUser user, @AuthenticationPrincipal UserEntity adminThatDeleting){
         if (user.getNickname().equals(adminThatDeleting.getNickname())){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -104,7 +114,14 @@ public class TemplateController {
     }
 
     @GetMapping("/messages")
+    @Operation(summary = "Сторінка повідомлень", description = "Повертає сторінку з повідомленнями")
     public String getMessagePage(){
         return "messages";
+    }
+
+    @GetMapping("/friends")
+    @Operation(summary = "Сторінка друзів", description = "Повертає сторінку з друзями користувача")
+    public String getFriendsTemplate(){
+        return "friends";
     }
 }
