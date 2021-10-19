@@ -4,8 +4,9 @@
 
 #### About
 This project is develop for training and should not be used for commercial purposes!
-<br>You can see this project [here](http://versatile-development.xyz)(not available for now).
-<br>You can find api details use: http://localhost:8081/swagger-ui.html (Authorization needed)
+<br>You can see this project [here](http://versatile-development.xyz) (not available for now).
+<br>You can find api details using: http://localhost:8081/swagger-ui.html (Authorization needed)
+<br>You can see my tasks progress on this [board](https://trello.com/b/j08mhCbw/versatile-development).
 
 ##### Software that you need
 * Java 17.
@@ -23,8 +24,6 @@ This project is develop for training and should not be used for commercial purpo
 &emsp;Go to Edit Configuration and change program arguments to \
 &emsp;`--spring.profiles.active=dev`.
 * Redis saves user Session and user locale.
-
-You can see my task progress in a [table](https://trello.com/b/j08mhCbw/versatile-development):
 
 ##### Technology stack:
 * HTML, CSS, Bootstrap, JS/JQuery, Thymeleaf;

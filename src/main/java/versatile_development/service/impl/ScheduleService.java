@@ -15,8 +15,8 @@ import java.util.List;
 @Service
 public class ScheduleService {
 
-    private UserRepository userRepository;
-    private UserService userService;
+    private final UserRepository userRepository;
+    private final UserService userService;
 
     ScheduleService(UserRepository userRepository,
                     UserService userService) {
@@ -30,10 +30,10 @@ public class ScheduleService {
         List<UserEntity> users = userRepository.findAllByTokenExpirationLessThanCurrentTime();
         log.info("Starting deleting all non activated accounts...");
 
-        for (UserEntity user : users) {
-            if (!user.isActivated())
-                userService.deleteAccountByNickname(user.getNickname());
-        }
+        users.stream()
+                .filter(user -> !user.isActivated())
+                .forEach(user -> userService.deleteAccountByNickname(user.getNickname()));
+
         log.info("All non activated accounts were deleted successfully.");
     }
 
