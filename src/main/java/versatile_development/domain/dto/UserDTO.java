@@ -3,7 +3,6 @@ package versatile_development.domain.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import versatile_development.domain.Role;
-import versatile_development.entity.ArticleEntity;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;

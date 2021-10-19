@@ -58,9 +58,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         List<UserEntity> userEntities = userRepository.findAll(sort);
         List<UserDTO> userDTOs = new ArrayList<>();
 
-        for (UserEntity userEntity : userEntities){
-            userDTOs.add(entityToDTOMapper(userEntity));
-        }
+        userEntities.forEach(userEntity -> userDTOs.add(entityToDTOMapper(userEntity)));
 
         return userDTOs;
     }
@@ -101,14 +99,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         UserDTO userToUpdate = entityToDTOMapper(userRepository.findByNickname(nickname));
         SimpleDateFormat DateFor = new SimpleDateFormat("yyyy-MM-dd");
 
-        if (user.getFirstname() != null && user.getFirstname() != "")userToUpdate.setFirstname(user.getFirstname());
-        if (user.getLastname() != null && user.getLastname() != "")userToUpdate.setLastname(user.getLastname());
-        if (user.getEmail() != null && user.getEmail() != "")userToUpdate.setEmail(user.getEmail());
-        if (user.getPassword() != null && user.getPassword() != "")userToUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
-        if (user.getGender() != null && user.getGender() != "")userToUpdate.setGender(user.getGender());
-        if (user.getNationality() != null && user.getNationality() != "")userToUpdate.setNationality(user.getNationality());
-        if (user.getAboutUser() != null && user.getAboutUser() != "")userToUpdate.setAboutUser(user.getAboutUser());
-        if (user.getBirthday() != null && user.getBirthday() != ""){
+        if (user.getFirstname() != null && !user.getFirstname().equals(""))userToUpdate.setFirstname(user.getFirstname());
+        if (user.getLastname() != null && !user.getLastname().equals(""))userToUpdate.setLastname(user.getLastname());
+        if (user.getEmail() != null && !user.getEmail().equals(""))userToUpdate.setEmail(user.getEmail());
+        if (user.getPassword() != null && !user.getPassword().equals(""))userToUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (user.getGender() != null && !user.getGender().equals(""))userToUpdate.setGender(user.getGender());
+        if (user.getNationality() != null && !user.getNationality().equals(""))userToUpdate.setNationality(user.getNationality());
+        if (user.getAboutUser() != null && !user.getAboutUser().equals(""))userToUpdate.setAboutUser(user.getAboutUser());
+        if (user.getBirthday() != null && !user.getBirthday().equals("")){
             userToUpdate.setBirthday(DateFor.parse(user.getBirthday()));
 
             Date now = new Date();
