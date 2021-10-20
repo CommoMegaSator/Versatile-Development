@@ -32,7 +32,7 @@ This project is develop for training and should not be used for commercial purpo
 * PostgreSQL, Redis, Flyway, Swagger 3.
 
 ##### Installing Java on Linux
-* Download jdk-17.
+* Download [jdk-17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html).
 * Install maven via `sudo apt install maven`
 * Set JAVA_HOME:
    1) `export $JAVA_HOME/=Path into JDK directory`

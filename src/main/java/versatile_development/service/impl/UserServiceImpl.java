@@ -94,6 +94,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @SneakyThrows
     @Override
+    @Transactional
     public void updateUserInformationFromSettings(UserForUpdating user, String nickname) {
         if (user == null) throw new EmptyUserDataException();
         var userToUpdate = entityToDTOMapper(userRepository.findByNickname(nickname));
