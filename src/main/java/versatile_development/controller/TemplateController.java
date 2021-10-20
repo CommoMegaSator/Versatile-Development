@@ -51,7 +51,7 @@ public class TemplateController {
     @GetMapping("confirm")
     @Operation(summary = "Активація акаунта", description = "Активовує акаунт")
     public String activateAccount(@RequestParam String token){
-        UserDTO userDTO = userService.findByConfirmationToken(token);
+        var userDTO = userService.findByConfirmationToken(token);
         if (userDTO != null) {
             userDTO.setActivated(true);
             userDTO.setConfirmationToken(null);
@@ -74,7 +74,7 @@ public class TemplateController {
     @Operation(summary = "Профіль користувача", description = "Повертає сторінку користувача")
     public String getProfileView(@AuthenticationPrincipal UserEntity user,
                                  @RequestParam(name = "nickname", required = false) String nickname, Model model){
-        SimpleDateFormat DateFor = new SimpleDateFormat("dd.MM.yyyy");
+        var DateFor = new SimpleDateFormat("dd.MM.yyyy");
         UserDTO userDTO;
         if (nickname != null) {
             userDTO = userService.findByNickname(nickname);

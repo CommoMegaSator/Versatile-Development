@@ -24,6 +24,7 @@ class ScheduleServiceTest {
     private UserService userService;
 
     private ScheduleService scheduleService;
+    private UserEntity userEntity;
 
     @BeforeEach
     void initService() {

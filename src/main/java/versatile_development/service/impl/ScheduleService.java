@@ -4,12 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import versatile_development.entity.UserEntity;
 import versatile_development.repository.UserRepository;
 import versatile_development.service.UserService;
 
 import java.util.Calendar;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -27,7 +25,7 @@ public class ScheduleService {
     @Scheduled(cron = "0 0 * * * *")
     @Transactional
     public void deleteAllUsersWithExpiredActivation(){
-        List<UserEntity> users = userRepository.findAllByTokenExpirationLessThanCurrentTime();
+        var users = userRepository.findAllByTokenExpirationLessThanCurrentTime();
         log.info("Starting deleting all non activated accounts...");
 
         users.stream()
@@ -40,14 +38,14 @@ public class ScheduleService {
     @Scheduled(cron = "0 0 0 * * *")
     @Transactional
     public void ageIncrementer(){
-        Integer day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-        Integer month = Calendar.getInstance().get(Calendar.MONTH);
-        List<UserEntity> users = userRepository.findAllByBirthday(day, month);
-        int userNumber = 0;
+        var day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        var month = Calendar.getInstance().get(Calendar.MONTH);
+        var users = userRepository.findAllByBirthday(day, month);
+        var userNumber = 0;
 
         if (!users.isEmpty()) {
-            for(UserEntity user : users) {
-                int newAge = user.getAge();
+            for(var user : users) {
+                var newAge = user.getAge();
                 ++userNumber;
 
                 user.setAge(++newAge);

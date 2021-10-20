@@ -37,10 +37,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Value("${host.url}")
     String hostUrl;
-    private UserRepository userRepository;
-    private EmailService emailService;
-    private PasswordEncoder passwordEncoder;
-    private ObjectMapperUtils modelMapper;
+    private final UserRepository userRepository;
+    private final EmailService emailService;
+    private final PasswordEncoder passwordEncoder;
+    private final ObjectMapperUtils modelMapper;
 
     @Autowired
     UserServiceImpl(@Qualifier(value = "userRepository") UserRepository userRepository,
@@ -55,8 +55,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public List<UserDTO> findAllUsers(Sort sort) {
-        List<UserEntity> userEntities = userRepository.findAll(sort);
-        List<UserDTO> userDTOs = new ArrayList<>();
+        var userEntities = userRepository.findAll(sort);
+        var userDTOs = new ArrayList<UserDTO>();
 
         userEntities.forEach(userEntity -> userDTOs.add(entityToDTOMapper(userEntity)));
 
@@ -96,8 +96,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void updateUserInformationFromSettings(UserForUpdating user, String nickname) {
         if (user == null) throw new EmptyUserDataException();
-        UserDTO userToUpdate = entityToDTOMapper(userRepository.findByNickname(nickname));
-        SimpleDateFormat DateFor = new SimpleDateFormat("yyyy-MM-dd");
+        var userToUpdate = entityToDTOMapper(userRepository.findByNickname(nickname));
+        var DateFor = new SimpleDateFormat("yyyy-MM-dd");
 
         if (user.getFirstname() != null && !user.getFirstname().equals(""))userToUpdate.setFirstname(user.getFirstname());
         if (user.getLastname() != null && !user.getLastname().equals(""))userToUpdate.setLastname(user.getLastname());
@@ -109,10 +109,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (user.getBirthday() != null && !user.getBirthday().equals("")){
             userToUpdate.setBirthday(DateFor.parse(user.getBirthday()));
 
-            Date now = new Date();
-            DateTime d1 = new DateTime(DateFor.parse(user.getBirthday()));
-            DateTime d2 = new DateTime(now);
-            int age = Math.abs(Years.yearsBetween(d2, d1).getYears());
+            var now = new Date();
+            var d1 = new DateTime(DateFor.parse(user.getBirthday()));
+            var d2 = new DateTime(now);
+            var age = Math.abs(Years.yearsBetween(d2, d1).getYears());
             userToUpdate.setAge(age);
         }
 
@@ -122,7 +122,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @Transactional
     public void deleteAccountByNickname(String nickname) {
-        Jedis jedis = new Jedis();
+        var jedis = new Jedis();
 
         if (jedis.get(nickname + Constants.USER_LOCALE_EXTENSION) != null)jedis.del(nickname + Constants.USER_LOCALE_EXTENSION);
         userRepository.deleteByNickname(nickname);
@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username){
-        UserEntity user = userRepository.findByNicknameIgnoreCase(username);
+        var user = userRepository.findByNicknameIgnoreCase(username);
 
         if (user == null)throw new UsernameNotFoundException("No such user.");
         else return user;
@@ -138,7 +138,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     public UserDTO entityToDTOMapper(UserEntity userEntity){
         if (userEntity != null){
-            UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
+            var userDTO = modelMapper.map(userEntity, UserDTO.class);
             userDTO.setId(userEntity.getId());
             return userDTO;
         }else return null;
@@ -152,7 +152,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     public HttpStatus register(UserDTO userDTO) {
         try{
-            Date creationDate = new Date();
+            var creationDate = new Date();
 
             userDTO.setCreationDate(creationDate);
             userDTO.setTokenExpiration(new Date(creationDate.getTime() + Constants.DAY));
@@ -161,13 +161,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             userDTO.setConfirmationToken(UUID.randomUUID().toString());
             userDTO.setRoles(Collections.singleton(Role.USER));
 
-            UserEntity userEntity = DTOToEntityMapper(userDTO);
+            var userEntity = DTOToEntityMapper(userDTO);
             userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
             userRepository.save(userEntity);
 
             log.info(userDTO.getNickname() + " has registered.");
 
-            String message = String.format(Constants.EMAIL_MESSAGE, userDTO.getNickname(), hostUrl, userDTO.getConfirmationToken());
+            var message = String.format(Constants.EMAIL_MESSAGE, userDTO.getNickname(), hostUrl, userDTO.getConfirmationToken());
             emailService.sendEmail(userDTO.getEmail(), userDTO.getConfirmationToken(), message);
 
             log.info(String.format(userDTO.getNickname() + " activation link: " + "%sconfirm?token=%s", hostUrl, userDTO.getConfirmationToken()));

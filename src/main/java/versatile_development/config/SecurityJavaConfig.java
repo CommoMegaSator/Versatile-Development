@@ -18,9 +18,9 @@ import java.util.concurrent.TimeUnit;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     SecurityJavaConfig(PasswordEncoder passwordEncoder, UserService userService){

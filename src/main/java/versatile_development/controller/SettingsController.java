@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import versatile_development.domain.Role;
-import versatile_development.domain.dto.UserDTO;
 import versatile_development.domain.dto.UserForUpdating;
 import versatile_development.entity.UserEntity;
 import versatile_development.exception.EmptyUserDataException;
@@ -30,7 +29,7 @@ import static versatile_development.constants.Constants.START_DATE_LIMIT;
 @Tag(name="Settings Controller", description="Контроллер для налаштування акаунта")
 public class SettingsController {
 
-    UserService userService;
+    private final UserService userService;
 
     @Autowired
     SettingsController(@Qualifier(value = "userServiceImpl") UserService userService){
@@ -41,12 +40,12 @@ public class SettingsController {
     @PreAuthorize("hasAnyAuthority('ADMIN, USER')")
     @Operation(summary = "Отримання сторінки", description = "Дозволяє отримати сторінку налаштувань")
     public String getSettings(@AuthenticationPrincipal UserEntity user, Model model){
-        UserDTO userDTO = userService.findByNickname(user.getNickname());
-        boolean isAdmin = user.getAuthorities().contains(Role.ADMIN);
+        var userDTO = userService.findByNickname(user.getNickname());
+        var isAdmin = user.getAuthorities().contains(Role.ADMIN);
 
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR) - MIN_YEARS_OLD_MINUS;
-        String endDateLimit = year + "-12-31";
+        var calendar = Calendar.getInstance();
+        var year = calendar.get(Calendar.YEAR) - MIN_YEARS_OLD_MINUS;
+        var endDateLimit = year + "-12-31";
 
         model.addAttribute("startDateLimit", START_DATE_LIMIT);
         model.addAttribute("endDateLimit", endDateLimit);

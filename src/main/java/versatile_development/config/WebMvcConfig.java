@@ -38,14 +38,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
-        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+        var lci = new LocaleChangeInterceptor();
         lci.setParamName("lang");
         return lci;
     }
 
     @Bean
     public MessageSource messageSource() {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        var messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:locale/Language");
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;

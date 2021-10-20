@@ -3,7 +3,6 @@ package versatile_development.service.impl;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -27,8 +26,8 @@ public class NasaServiceImpl implements NasaService {
 
     @Scheduled(cron = "0 0 4 * * *")
     public void requestForPictureOfDay(){
-        String nasaPictureOfDayUrl = PICTURE_OF_DAY + API_KEY_PARAM + apiKey;
-        ResponseEntity<PictureOfDay> pictureOfDayResponse = restTemplate.getForEntity(nasaPictureOfDayUrl, PictureOfDay.class);
+        var nasaPictureOfDayUrl = PICTURE_OF_DAY + API_KEY_PARAM + apiKey;
+        var pictureOfDayResponse = restTemplate.getForEntity(nasaPictureOfDayUrl, PictureOfDay.class);
 
         if (pictureOfDayResponse.getStatusCodeValue() == 200) {
             jedis.set("pictureOfDay", gson.toJson(pictureOfDayResponse.getBody()));

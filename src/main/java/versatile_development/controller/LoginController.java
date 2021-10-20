@@ -20,7 +20,7 @@ import javax.validation.Valid;
 @Tag(name="Login Controller", description="Контроллер для авторизації")
 public class LoginController {
 
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     LoginController(@Qualifier(value = "userServiceImpl") UserService userService){
@@ -34,7 +34,7 @@ public class LoginController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         else{
-            HttpStatus httpStatus = userService.register(userDTO);
+            var httpStatus = userService.register(userDTO);
             return new ResponseEntity<>(httpStatus);
         }
     }

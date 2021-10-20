@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import versatile_development.service.EmailService;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 
 import static versatile_development.constants.Constants.EMAIL_MESSAGE_CONTENT;
 import static versatile_development.constants.Constants.REGISTRATION_EMAIL_SUBJECT;
@@ -19,7 +18,7 @@ import static versatile_development.constants.Constants.REGISTRATION_EMAIL_SUBJE
 @Service
 public class EmailServiceImpl implements EmailService {
 
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
     @Value("${spring.mail.username}")
     private String usernameThatSends;
@@ -32,8 +31,8 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void sendEmail(String emailTo, String subject, String message) {
         try{
-            MimeMessage mimeMessage = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+            var mimeMessage = mailSender.createMimeMessage();
+            var helper = new MimeMessageHelper(mimeMessage, "utf-8");
 
             mimeMessage.setContent(message, EMAIL_MESSAGE_CONTENT);
             helper.setTo(emailTo);

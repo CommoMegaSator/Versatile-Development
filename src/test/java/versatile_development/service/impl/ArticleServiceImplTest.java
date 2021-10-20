@@ -65,7 +65,7 @@ public class ArticleServiceImplTest {
         userEntity.setLastname("Doe");
         userEntity.setRoles(new HashSet<Role>());
 
-        ArticleEntity articleEntity = new ArticleEntity();
+        var articleEntity = new ArticleEntity();
         articleEntity.setText("Text");
         LocalDateTime atStartOfDayResult3 = LocalDate.of(1970, 1, 1).atStartOfDay();
         articleEntity.setCreation_date(Date.from(atStartOfDayResult3.atZone(ZoneId.systemDefault()).toInstant()));

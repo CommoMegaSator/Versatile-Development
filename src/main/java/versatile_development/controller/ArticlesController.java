@@ -22,7 +22,7 @@ import java.util.Date;
 @Tag(name="Article Controller", description="Контроллер статтей")
 public class ArticlesController {
 
-    ArticleService articleService;
+    private final ArticleService articleService;
 
     @Autowired
     ArticlesController(ArticleService articleService){
@@ -40,7 +40,7 @@ public class ArticlesController {
     public String createArticle(@AuthenticationPrincipal UserDTO user,
                                 @RequestParam("title") String articleTitle,
                                 @RequestParam("text") String articleText){
-        ArticleDTO article = new ArticleDTO();
+        var article = new ArticleDTO();
         article.setCreation_date(new Date());
         article.setTitle(articleTitle);
         article.setText(articleText);

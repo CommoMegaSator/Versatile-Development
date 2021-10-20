@@ -15,9 +15,9 @@ import java.util.List;
 @Service
 public class ArticleServiceImpl implements ArticleService {
 
-    private ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
 
-    private ObjectMapperUtils modelMapper;
+    private final ObjectMapperUtils modelMapper;
 
     @Autowired
     ArticleServiceImpl(@Qualifier(value = "articleRepository") ArticleRepository articleRepository,
@@ -28,14 +28,14 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public void createArticle(ArticleDTO articleDTO) {
-        ArticleEntity article = DTOToEntityMapper(articleDTO);
-        articleRepository.save(article);
+        var articleEntity = DTOToEntityMapper(articleDTO);
+        articleRepository.save(articleEntity);
     }
 
     @Override
     public List<ArticleDTO> findAllArticles() {
-        List<ArticleEntity> listOfArticles = articleRepository.findAll();
-        List<ArticleDTO> articleDTOs = new ArrayList<>();
+        var listOfArticles = articleRepository.findAll();
+        var articleDTOs = new ArrayList<ArticleDTO>();
 
         for (ArticleEntity articleEntity : listOfArticles){
             articleDTOs.add(entityToDTOMapper(articleEntity));
@@ -45,7 +45,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     public ArticleDTO entityToDTOMapper(ArticleEntity articleEntity){
-        ArticleDTO articleDTO = modelMapper.map(articleEntity, ArticleDTO.class);
+        var articleDTO = modelMapper.map(articleEntity, ArticleDTO.class);
         articleDTO.setId(articleEntity.getId());
         return articleDTO;
     }
