@@ -12,6 +12,7 @@ import versatile_development.service.UserService;
 
 import java.util.Arrays;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @Slf4j
@@ -24,7 +25,6 @@ class ScheduleServiceTest {
     private UserService userService;
 
     private ScheduleService scheduleService;
-    private UserEntity userEntity;
 
     @BeforeEach
     void initService() {
@@ -35,24 +35,40 @@ class ScheduleServiceTest {
 
     @Test
     void deleteAllUsersWithExpiredActivation() {
-        UserEntity first = new UserEntity();
-        first.setActivated(false);
-        first.setNickname("user1");
+        var firstUser = new UserEntity();
+        firstUser.setActivated(false);
+        firstUser.setNickname("user1");
 
-        UserEntity second = new UserEntity();
-        second.setActivated(true);
-        first.setNickname("user2");
+        var secondUser = new UserEntity();
+        secondUser.setActivated(true);
+        secondUser.setNickname("user2");
 
-        UserEntity third = new UserEntity();
-        first.setActivated(false);
-        first.setNickname("user3");
+        var thirdUser = new UserEntity();
+        thirdUser.setActivated(false);
+        thirdUser.setNickname("user3");
 
         when(userRepository.findAllByTokenExpirationLessThanCurrentTime()).
-                thenReturn(Arrays.asList(first, second, third));
+                thenReturn(Arrays.asList(firstUser, secondUser, thirdUser));
         doNothing().when(userService).deleteAccountByNickname(anyString());
 
         scheduleService.deleteAllUsersWithExpiredActivation();
 
         verify(userService, atLeastOnce()).deleteAccountByNickname(anyString());
+    }
+
+    @Test
+    void ageIncrementer() {
+        var userAge = 18;
+        var userEntity = new UserEntity();
+        userEntity.setAge(userAge);
+
+        when(userRepository.save(any(UserEntity.class))).thenReturn(null);
+        when(userRepository.findAllByBirthday(anyInt(), anyInt())).thenReturn(Arrays.asList(userEntity));
+
+        scheduleService.ageIncrementer();
+
+        assertEquals(++userAge, userEntity.getAge());
+        verify(userRepository).findAllByBirthday(anyInt(), anyInt());
+        verify(userRepository).save(any(UserEntity.class));
     }
 }
