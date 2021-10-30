@@ -1,36 +1,66 @@
-version: "3.5"
+version: "3.7"
 
 services:
-  versatile:
-    image: 'versatile-development:latest'
-    build:
-      context: .
-    container_name: versatile
-    depends_on:
-      - postgresql
-      - redis
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/versatile
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
-      - SPRING_DATASOURCE_HIKARI_SCHEMA=main
   postgresql:
-    image: postgres:11.7
+    image: postgres:latest
     container_name: postgresql
     volumes:
       - /opt/postgres-data:/var/lib/postgresql/data
     ports:
-      - 3001:5432
+      - "3001:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=versatile
       - POSTGRES_SCHEMA=main
+    restart: on-failure
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     expose:
       - 3001
+    networks:
+      - versatile
 
   redis:
-    image: redis:latest
+    image: redis
     container_name: redis
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB, FLUSHALL
+    restart: on-failure
     ports:
-      - 3002:6379
+      - "3002:6379"
+    networks:
+      - versatile
+
+  versatile:
+    image: versatile
+    build:
+      context: .
+    container_name: versatile
+    ports:
+      - "3000:8081"
+    restart: on-failure
+    links:
+      - redis
+      - postgresql
+    depends_on:
+      - redis
+      - postgresql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/versatile
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_DATASOURCE_HIKARI_SCHEMA=main
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    expose:
+      - 8081
+    networks:
+      - versatile
+
+networks:
+  versatile:
+    driver: bridge

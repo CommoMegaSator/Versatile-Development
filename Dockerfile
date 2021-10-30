@@ -1,6 +1,8 @@
-FROM openjdk:11-jre-slim
-EXPOSE 8080
+FROM openjdk:17-alpine
+MAINTAINER CommoMegaSator
 VOLUME /tmp
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} versatile-development.jar
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=container", "-jar", "app/versatile-development.jar"]
+EXPOSE 3000
+RUN mkdir -p /app/
+RUN mkdir -p /app/logs/
+ADD target/versatile-development.jar /app/versatile-development.jar
+ENTRYPOINT ["java", "-Dspring.profiles.active=dev", "-jar", "/app/versatile-development.jar"]
