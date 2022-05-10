@@ -15,7 +15,7 @@ public class SwaggerConfig {
     @Value("${swagger.app.version}")
     private String version;
 
-    @Value("${spring.mail.username}")
+    @Value("${swagger.email}")
     private String email;
 
     @Value("${swagger.username}")
