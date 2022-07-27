@@ -44,6 +44,10 @@ function register(){
                     $('#btn-register').show();
                     alert("Credentials is not valid!")
                 }
+                else {
+                    $('#btn-register').show();
+                    alert("Something went wrong")
+                }
             }
         });
     }
@@ -57,16 +61,33 @@ function registrationFormValidation(form) {
 
     else if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(form.email)){
         if (form.nickname.length < 4 || form.nickname.length > 25) {
-            alert("Nickname should consist 4-25 symbols!");return false;}
+            alert("Nickname should consist 4-25 symbols!");
+            return false;
+        }
         else if (form.email.length < 4 || form.email.length > 25) {
-            alert("Email should consist 4-25 symbols!");return false;}
-        else if (form.password.length < 8 || form.password.length > 25 || confirm.length < 8 || confirm.length > 25) {
-            alert("Password should consist 8-25 symbols!");return false;}
+            alert("Email should consist 4-25 symbols!");
+            return false;
+        }
+        else if (!form.password.match("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])([a-zA-Z0-9@$!%*?&]{8,25})$")){
+            alert("Password should have at least: \n" +
+                "1) 8 characters long;\n" +
+                "2) One lowercase;\n" +
+                "3) One uppercase;\n" +
+                "4) One number;\n" +
+                "5) One special character;\n" +
+                "6) No whitespaces.");
+            return false;
+        }
         else if (form.password !== confirm){
-            alert("Passwords do not match!");return false;}
-        return true;}
-
-    else {alert("You have entered an invalid email address!");return false;}
+            alert("Passwords do not match!");
+            return false;
+        }
+        else return true;
+        }
+    else {
+        alert("You have entered an invalid email address!");
+        return false;
+    }
 }
 
 function languageSelector() {
@@ -77,7 +98,7 @@ function languageSelector() {
 }
 
 function parseUrl(url) {
-    var m = url.match(/^(([^:\/?#]+:)?(?:\/\/((?:([^\/?#:]*):([^\/?#:]*)@)?([^\/?#:]*)(?::([^\/?#:]*))?)))?([^?#]*)(\?[^#]*)?(#.*)?$/),
+    let m = url.match(/^(([^:\/?#]+:)?(?:\/\/((?:([^\/?#:]*):([^\/?#:]*)@)?([^\/?#:]*)(?::([^\/?#:]*))?)))?([^?#]*)(\?[^#]*)?(#.*)?$/),
         r = {
             hash: m[10] || "",
             host: m[3] || "",
@@ -155,7 +176,19 @@ function deleteUser(nickname) {
 }
 
 $('#updateAccountData').click(function () {
-    if ($('#newpass').val() !== $('#retypedPass').val())alert("Passwords is not same");
+    let newPassword = $('#newpass').val();
+    let retypedPassword = $('#retypedPass').val();
+
+    if (newPassword !== retypedPassword)alert("Passwords is not same");
+    else if (!newPassword.match("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])([a-zA-Z0-9@$!%*?&]{8,25})$")){
+        alert("Password should have at least: \n" +
+            "1) 8 characters long;\n" +
+            "2) One lowercase;\n" +
+            "3) One uppercase;\n" +
+            "4) One number;\n" +
+            "5) One special character;\n" +
+            "6) No whitespaces.");
+    }
     else {
         let userData = {
             firstname: $('#firstname').val(),

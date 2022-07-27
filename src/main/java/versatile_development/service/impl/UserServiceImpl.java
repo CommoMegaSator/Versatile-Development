@@ -98,18 +98,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         var userToUpdate = userMapper.toDto(userRepository.findByNickname(nickname));
         var DateFor = new SimpleDateFormat("yyyy-MM-dd");
 
-        if (user.getFirstname() != null && !user.getFirstname().equals(""))
-            userToUpdate.setFirstname(user.getFirstname());
-        if (user.getLastname() != null && !user.getLastname().equals("")) userToUpdate.setLastname(user.getLastname());
-        if (user.getEmail() != null && !user.getEmail().equals("")) userToUpdate.setEmail(user.getEmail());
-        if (user.getPassword() != null && !user.getPassword().equals(""))
+        if (user.getFirstname() != null && !user.getFirstname().equals(""))userToUpdate.setFirstname(user.getFirstname());
+        if (user.getLastname() != null && !user.getLastname().equals(""))userToUpdate.setLastname(user.getLastname());
+        if (user.getEmail() != null && !user.getEmail().equals(""))userToUpdate.setEmail(user.getEmail());
+        if (user.getPassword() != null && !user.getPassword().equals("") && user.getPassword().
+                matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])([a-zA-Z0-9@$!%*?&]{8,25})$")){
             userToUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
-        if (user.getGender() != null && !user.getGender().equals("")) userToUpdate.setGender(user.getGender());
-        if (user.getNationality() != null && !user.getNationality().equals(""))
-            userToUpdate.setNationality(user.getNationality());
-        if (user.getAboutUser() != null && !user.getAboutUser().equals(""))
-            userToUpdate.setAboutUser(user.getAboutUser());
-        if (user.getBirthday() != null && !user.getBirthday().equals("")) {
+        }
+        if (user.getGender() != null && !user.getGender().equals(""))userToUpdate.setGender(user.getGender());
+        if (user.getNationality() != null && !user.getNationality().equals(""))userToUpdate.setNationality(user.getNationality());
+        if (user.getAboutUser() != null && !user.getAboutUser().equals(""))userToUpdate.setAboutUser(user.getAboutUser());
+        if (user.getBirthday() != null && !user.getBirthday().equals("")){
             userToUpdate.setBirthday(DateFor.parse(user.getBirthday()));
 
             var now = new Date();
@@ -142,7 +141,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Transactional
     public HttpStatus register(UserDTO userDTO) {
-        try {
+        try{
             var creationDate = new Date();
 
             userDTO.setCreationDate(creationDate);
@@ -154,17 +153,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
             var userEntity = userMapper.toEntity(userDTO);
             userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-            userRepository.save(userEntity);
-
-            log.info(userDTO.getNickname() + " has registered.");
 
             var message = String.format(Constants.EMAIL_MESSAGE, userDTO.getNickname(), hostUrl, userDTO.getConfirmationToken());
             emailService.sendEmail(userDTO.getEmail(), userDTO.getConfirmationToken(), message);
-
             log.info(String.format(userDTO.getNickname() + " activation link: " + "%sconfirm?token=%s", hostUrl, userDTO.getConfirmationToken()));
+
+            userRepository.save(userEntity);
+            log.info(userDTO.getNickname() + " has registered.");
+
             return HttpStatus.CREATED;
         } catch (MailException ex) {
-            return HttpStatus.CONFLICT;
+            return HttpStatus.INTERNAL_SERVER_ERROR;
         }
     }
 }
