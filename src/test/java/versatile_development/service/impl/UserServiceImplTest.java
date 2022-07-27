@@ -146,7 +146,7 @@ class UserServiceImplTest {
         when(userRepository.save(any(UserEntity.class))).thenReturn(null);
         doThrow(new MailSendException("Can`t send email")).when(emailService).sendEmail(anyString(), anyString(), anyString());
 
-        assertEquals(HttpStatus.CONFLICT, userService.register(userDTO));
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, userService.register(userDTO));
     }
 
     @Test
