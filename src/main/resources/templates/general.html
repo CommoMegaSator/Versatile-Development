@@ -27,9 +27,6 @@
                     <a th:class="${#httpServletRequest.requestURI=='/profile'}?'nav-link active':'nav-link'" href="/profile" th:text="#{profile}"/>
                 </li>
                 <li class="nav-item">
-                    <a th:class="${#httpServletRequest.requestURI=='/picture-of-day'}?'nav-link active':'nav-link'" href="/picture-of-day" th:text="#{nasa}"/>
-                </li>
-                <li class="nav-item">
                     <a th:class="${#httpServletRequest.requestURI=='/settings'}?'nav-link active':'nav-link'" href="/settings" th:text="#{settings}"/>
                 </li>
             </ul>
