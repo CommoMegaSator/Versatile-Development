@@ -31,6 +31,8 @@
             <th scope="col" th:text="#{user.age}"/>
             <th scope="col" th:text="#{user.activated}"/>
             <th scope="col" th:text="#{user.created}"/>
+            <th scope="col" th:text="#{user.roles}"/>
+            <th scope="col" th:text=" X "/>
         </tr>
     </thead>
     <tbody>
@@ -44,6 +46,7 @@
             <td th:text="(${user.getAge()}==null)?'-':${user.getAge()}"/>
             <td th:text="${user.isActivated()}"/>
             <td th:text="${#dates.format(user.getCreationDate(), 'dd.MM.yyyy HH:mm:ss')}"/>
+            <td th:text="${user.getRoles()}"/>
             <td>
                 <a href="#" id="deleteUser" th:value="${user.getNickname()}" onclick="deleteUser(this.getAttribute('value'));">
                     <img class="all-user-controller" src="../static/images/button_delete.svg" alt="" style="height: 20px;">
