@@ -20,7 +20,7 @@ import versatile_development.entity.UserEntity;
 import versatile_development.repository.UserRepository;
 import versatile_development.service.EmailService;
 import versatile_development.service.UserService;
-import versatile_development.utils.ObjectMapperUtils;
+import versatile_development.utils.UserMapper;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -37,8 +37,10 @@ class UserServiceImplTest {
 
     private UserRepository userRepository;
     private EmailService emailService;
+
+
     private PasswordEncoder passwordEncoder;
-    private ObjectMapperUtils modelMapper;
+    private UserMapper userMapper;
 
     private UserEntity user1;
     private UserEntity user2;
@@ -48,8 +50,8 @@ class UserServiceImplTest {
         userRepository = mock(UserRepository.class);
         emailService = mock(EmailService.class);
         passwordEncoder = mock(PasswordEncoder.class);
-        modelMapper = mock(ObjectMapperUtils.class);
-        userService = new UserServiceImpl(userRepository, emailService, passwordEncoder, modelMapper);
+        userMapper = mock(UserMapper.class);
+        userService = new UserServiceImpl(userRepository, emailService, passwordEncoder, userMapper);
     }
 
     @Test
@@ -69,16 +71,6 @@ class UserServiceImplTest {
         when(this.userRepository.existsByNickname(anyString())).thenReturn(true);
         when(this.userRepository.existsByEmailIgnoreCase(anyString())).thenReturn(false);
         assertFalse(this.userService.userExists(null));
-    }
-
-    @Test
-    void findAllUsers() {
-        final int expectedUserCount = 2;
-        when(userRepository.findAll(Sort.by("id"))).thenReturn(Arrays.asList(user1, user2));
-        when(modelMapper.map(UserEntity.class, UserDTO.class)).thenReturn(new UserDTO());
-
-        int userDtoCount = userService.findAllUsers(Sort.by("id")).size();
-        assertEquals(expectedUserCount, userDtoCount);
     }
 
     @Test
@@ -128,7 +120,7 @@ class UserServiceImplTest {
         userEntity.setEmail("test@test.com");
         userEntity.setPassword("passWord1!");
 
-        when(modelMapper.map(any(), any())).thenReturn(userEntity);
+        when(userMapper.toEntity(any())).thenReturn(userEntity);
         when(userRepository.save(any(UserEntity.class))).thenReturn(null);
         doNothing().when(emailService).sendEmail(anyString(), anyString(), anyString());
 
@@ -150,7 +142,7 @@ class UserServiceImplTest {
         userEntity.setEmail("test@test.com");
         userEntity.setPassword("passWord1!");
 
-        when(modelMapper.map(any(), any())).thenReturn(userEntity);
+        when(userMapper.toEntity(any())).thenReturn(userEntity);
         when(userRepository.save(any(UserEntity.class))).thenReturn(null);
         doThrow(new MailSendException("Can`t send email")).when(emailService).sendEmail(anyString(), anyString(), anyString());
 
@@ -195,7 +187,7 @@ class UserServiceImplTest {
         userDTO.setNickname("nickname");
         userDTO.setEmail("some@email.com");
 
-        when(modelMapper.map(any(), any())).thenReturn(userDTO);
+        when(userMapper.toDto(any())).thenReturn(userDTO);
         when(userRepository.save(any(UserEntity.class))).thenReturn(null);
         when(userRepository.findByNickname(anyString())).thenReturn(userEntity);
 
@@ -218,8 +210,8 @@ class UserServiceImplTest {
 
         when(userRepository.findByEmailIgnoreCase(anyString())).thenReturn(userEntity);
         when(userRepository.save(any(UserEntity.class))).thenReturn(null);
-        when(modelMapper.map(userEntity, UserDTO.class)).thenReturn(userDTO);
-        when(modelMapper.map(any(UserDTO.class), any(UserEntity.class))).thenReturn(userEntity);
+        when(userMapper.toDto(userEntity)).thenReturn(userDTO);
+        when(userMapper.toEntity(any(UserDTO.class))).thenReturn(userEntity);
 
         userService.updateUser(userDTO);
 
@@ -249,8 +241,8 @@ class UserServiceImplTest {
 
         when(userRepository.findByNickname(anyString())).thenReturn(userEntity);
         when(userRepository.findByEmailIgnoreCase(anyString())).thenReturn(userEntity);
-        when(modelMapper.map(userEntity, UserDTO.class)).thenReturn(userDTO);
-        when(modelMapper.map(any(UserDTO.class), any(UserEntity.class))).thenReturn(userEntity);
+        when(userMapper.toDto(userEntity)).thenReturn(userDTO);
+        when(userMapper.toEntity(any(UserDTO.class))).thenReturn(userEntity);
         when(userRepository.save(any(UserEntity.class))).thenReturn(null);
 
         userService.updateUserInformationFromSettings(userForUpdating, userDTO.getNickname());
@@ -283,13 +275,12 @@ class UserServiceImplTest {
         userEntity.setEmail("some@email.com");
 
         when(userRepository.findByConfirmationToken(anyString())).thenReturn(userEntity);
-        when(modelMapper.map(userEntity, UserDTO.class)).thenReturn(userDTO);
-        when(modelMapper.map(any(UserDTO.class), any(UserEntity.class))).thenReturn(userEntity);
+        when(userMapper.toDto(userEntity)).thenReturn(userDTO);
+        when(userMapper.toEntity(any(UserDTO.class))).thenReturn(userEntity);
 
         userService.findByConfirmationToken(userDTO.getNickname());
 
         verify(userRepository).findByConfirmationToken(anyString());
-        verify(modelMapper).map(userEntity, UserDTO.class);
     }
 
     @Test
@@ -303,12 +294,11 @@ class UserServiceImplTest {
         userEntity.setEmail("some@email.com");
 
         when(userRepository.findByNicknameIgnoreCase(anyString())).thenReturn(userEntity);
-        when(modelMapper.map(userEntity, UserDTO.class)).thenReturn(userDTO);
-        when(modelMapper.map(any(UserDTO.class), any(UserEntity.class))).thenReturn(userEntity);
+        when(userMapper.toDto(userEntity)).thenReturn(userDTO);
+        when(userMapper.toEntity(any(UserDTO.class))).thenReturn(userEntity);
 
         userService.findByNickname(userDTO.getNickname());
 
         verify(userRepository).findByNicknameIgnoreCase(anyString());
-        verify(modelMapper).map(userEntity, UserDTO.class);
     }
 }
