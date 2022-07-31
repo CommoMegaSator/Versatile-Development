@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     UserServiceImpl(@Qualifier(value = "userRepository") UserRepository userRepository,
                     @Qualifier(value = "emailServiceImpl") EmailService emailService,
                     @Qualifier(value = "encoder") PasswordEncoder passwordEncoder,
-                    UserMapper userMapper){
+                    UserMapper userMapper) {
         this.userRepository = userRepository;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public UserDTO findByEmail(String email){
+    public UserDTO findByEmail(String email) {
         return userMapper.toDto(userRepository.findByEmailIgnoreCase(email));
     }
 
@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @Transactional
     public void updateUser(UserDTO userToUpdate) {
-        if(findByEmail(userToUpdate.getEmail()) != null){
+        if (findByEmail(userToUpdate.getEmail()) != null) {
             userRepository.save(userMapper.toEntity(userToUpdate));
         }
     }
@@ -98,14 +98,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         var userToUpdate = userMapper.toDto(userRepository.findByNickname(nickname));
         var DateFor = new SimpleDateFormat("yyyy-MM-dd");
 
-        if (user.getFirstname() != null && !user.getFirstname().equals(""))userToUpdate.setFirstname(user.getFirstname());
-        if (user.getLastname() != null && !user.getLastname().equals(""))userToUpdate.setLastname(user.getLastname());
-        if (user.getEmail() != null && !user.getEmail().equals(""))userToUpdate.setEmail(user.getEmail());
-        if (user.getPassword() != null && !user.getPassword().equals(""))userToUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
-        if (user.getGender() != null && !user.getGender().equals(""))userToUpdate.setGender(user.getGender());
-        if (user.getNationality() != null && !user.getNationality().equals(""))userToUpdate.setNationality(user.getNationality());
-        if (user.getAboutUser() != null && !user.getAboutUser().equals(""))userToUpdate.setAboutUser(user.getAboutUser());
-        if (user.getBirthday() != null && !user.getBirthday().equals("")){
+        if (user.getFirstname() != null && !user.getFirstname().equals(""))
+            userToUpdate.setFirstname(user.getFirstname());
+        if (user.getLastname() != null && !user.getLastname().equals("")) userToUpdate.setLastname(user.getLastname());
+        if (user.getEmail() != null && !user.getEmail().equals("")) userToUpdate.setEmail(user.getEmail());
+        if (user.getPassword() != null && !user.getPassword().equals(""))
+            userToUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (user.getGender() != null && !user.getGender().equals("")) userToUpdate.setGender(user.getGender());
+        if (user.getNationality() != null && !user.getNationality().equals(""))
+            userToUpdate.setNationality(user.getNationality());
+        if (user.getAboutUser() != null && !user.getAboutUser().equals(""))
+            userToUpdate.setAboutUser(user.getAboutUser());
+        if (user.getBirthday() != null && !user.getBirthday().equals("")) {
             userToUpdate.setBirthday(DateFor.parse(user.getBirthday()));
 
             var now = new Date();
@@ -123,21 +127,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void deleteAccountByNickname(String nickname) {
         var jedis = new Jedis();
 
-        if (jedis.get(nickname + Constants.USER_LOCALE_EXTENSION) != null)jedis.del(nickname + Constants.USER_LOCALE_EXTENSION);
+        if (jedis.get(nickname + Constants.USER_LOCALE_EXTENSION) != null)
+            jedis.del(nickname + Constants.USER_LOCALE_EXTENSION);
         userRepository.deleteByNickname(nickname);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username){
+    public UserDetails loadUserByUsername(String username) {
         var user = userRepository.findByNicknameIgnoreCase(username);
 
-        if (user == null)throw new UsernameNotFoundException("No such user.");
+        if (user == null) throw new UsernameNotFoundException("No such user.");
         else return user;
     }
 
     @Transactional
     public HttpStatus register(UserDTO userDTO) {
-        try{
+        try {
             var creationDate = new Date();
 
             userDTO.setCreationDate(creationDate);
