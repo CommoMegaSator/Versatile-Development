@@ -9,8 +9,6 @@ public class Constants {
     public static final String EMAIL_MESSAGE_CONTENT = "text/html";
     public static final String REGISTRATION_EMAIL_SUBJECT = "Registration Confirmation";
     public static final String DELETING_USER_TOKEN = "nonVersatileProtecting";
-    public static final String PICTURE_OF_DAY = "https://api.nasa.gov/planetary/apod?";
-    public static final String API_KEY_PARAM = "api_key=";
     public static final String CREATOR_NICKNAME = "CommoMegaSator";
     public static final Integer MIN_YEARS_OLD_MINUS = 6;
     public static final String START_DATE_LIMIT = "1950-01-01";

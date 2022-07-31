@@ -109,38 +109,11 @@ public class TemplateControllerTest {
     }
 
     @Test
-    public void testGetLoginView2() throws Exception {
-        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/login");
-        getResult.characterEncoding("Encoding");
-        MockMvcBuilders.standaloneSetup(this.templateController)
-                .build()
-                .perform(getResult)
-                .andExpect(MockMvcResultMatchers.status().isFound())
-                .andExpect(MockMvcResultMatchers.model().<Object>size(1))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("userEntity"))
-                .andExpect(MockMvcResultMatchers.view().name("redirect:/profile"))
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/profile"));
-    }
-
-    @Test
     public void testGetMainPageView() throws Exception {
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/");
         MockMvcBuilders.standaloneSetup(this.templateController)
                 .build()
                 .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().<Object>size(0))
-                .andExpect(MockMvcResultMatchers.view().name("main"))
-                .andExpect(MockMvcResultMatchers.forwardedUrl("main"));
-    }
-
-    @Test
-    public void testGetMainPageView2() throws Exception {
-        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/");
-        getResult.characterEncoding("Encoding");
-        MockMvcBuilders.standaloneSetup(this.templateController)
-                .build()
-                .perform(getResult)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().<Object>size(0))
                 .andExpect(MockMvcResultMatchers.view().name("main"))
@@ -182,20 +155,6 @@ public class TemplateControllerTest {
         MockMvcBuilders.standaloneSetup(this.templateController)
                 .build()
                 .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isFound())
-                .andExpect(MockMvcResultMatchers.model().<Object>size(1))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("userEntity"))
-                .andExpect(MockMvcResultMatchers.view().name("redirect:/profile"))
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/profile"));
-    }
-
-    @Test
-    public void testGetRegistrationView2() throws Exception {
-        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/registration");
-        getResult.characterEncoding("Encoding");
-        MockMvcBuilders.standaloneSetup(this.templateController)
-                .build()
-                .perform(getResult)
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.model().<Object>size(1))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("userEntity"))

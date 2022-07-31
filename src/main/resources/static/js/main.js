@@ -175,50 +175,56 @@ function deleteUser(nickname) {
     });
 }
 
+function sendUpdatedInfo() {
+    let userData = {
+        firstname: $('#firstname').val(),
+        lastname: $('#lastname').val(),
+        email: $('#email').val(),
+        gender: $('#gender').val(),
+        birthday: $('#birthday').val(),
+        nationality: $('#nationality').val().toLowerCase(),
+        aboutUser: $('#about-me').val(),
+        password: $('#newpass').val()
+    };
+    let token = $('#_csrf').attr('content');
+    let header = $('#_csrf_header').attr('content');
+
+    $.ajax({
+        url: document.location.href,
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(userData),
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader(header, token);
+        },
+        complete: function (serverResponse) {
+            if (serverResponse.status == 200) {
+                alert("Account was updated successfully");
+                location.reload();
+            } else if (serverResponse.status == 204) {
+                alert("User data is empty!")
+            }
+        }
+    });
+}
+
 $('#updateAccountData').click(function () {
     let newPassword = $('#newpass').val();
     let retypedPassword = $('#retypedPass').val();
 
     if (newPassword !== retypedPassword)alert("Passwords is not same");
-    else if (!newPassword.match("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])([a-zA-Z0-9@$!%*?&]{8,25})$")){
-        alert("Password should have at least: \n" +
-            "1) 8 characters long;\n" +
-            "2) One lowercase;\n" +
-            "3) One uppercase;\n" +
-            "4) One number;\n" +
-            "5) One special character;\n" +
-            "6) No whitespaces.");
+    else if (newPassword.length > 0 && retypedPassword.length > 0) {
+        if (!newPassword.match("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])([a-zA-Z0-9@$!%*?&]{8,25})$")){
+            alert("Password should have at least: \n" +
+                "1) 8 characters long;\n" +
+                "2) One lowercase;\n" +
+                "3) One uppercase;\n" +
+                "4) One number;\n" +
+                "5) One special character;\n" +
+                "6) No whitespaces.");
+        } else sendUpdatedInfo();
     }
     else {
-        let userData = {
-            firstname: $('#firstname').val(),
-            lastname: $('#lastname').val(),
-            email: $('#email').val(),
-            gender: $('#gender').val(),
-            birthday: $('#birthday').val(),
-            nationality: $('#nationality').val().toLowerCase(),
-            aboutUser: $('#about-me').val(),
-            password: $('#newpass').val()
-        };
-        let token = $('#_csrf').attr('content');
-        let header = $('#_csrf_header').attr('content');
-
-        $.ajax({
-            url: document.location.href,
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(userData),
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader(header, token);
-            },
-            complete: function (serverResponse) {
-                if (serverResponse.status == 200) {
-                    alert("Account was updated successfully");
-                    location.reload();
-                } else if (serverResponse.status == 204) {
-                    alert("User data is empty!")
-                }
-            }
-        });
+        sendUpdatedInfo();
     }
 });
