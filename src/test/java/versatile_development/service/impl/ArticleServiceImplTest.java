@@ -24,9 +24,9 @@ import versatile_development.domain.dto.ArticleDTO;
 import versatile_development.entity.ArticleEntity;
 import versatile_development.entity.UserEntity;
 import versatile_development.repository.ArticleRepository;
-import versatile_development.utils.ObjectMapperUtils;
+import versatile_development.utils.ArticleMapper;
 
-@ContextConfiguration(classes = {ArticleRepository.class, ArticleServiceImpl.class, ObjectMapperUtils.class})
+@ContextConfiguration(classes = {ArticleRepository.class, ArticleServiceImpl.class, ArticleMapper.class})
 @ExtendWith(SpringExtension.class)
 public class ArticleServiceImplTest {
     @MockBean
@@ -36,7 +36,7 @@ public class ArticleServiceImplTest {
     private ArticleServiceImpl articleServiceImpl;
 
     @MockBean
-    private ObjectMapperUtils objectMapperUtils;
+    private ArticleMapper articleMapper;
 
     @Test
     public void testCreateArticle() {
