@@ -56,14 +56,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public List<UserDTO> findAllUsers(Sort sort) {
         var userEntities = userRepository.findAll(sort);
-        var userDTOs = userMapper.toDtoList(userEntities);
+        var userDTOs = userMapper.entityListToDtoList(userEntities);
 
         return userDTOs;
     }
 
     @Override
     public UserDTO findByEmail(String email) {
-        return userMapper.toDto(userRepository.findByEmailIgnoreCase(email));
+        return userMapper.entityToDto(userRepository.findByEmailIgnoreCase(email));
     }
 
     @Override
@@ -74,19 +74,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDTO findByConfirmationToken(String confirmationToken) {
-        return userMapper.toDto(userRepository.findByConfirmationToken(confirmationToken));
+        return userMapper.entityToDto(userRepository.findByConfirmationToken(confirmationToken));
     }
 
     @Override
     public UserDTO findByNickname(String nickname) {
-        return userMapper.toDto(userRepository.findByNicknameIgnoreCase(nickname));
+        return userMapper.entityToDto(userRepository.findByNicknameIgnoreCase(nickname));
     }
 
     @Override
     @Transactional
     public void updateUser(UserDTO userToUpdate) {
         if (findByEmail(userToUpdate.getEmail()) != null) {
-            userRepository.save(userMapper.toEntity(userToUpdate));
+            userRepository.save(userMapper.dtoToEntity(userToUpdate));
         }
     }
 
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     public void updateUserInformationFromSettings(UserForUpdating user, String nickname) {
         if (user == null) throw new EmptyUserDataException();
-        var userToUpdate = userMapper.toDto(userRepository.findByNickname(nickname));
+        var userToUpdate = userMapper.entityToDto(userRepository.findByNickname(nickname));
         var DateFor = new SimpleDateFormat("yyyy-MM-dd");
 
         if (user.getFirstname() != null && !user.getFirstname().equals(""))userToUpdate.setFirstname(user.getFirstname());
@@ -155,7 +155,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             userDTO.setConfirmationToken(UUID.randomUUID().toString());
             userDTO.setRoles(Collections.singleton(Role.USER));
 
-            var userEntity = userMapper.toEntity(userDTO);
+            var userEntity = userMapper.dtoToEntity(userDTO);
             userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
 
             var message = String.format(Constants.EMAIL_MESSAGE, userDTO.getNickname(), hostUrl, userDTO.getConfirmationToken());

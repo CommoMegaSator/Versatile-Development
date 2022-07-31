@@ -10,11 +10,11 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ArticleMapper {
-    ArticleEntity toEntity(ArticleDTO articleDTO);
+    ArticleEntity dtoToEntity(ArticleDTO articleDTO);
 
-    ArticleDTO toDto(ArticleEntity articleEntity);
+    ArticleDTO entityToDto(ArticleEntity articleEntity);
 
-    List<ArticleDTO> toDtoList(List<ArticleEntity> articleEntityList);
+    List<ArticleDTO> entityListToDtoList(List<ArticleEntity> articleEntityList);
 
-    List<ArticleEntity> toEntityList(List<ArticleDTO> articleDTOList);
+    List<ArticleEntity> dtoListToEntityList(List<ArticleDTO> articleDTOList);
 }

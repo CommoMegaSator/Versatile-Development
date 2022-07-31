@@ -45,12 +45,12 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     public ArticleDTO entityToDTOMapper(ArticleEntity articleEntity){
-        var articleDTO = articleMapper.toDto(articleEntity);
+        var articleDTO = articleMapper.entityToDto(articleEntity);
         articleDTO.setId(articleEntity.getId());
         return articleDTO;
     }
 
     public ArticleEntity DTOToEntityMapper(ArticleDTO articleDTO){
-        return articleMapper.toEntity(articleDTO);
+        return articleMapper.dtoToEntity(articleDTO);
     }
 }

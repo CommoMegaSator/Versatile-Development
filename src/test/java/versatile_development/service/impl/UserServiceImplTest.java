@@ -120,7 +120,7 @@ class UserServiceImplTest {
         userEntity.setEmail("test@test.com");
         userEntity.setPassword("passWord1!");
 
-        when(userMapper.toEntity(any())).thenReturn(userEntity);
+        when(userMapper.dtoToEntity(any())).thenReturn(userEntity);
         when(userRepository.save(any(UserEntity.class))).thenReturn(null);
         doNothing().when(emailService).sendEmail(anyString(), anyString(), anyString());
 
@@ -142,7 +142,7 @@ class UserServiceImplTest {
         userEntity.setEmail("test@test.com");
         userEntity.setPassword("passWord1!");
 
-        when(userMapper.toEntity(any())).thenReturn(userEntity);
+        when(userMapper.dtoToEntity(any())).thenReturn(userEntity);
         when(userRepository.save(any(UserEntity.class))).thenReturn(null);
         doThrow(new MailSendException("Can`t send email")).when(emailService).sendEmail(anyString(), anyString(), anyString());
 
@@ -187,7 +187,7 @@ class UserServiceImplTest {
         userDTO.setNickname("nickname");
         userDTO.setEmail("some@email.com");
 
-        when(userMapper.toDto(any())).thenReturn(userDTO);
+        when(userMapper.entityToDto(any())).thenReturn(userDTO);
         when(userRepository.save(any(UserEntity.class))).thenReturn(null);
         when(userRepository.findByNickname(anyString())).thenReturn(userEntity);
 
@@ -210,8 +210,8 @@ class UserServiceImplTest {
 
         when(userRepository.findByEmailIgnoreCase(anyString())).thenReturn(userEntity);
         when(userRepository.save(any(UserEntity.class))).thenReturn(null);
-        when(userMapper.toDto(userEntity)).thenReturn(userDTO);
-        when(userMapper.toEntity(any(UserDTO.class))).thenReturn(userEntity);
+        when(userMapper.entityToDto(userEntity)).thenReturn(userDTO);
+        when(userMapper.dtoToEntity(any(UserDTO.class))).thenReturn(userEntity);
 
         userService.updateUser(userDTO);
 
@@ -241,8 +241,8 @@ class UserServiceImplTest {
 
         when(userRepository.findByNickname(anyString())).thenReturn(userEntity);
         when(userRepository.findByEmailIgnoreCase(anyString())).thenReturn(userEntity);
-        when(userMapper.toDto(userEntity)).thenReturn(userDTO);
-        when(userMapper.toEntity(any(UserDTO.class))).thenReturn(userEntity);
+        when(userMapper.entityToDto(userEntity)).thenReturn(userDTO);
+        when(userMapper.dtoToEntity(any(UserDTO.class))).thenReturn(userEntity);
         when(userRepository.save(any(UserEntity.class))).thenReturn(null);
 
         userService.updateUserInformationFromSettings(userForUpdating, userDTO.getNickname());
@@ -275,8 +275,8 @@ class UserServiceImplTest {
         userEntity.setEmail("some@email.com");
 
         when(userRepository.findByConfirmationToken(anyString())).thenReturn(userEntity);
-        when(userMapper.toDto(userEntity)).thenReturn(userDTO);
-        when(userMapper.toEntity(any(UserDTO.class))).thenReturn(userEntity);
+        when(userMapper.entityToDto(userEntity)).thenReturn(userDTO);
+        when(userMapper.dtoToEntity(any(UserDTO.class))).thenReturn(userEntity);
 
         userService.findByConfirmationToken(userDTO.getNickname());
 
@@ -294,8 +294,8 @@ class UserServiceImplTest {
         userEntity.setEmail("some@email.com");
 
         when(userRepository.findByNicknameIgnoreCase(anyString())).thenReturn(userEntity);
-        when(userMapper.toDto(userEntity)).thenReturn(userDTO);
-        when(userMapper.toEntity(any(UserDTO.class))).thenReturn(userEntity);
+        when(userMapper.entityToDto(userEntity)).thenReturn(userDTO);
+        when(userMapper.dtoToEntity(any(UserDTO.class))).thenReturn(userEntity);
 
         userService.findByNickname(userDTO.getNickname());
 
