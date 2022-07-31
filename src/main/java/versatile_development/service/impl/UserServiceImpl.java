@@ -142,6 +142,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     public HttpStatus register(UserDTO userDTO) {
         try{
+            if (!userDTO.getPassword().
+                    matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])([a-zA-Z0-9@$!%*?&]{8,25})$")){
+                return HttpStatus.BAD_REQUEST;
+            }
             var creationDate = new Date();
 
             userDTO.setCreationDate(creationDate);
