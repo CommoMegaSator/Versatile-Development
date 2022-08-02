@@ -21,9 +21,6 @@ public interface UserService extends UserDetailsService {
 
     boolean userExists(UserDTO userDTO);
 
-    UserDTO entityToDTOMapper(UserEntity userEntity);
-    UserEntity DTOToEntityMapper(UserDTO userDTO);
-
     void deleteAccountByNickname(String nickname);
     HttpStatus register(UserDTO userDTO);
 }

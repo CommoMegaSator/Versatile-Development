@@ -26,7 +26,7 @@ import versatile_development.exception.EmptyUserDataException;
 import versatile_development.repository.UserRepository;
 import versatile_development.service.EmailService;
 import versatile_development.service.UserService;
-import versatile_development.utils.ObjectMapperUtils;
+import versatile_development.utils.UserMapper;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -40,32 +40,30 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
-    private final ObjectMapperUtils modelMapper;
+    private final UserMapper userMapper;
 
     @Autowired
     UserServiceImpl(@Qualifier(value = "userRepository") UserRepository userRepository,
                     @Qualifier(value = "emailServiceImpl") EmailService emailService,
                     @Qualifier(value = "encoder") PasswordEncoder passwordEncoder,
-                    @Qualifier(value = "objectMapperUtils") ObjectMapperUtils modelMapper){
+                    UserMapper userMapper) {
         this.userRepository = userRepository;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
-        this.modelMapper = modelMapper;
+        this.userMapper = userMapper;
     }
 
     @Override
     public List<UserDTO> findAllUsers(Sort sort) {
         var userEntities = userRepository.findAll(sort);
-        var userDTOs = new ArrayList<UserDTO>();
-
-        userEntities.forEach(userEntity -> userDTOs.add(entityToDTOMapper(userEntity)));
+        var userDTOs = userMapper.entityListToDtoList(userEntities);
 
         return userDTOs;
     }
 
     @Override
-    public UserDTO findByEmail(String email){
-        return entityToDTOMapper(userRepository.findByEmailIgnoreCase(email));
+    public UserDTO findByEmail(String email) {
+        return userMapper.entityToDto(userRepository.findByEmailIgnoreCase(email));
     }
 
     @Override
@@ -76,19 +74,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDTO findByConfirmationToken(String confirmationToken) {
-        return entityToDTOMapper(userRepository.findByConfirmationToken(confirmationToken));
+        return userMapper.entityToDto(userRepository.findByConfirmationToken(confirmationToken));
     }
 
     @Override
     public UserDTO findByNickname(String nickname) {
-        return entityToDTOMapper(userRepository.findByNicknameIgnoreCase(nickname));
+        return userMapper.entityToDto(userRepository.findByNicknameIgnoreCase(nickname));
     }
 
     @Override
     @Transactional
     public void updateUser(UserDTO userToUpdate) {
-        if(findByEmail(userToUpdate.getEmail()) != null){
-            userRepository.save(DTOToEntityMapper(userToUpdate));
+        if (findByEmail(userToUpdate.getEmail()) != null) {
+            userRepository.save(userMapper.dtoToEntity(userToUpdate));
         }
     }
 
@@ -97,7 +95,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     public void updateUserInformationFromSettings(UserForUpdating user, String nickname) {
         if (user == null) throw new EmptyUserDataException();
-        var userToUpdate = entityToDTOMapper(userRepository.findByNickname(nickname));
+        var userToUpdate = userMapper.entityToDto(userRepository.findByNickname(nickname));
         var DateFor = new SimpleDateFormat("yyyy-MM-dd");
 
         if (user.getFirstname() != null && !user.getFirstname().equals(""))userToUpdate.setFirstname(user.getFirstname());
@@ -128,29 +126,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void deleteAccountByNickname(String nickname) {
         var jedis = new Jedis();
 
-        if (jedis.get(nickname + Constants.USER_LOCALE_EXTENSION) != null)jedis.del(nickname + Constants.USER_LOCALE_EXTENSION);
+        if (jedis.get(nickname + Constants.USER_LOCALE_EXTENSION) != null)
+            jedis.del(nickname + Constants.USER_LOCALE_EXTENSION);
         userRepository.deleteByNickname(nickname);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username){
+    public UserDetails loadUserByUsername(String username) {
         var user = userRepository.findByNicknameIgnoreCase(username);
 
-        if (user == null)throw new UsernameNotFoundException("No such user.");
+        if (user == null) throw new UsernameNotFoundException("No such user.");
         else return user;
-    }
-
-    public UserDTO entityToDTOMapper(UserEntity userEntity){
-        if (userEntity != null){
-            var userDTO = modelMapper.map(userEntity, UserDTO.class);
-            userDTO.setId(userEntity.getId());
-            return userDTO;
-        }else return null;
-    }
-
-    public UserEntity DTOToEntityMapper(UserDTO userDTO){
-        if (userDTO == null)return null;
-        else return modelMapper.map(userDTO, UserEntity.class);
     }
 
     @Transactional
@@ -169,7 +155,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             userDTO.setConfirmationToken(UUID.randomUUID().toString());
             userDTO.setRoles(Collections.singleton(Role.USER));
 
-            var userEntity = DTOToEntityMapper(userDTO);
+            var userEntity = userMapper.dtoToEntity(userDTO);
             userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
 
             var message = String.format(Constants.EMAIL_MESSAGE, userDTO.getNickname(), hostUrl, userDTO.getConfirmationToken());
