@@ -7,7 +7,7 @@ import versatile_development.domain.dto.ArticleDTO;
 import versatile_development.entity.ArticleEntity;
 import versatile_development.repository.ArticleRepository;
 import versatile_development.service.ArticleService;
-import versatile_development.utils.ArticleMapper;
+import versatile_development.mapper.ArticleMapper;
 
 import java.util.ArrayList;
 import java.util.List;

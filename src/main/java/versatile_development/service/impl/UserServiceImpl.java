@@ -21,12 +21,11 @@ import versatile_development.constants.Constants;
 import versatile_development.domain.Role;
 import versatile_development.domain.dto.UserDTO;
 import versatile_development.domain.dto.UserForUpdating;
-import versatile_development.entity.UserEntity;
 import versatile_development.exception.EmptyUserDataException;
 import versatile_development.repository.UserRepository;
 import versatile_development.service.EmailService;
 import versatile_development.service.UserService;
-import versatile_development.utils.UserMapper;
+import versatile_development.mapper.UserMapper;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -56,9 +55,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public List<UserDTO> findAllUsers(Sort sort) {
         var userEntities = userRepository.findAll(sort);
-        var userDTOs = userMapper.entityListToDtoList(userEntities);
-
-        return userDTOs;
+        return userMapper.entityListToDtoList(userEntities);
     }
 
     @Override

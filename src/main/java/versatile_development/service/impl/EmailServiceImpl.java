@@ -20,7 +20,7 @@ public class EmailServiceImpl implements EmailService {
 
     private final Message message;
 
-    @Value("${spring.mail.username}")
+    @Value("${mail.username}")
     private String usernameThatSends;
 
     @Autowired

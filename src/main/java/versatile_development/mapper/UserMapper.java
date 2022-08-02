@@ -1,6 +1,5 @@
-package versatile_development.utils;
+package versatile_development.mapper;
 
-import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import versatile_development.domain.dto.UserDTO;
 import versatile_development.entity.UserEntity;

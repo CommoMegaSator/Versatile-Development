@@ -33,8 +33,8 @@
             <form class="my-2 my-lg-0">
                 <select sec:authorize="isAuthenticated()" id="locales" class="mr-2" onchange="languageSelector()">
                     <option value="" th:text="#{lang.chooser}"/>
-                    <option value="en_US" th:text="#{lang.eng}"/>
-                    <option value="uk_UA" th:text="#{lang.ua}"/>
+                    <option value="en_US" th:text="'🇺🇸' + #{lang.eng}"/>
+                    <option value="uk_UA" th:text="'🇺🇦' + #{lang.ua}"/>
                 </select>
             </form>
             <button sec:authorize="isAuthenticated()" id="exitButton" class="btn btn-success" type="submit" th:text="#{logout}"/>

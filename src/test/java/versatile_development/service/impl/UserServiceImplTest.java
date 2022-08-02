@@ -20,10 +20,9 @@ import versatile_development.entity.UserEntity;
 import versatile_development.repository.UserRepository;
 import versatile_development.service.EmailService;
 import versatile_development.service.UserService;
-import versatile_development.utils.UserMapper;
+import versatile_development.mapper.UserMapper;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,9 +40,6 @@ class UserServiceImplTest {
 
     private PasswordEncoder passwordEncoder;
     private UserMapper userMapper;
-
-    private UserEntity user1;
-    private UserEntity user2;
 
     @BeforeEach
     void initService() {
