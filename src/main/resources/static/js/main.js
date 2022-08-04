@@ -70,7 +70,7 @@ function registrationFormValidation(form) {
         }
         else if (!form.password.match("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])([a-zA-Z0-9@$!%*?&]{8,25})$")){
             alert("Password should have at least: \n" +
-                "1) 8 characters long;\n" +
+                "1) 8-25 characters long;\n" +
                 "2) One lowercase;\n" +
                 "3) One uppercase;\n" +
                 "4) One number;\n" +
@@ -216,7 +216,7 @@ $('#updateAccountData').click(function () {
     else if (newPassword.length > 0 && retypedPassword.length > 0) {
         if (!newPassword.match("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])([a-zA-Z0-9@$!%*?&]{8,25})$")){
             alert("Password should have at least: \n" +
-                "1) 8 characters long;\n" +
+                "1) 8-25 characters long;\n" +
                 "2) One lowercase;\n" +
                 "3) One uppercase;\n" +
                 "4) One number;\n" +

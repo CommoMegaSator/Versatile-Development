@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS user_role (
     roles           varchar(255)
 );
 
-insert into usr (email, nickname, password, activated, creation_date) values ('default@versatile.dev', 'Default', '$2a$10$juJwntMUSXoYFocl1nBI9Oye3OhjgQlWlHApEnkP4TQms.wIQaIHG', true, CURRENT_TIMESTAMP);
+insert into usr (email, nickname, password, activated, creation_date) values ('default@versatile.dev', 'Default', '$2a$04$7Jbgq4p4RL/Pg9z/6rFK3.kn.2SwIIYA4qPvbvSTvfTU1A7nl04eu', true, CURRENT_TIMESTAMP);
 insert into usr (email, nickname, password, activated, creation_date) values ('admin@versatile.dev', 'Adminus', '$2a$10$sx7o8gUzbEVAo2FY59NQQu3l.Z2cwYrZLCaRGH2lQoX6C6.n2Sif6', true, CURRENT_TIMESTAMP);
 insert into user_role values (1, 'USER');
 insert into user_role values (2, 'USER');
