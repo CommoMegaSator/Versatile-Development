@@ -53,7 +53,7 @@ This project is developed for training and should not be used for commercial pur
 
 ##### Testing application for any user
 * Login: `Default`
-* Password: `DefaultChecker`
+* Password: `DefaultChecker111?`
 
 ##### Testing application for administrators
 * Login: `Adminus`
