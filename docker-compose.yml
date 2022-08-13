@@ -67,7 +67,7 @@ services:
       - SPRING_DATASOURCE_HIKARI_SCHEMA=main
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - REDIS_HOST=redis
-      - REDIS_PORT=3002
+      - REDIS_PORT=6379
     expose:
       - 8081
     networks:

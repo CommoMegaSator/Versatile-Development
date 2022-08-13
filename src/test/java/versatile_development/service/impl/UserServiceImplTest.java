@@ -158,23 +158,6 @@ class UserServiceImplTest {
     }
 
     @Test
-    void deleteAccountByNickname() {
-        final var jedis = new Jedis();
-        final var nickname = "nicknameForJedisTest";
-        final var localeOption = "en_US";
-        final var jedisKey = nickname + Constants.USER_LOCALE_EXTENSION;
-
-        doNothing().when(userRepository).deleteByNickname(anyString());
-
-        jedis.set(jedisKey, localeOption);
-        assertNotNull(jedis.get(jedisKey));
-        userService.deleteAccountByNickname(nickname);
-
-        assertNull(jedis.get(jedisKey));
-        verify(userRepository).deleteByNickname(anyString());
-    }
-
-    @Test
     void loadUserByUsernameNotExists() {
         when(userRepository.findByNicknameIgnoreCase(anyString())).thenReturn(null);
 

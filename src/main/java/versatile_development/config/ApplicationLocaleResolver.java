@@ -1,5 +1,7 @@
 package versatile_development.config;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import redis.clients.jedis.Jedis;
@@ -9,13 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
 
+@Configuration
+@RequiredArgsConstructor
 public class ApplicationLocaleResolver extends SessionLocaleResolver {
     private final Jedis jedis;
-
-    ApplicationLocaleResolver(){
-        super();
-        jedis = new Jedis();
-    }
 
     @Override
     public Locale resolveLocale(HttpServletRequest request) {
