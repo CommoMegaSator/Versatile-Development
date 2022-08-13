@@ -26,14 +26,23 @@ services:
 
   redis:
     image: redis:latest
+    hostname: redis
     container_name: redis
-    command: [ "redis-server", "--protected-mode", "no", "--bind", "0.0.0.0" ]
+    command: redis-server --requirepass StrongPass12 --bind 0.0.0.0
+    volumes:
+      - $PWD/redis-data:/var/lib/redis
+      - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
+#    command: [ "redis-server", "--protected-mode", "no", "--bind", "redis", "--port", "3002" ]
     environment:
-      - ALLOW_EMPTY_PASSWORD=yes
+#      - ALLOW_EMPTY_PASSWORD=yes
       - REDIS_DISABLE_COMMANDS=FLUSHDB, FLUSHALL
     restart: on-failure
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
     ports:
       - "3002:6379"
+    expose:
+      - 3002
     networks:
       - versatile
 
@@ -57,6 +66,8 @@ services:
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_DATASOURCE_HIKARI_SCHEMA=main
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - REDIS_HOST=redis
+      - REDIS_PORT=3002
     expose:
       - 8081
     networks:
