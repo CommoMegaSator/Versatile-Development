@@ -3,13 +3,13 @@ package versatile_development.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import versatile_development.service.EmailService;
 
+import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
 
 import static versatile_development.constants.Constants.EMAIL_MESSAGE_CONTENT;
 import static versatile_development.constants.Constants.REGISTRATION_EMAIL_SUBJECT;
@@ -18,35 +18,27 @@ import static versatile_development.constants.Constants.REGISTRATION_EMAIL_SUBJE
 @Service
 public class EmailServiceImpl implements EmailService {
 
-    private final JavaMailSender mailSender;
+    private final Message message;
 
-    @Value("${spring.mail.username}")
+    @Value("${mail.username}")
     private String usernameThatSends;
 
     @Autowired
-    public EmailServiceImpl(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
+    public EmailServiceImpl(Message message) {
+        this.message = message;
     }
 
     @Override
-    public void sendEmail(String emailTo, String subject, String message) {
+    public void sendEmail(String emailTo, String subject, String messageText) {
         try{
-            var mimeMessage = mailSender.createMimeMessage();
-            var helper = new MimeMessageHelper(mimeMessage, "utf-8");
+            message.setFrom(new InternetAddress(usernameThatSends));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
+            message.setSubject(REGISTRATION_EMAIL_SUBJECT);
+            message.setContent(messageText, EMAIL_MESSAGE_CONTENT);
 
-            mimeMessage.setContent(message, EMAIL_MESSAGE_CONTENT);
-            helper.setTo(emailTo);
-            helper.setSubject(REGISTRATION_EMAIL_SUBJECT);
-            helper.setFrom(usernameThatSends);
-
-            mailSender.send(mimeMessage);
+            Transport.send(message);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void sendEmail(SimpleMailMessage email) {
-        mailSender.send(email);
     }
 }

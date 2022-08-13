@@ -7,7 +7,7 @@ import versatile_development.domain.dto.ArticleDTO;
 import versatile_development.entity.ArticleEntity;
 import versatile_development.repository.ArticleRepository;
 import versatile_development.service.ArticleService;
-import versatile_development.utils.ObjectMapperUtils;
+import versatile_development.mapper.ArticleMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +17,13 @@ public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleRepository articleRepository;
 
-    private final ObjectMapperUtils modelMapper;
+    private final ArticleMapper articleMapper;
 
     @Autowired
     ArticleServiceImpl(@Qualifier(value = "articleRepository") ArticleRepository articleRepository,
-                       @Qualifier(value = "objectMapperUtils") ObjectMapperUtils modelMapper){
+                       ArticleMapper articleMapper){
         this.articleRepository = articleRepository;
-        this.modelMapper = modelMapper;
+        this.articleMapper = articleMapper;
     }
 
     @Override
@@ -45,12 +45,12 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     public ArticleDTO entityToDTOMapper(ArticleEntity articleEntity){
-        var articleDTO = modelMapper.map(articleEntity, ArticleDTO.class);
+        var articleDTO = articleMapper.entityToDto(articleEntity);
         articleDTO.setId(articleEntity.getId());
         return articleDTO;
     }
 
     public ArticleEntity DTOToEntityMapper(ArticleDTO articleDTO){
-        return modelMapper.map(articleDTO, ArticleEntity.class);
+        return articleMapper.dtoToEntity(articleDTO);
     }
 }

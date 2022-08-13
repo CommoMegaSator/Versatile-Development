@@ -3,43 +3,59 @@ package versatile_development.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
+
+import static versatile_development.constants.Constants.*;
 
 @Configuration
 public class MailConfig {
 
-    @Value("${spring.mail.host}")
+    @Value("${mail.host}")
     private String host;
 
-    @Value("${spring.mail.port}")
+    @Value("${mail.port}")
     private int port;
 
-    @Value("${spring.mail.username}")
+    @Value("${mail.username}")
     private String username;
 
-    @Value("${spring.mail.password}")
+    @Value("${mail.password}")
     private String password;
-
-    @Value("${spring.mail.protocol}")
-    private String protocol;
 
     @Value("${mail.debug}")
     private String debug;
 
+    @Value("${mail.smtp.socketFactory.port}")
+    private String socketFactoryPort;
+
+    @Value("${mail.smtp.socketFactory.class}")
+    private String socketFactoryClass;
+
+    @Value("${mail.smtp.auth}")
+    private String auth;
+
     @Bean
-    public JavaMailSender getMailSender(){
-        var mailSender = new JavaMailSenderImpl();
+    public Message getMessage(){
+        Properties prop = new Properties();
+        prop.put(MAIL_SMTP_HOST, host);
+        prop.put(MAIL_SMTP_PORT, port);
+        prop.put(MAIL_SMTP_AUTH, auth);
+        prop.put(MAIL_SMTP_SOCKET_PORT, socketFactoryPort);
+        prop.put(MAIL_SMTP_SOCKET_CLASS, socketFactoryClass);
+        prop.put(MAIL_DEBUG, debug);
 
-        mailSender.setHost(host);
-        mailSender.setPort(port);
-        mailSender.setUsername(username);
-        mailSender.setPassword(password);
+        Session session = Session.getInstance(prop,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
 
-        var properties = mailSender.getJavaMailProperties();
-        properties.setProperty("mail.transport.protocol", protocol);
-        properties.setProperty("mail.debug", debug);
-
-        return mailSender;
+        return new MimeMessage(session);
     }
 }

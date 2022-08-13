@@ -1,10 +1,16 @@
 package versatile_development.service.impl;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import versatile_development.domain.dto.ArticleDTO;
+import versatile_development.entity.ArticleEntity;
+import versatile_development.entity.UserEntity;
+import versatile_development.mapper.ArticleMapper;
+import versatile_development.repository.ArticleRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,20 +19,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import versatile_development.domain.Role;
-import versatile_development.domain.dto.ArticleDTO;
-import versatile_development.entity.ArticleEntity;
-import versatile_development.entity.UserEntity;
-import versatile_development.repository.ArticleRepository;
-import versatile_development.utils.ObjectMapperUtils;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
 
-@ContextConfiguration(classes = {ArticleRepository.class, ArticleServiceImpl.class, ObjectMapperUtils.class})
+@ContextConfiguration(classes = {ArticleRepository.class, ArticleServiceImpl.class, ArticleMapper.class})
 @ExtendWith(SpringExtension.class)
 public class ArticleServiceImplTest {
     @MockBean
@@ -36,7 +33,7 @@ public class ArticleServiceImplTest {
     private ArticleServiceImpl articleServiceImpl;
 
     @MockBean
-    private ObjectMapperUtils objectMapperUtils;
+    private ArticleMapper articleMapper;
 
     @Test
     public void testCreateArticle() {
@@ -61,9 +58,9 @@ public class ArticleServiceImplTest {
         userEntity.setNationality("Nationality");
         userEntity.setAboutUser("About User");
         userEntity.setReports(1);
-        userEntity.setArticle(new ArrayList<ArticleEntity>());
+        userEntity.setArticle(new ArrayList<>());
         userEntity.setLastname("Doe");
-        userEntity.setRoles(new HashSet<Role>());
+        userEntity.setRoles(new HashSet<>());
 
         var articleEntity = new ArticleEntity();
         articleEntity.setText("Text");
@@ -72,14 +69,14 @@ public class ArticleServiceImplTest {
         articleEntity.setId(123L);
         articleEntity.setUser(userEntity);
         articleEntity.setTitle("Dr");
-        when(this.articleRepository.save((ArticleEntity) any())).thenReturn(articleEntity);
+        when(this.articleRepository.save(any())).thenReturn(articleEntity);
         this.articleServiceImpl.createArticle(new ArticleDTO());
-        verify(this.articleRepository).save((ArticleEntity) any());
+        verify(this.articleRepository).save(any());
     }
 
     @Test
     public void testFindAllArticles() {
-        when(this.articleRepository.findAll()).thenReturn(new ArrayList<ArticleEntity>());
+        when(this.articleRepository.findAll()).thenReturn(new ArrayList<>());
         assertTrue(this.articleServiceImpl.findAllArticles().isEmpty());
         verify(this.articleRepository).findAll();
     }

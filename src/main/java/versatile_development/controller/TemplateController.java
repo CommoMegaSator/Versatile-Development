@@ -112,16 +112,4 @@ public class TemplateController {
         log.info(user.getNickname() + "`s account was deleted by " + adminThatDeleting.getNickname());
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    @GetMapping("/messages")
-    @Operation(summary = "Сторінка повідомлень", description = "Повертає сторінку з повідомленнями")
-    public String getMessagePage(){
-        return "messages";
-    }
-
-    @GetMapping("/friends")
-    @Operation(summary = "Сторінка друзів", description = "Повертає сторінку з друзями користувача")
-    public String getFriendsTemplate(){
-        return "friends";
-    }
 }

@@ -89,11 +89,6 @@ input.hidden {
     padding: 5px 0;
 }
 
-.NASA{
-    max-width: 100%;
-    max-height: 500px;
-}
-
 @media screen and (max-width: 991px){
     body{
         background-image: url(../images/universe-phone.jpg);

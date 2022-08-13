@@ -3,10 +3,9 @@
 [![Versatile license](https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat-square)](LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
 
 #### About
-This project is develop for training and should not be used for commercial purposes!
+This project is developed for training and should not be used for commercial purposes!
 <br>You can see this project [here](http://versatile-development.xyz) (not available for now).
 <br>You can find api details using: http://localhost:8081/swagger-ui.html (Authorization needed)
-<br>You can see my tasks progress on this [board](https://trello.com/b/j08mhCbw/versatile-development).
 
 ##### Software that you need
 * Java 17.
@@ -54,7 +53,7 @@ This project is develop for training and should not be used for commercial purpo
 
 ##### Testing application for any user
 * Login: `Default`
-* Password: `DefaultChecker`
+* Password: `DefaultChecker111?`
 
 ##### Testing application for administrators
 * Login: `Adminus`
