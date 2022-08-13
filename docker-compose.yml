@@ -32,9 +32,7 @@ services:
     volumes:
       - $PWD/redis-data:/var/lib/redis
       - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
-#    command: [ "redis-server", "--protected-mode", "no", "--bind", "redis", "--port", "3002" ]
     environment:
-#      - ALLOW_EMPTY_PASSWORD=yes
       - REDIS_DISABLE_COMMANDS=FLUSHDB, FLUSHALL
     restart: on-failure
     healthcheck:
