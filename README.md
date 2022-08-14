@@ -2,10 +2,12 @@
 
 [![Versatile license](https://img.shields.io/badge/license-Apache%202.0-blue.svg?style=flat-square)](LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
 
+### Useful information
 #### About
 This project is developed for training and should not be used for commercial purposes!
 <br>You can see this project [here](http://versatile-development.xyz) (not available for now).
 <br>You can find api details using: http://localhost:8081/swagger-ui.html (Authorization needed)
+<br>This application can be started via docker-compose now!
 
 ##### Software that you need
 * Java 17.
@@ -30,6 +32,7 @@ This project is developed for training and should not be used for commercial pur
 * JUnit 5, Mockito;
 * PostgreSQL, Redis, Flyway, Swagger 3.
 
+### Installing needed software
 ##### Installing Java on Linux
 * Download [jdk-17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html).
 * Install maven via `sudo apt install maven`
@@ -51,9 +54,14 @@ This project is developed for training and should not be used for commercial pur
 * Change supervised to 'systemd'.
 * `sudo systemctl restart redis.service`
 
+### Testing application
 ##### Testing application for any user
 * Login: `Default`
 * Password: `DefaultChecker111?`
+
+##### Testing application for premium user
+* Login: `Pantalony`
+* Password: `AstalavistaPantalony38*`
 
 ##### Testing application for administrators
 * Login: `Adminus`
