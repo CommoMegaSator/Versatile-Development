@@ -1,5 +1,6 @@
 package versatile_development.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
@@ -32,6 +33,7 @@ import java.util.*;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Value("${host.url}")
@@ -40,17 +42,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
-
-    @Autowired
-    UserServiceImpl(@Qualifier(value = "userRepository") UserRepository userRepository,
-                    @Qualifier(value = "emailServiceImpl") EmailService emailService,
-                    @Qualifier(value = "encoder") PasswordEncoder passwordEncoder,
-                    UserMapper userMapper) {
-        this.userRepository = userRepository;
-        this.emailService = emailService;
-        this.passwordEncoder = passwordEncoder;
-        this.userMapper = userMapper;
-    }
+    private final Jedis jedis;
 
     @Override
     public List<UserDTO> findAllUsers(Sort sort) {
@@ -121,8 +113,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @Transactional
     public void deleteAccountByNickname(String nickname) {
-        var jedis = new Jedis();
-
         if (jedis.get(nickname + Constants.USER_LOCALE_EXTENSION) != null)
             jedis.del(nickname + Constants.USER_LOCALE_EXTENSION);
         userRepository.deleteByNickname(nickname);
