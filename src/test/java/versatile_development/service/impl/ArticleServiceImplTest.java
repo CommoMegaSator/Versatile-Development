@@ -80,10 +80,5 @@ public class ArticleServiceImplTest {
         assertTrue(this.articleServiceImpl.findAllArticles().isEmpty());
         verify(this.articleRepository).findAll();
     }
-
-    @Test
-    public void testDTOToEntityMapper() {
-        assertNull(this.articleServiceImpl.DTOToEntityMapper(new ArticleDTO()));
-    }
 }
 

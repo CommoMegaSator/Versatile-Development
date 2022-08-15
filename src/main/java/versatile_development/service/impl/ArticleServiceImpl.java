@@ -28,7 +28,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public void createArticle(ArticleDTO articleDTO) {
-        var articleEntity = DTOToEntityMapper(articleDTO);
+        var articleEntity = articleMapper.dtoToEntity(articleDTO);
         articleRepository.save(articleEntity);
     }
 
@@ -42,9 +42,5 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         return articleDTOs;
-    }
-
-    public ArticleEntity DTOToEntityMapper(ArticleDTO articleDTO){
-        return articleMapper.dtoToEntity(articleDTO);
     }
 }
