@@ -18,10 +18,10 @@ public class DataConfig {
 
     @Bean
     public Jedis jedis(){
-        Jedis jedis = new Jedis("redis", Integer.valueOf("6379"));
-//        if(!password.isEmpty()){
-            jedis.auth("StrongPass12");
-//        }
+        Jedis jedis = new Jedis(host, Integer.valueOf(port));
+        if(!password.isEmpty()){
+            jedis.auth(password);
+        }
         return jedis;
     }
 }
