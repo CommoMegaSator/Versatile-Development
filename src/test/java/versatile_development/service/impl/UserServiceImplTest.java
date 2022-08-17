@@ -35,6 +35,7 @@ class UserServiceImplTest {
     private UserService userService;
 
     private UserRepository userRepository;
+    private Jedis jedis;
     private EmailService emailService;
 
 
@@ -47,7 +48,8 @@ class UserServiceImplTest {
         emailService = mock(EmailService.class);
         passwordEncoder = mock(PasswordEncoder.class);
         userMapper = mock(UserMapper.class);
-        userService = new UserServiceImpl(userRepository, emailService, passwordEncoder, userMapper);
+        jedis = mock(Jedis.class);
+        userService = new UserServiceImpl(userRepository, emailService, passwordEncoder, userMapper, jedis);
     }
 
     @Test
@@ -279,5 +281,55 @@ class UserServiceImplTest {
         userService.findByNickname(userDTO.getNickname());
 
         verify(userRepository).findByNicknameIgnoreCase(anyString());
+    }
+
+    void incorrectPasswordTest(String password) {
+        var userDTO = new UserDTO();
+        userDTO.setNickname("nickname");
+        userDTO.setEmail("test@test.com");
+        userDTO.setPassword(password);
+
+        var userEntity = new UserEntity();
+        userEntity.setNickname("nickname");
+        userEntity.setEmail("test@test.com");
+        userEntity.setPassword(password);
+
+        when(userMapper.dtoToEntity(any())).thenReturn(userEntity);
+        when(userRepository.save(any(UserEntity.class))).thenReturn(null);
+        doNothing().when(emailService).sendEmail(anyString(), anyString(), anyString());
+
+        assertEquals(HttpStatus.BAD_REQUEST, userService.register(userDTO));
+    }
+
+    @Test
+    void passwordWithoutUpperCaseLetterTest() {
+        incorrectPasswordTest("password1!");
+    }
+
+    @Test
+    void passwordWithoutAnyNumberTest() {
+        incorrectPasswordTest("Password!");
+    }
+
+    @Test
+    void passwordWithoutSpecialCharacterTest() {
+        incorrectPasswordTest("Password1");
+    }
+
+    @Test
+    void passwordWithSizeLessThanEightTest() {
+        incorrectPasswordTest("Pass");
+    }
+
+    @Test
+    void deleteAccountByNickname() {
+        when(jedis.del(anyString())).thenReturn(null);
+        doNothing().when(userRepository).deleteByNickname(anyString());
+        when(jedis.get(anyString())).thenReturn("anyString()");
+
+        userService.deleteAccountByNickname(anyString());
+
+        verify(jedis).del(anyString());
+        verify(userRepository).deleteByNickname(anyString());
     }
 }
