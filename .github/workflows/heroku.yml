@@ -17,9 +17,9 @@ jobs:
 
       - name: Building app
         uses: actions/setup-java@v3
-          with:
-            java-version: '17'
-            distribution: 'adopt'
+        with:
+          java-version: '17'
+          distribution: 'adopt'
           - run: mvn --batch-mode --update-snapshots verify
           - run: mkdir staging && cp target/*.jar staging
 
