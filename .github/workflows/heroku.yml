@@ -20,6 +20,8 @@ jobs:
         with:
           java-version: 17
           distribution: 'adopt'
+      - run: mvn --batch-mode --update-snapshots verify
+      - run: mkdir app && cp target/*.jar app
 
       - name: Build, Push and Release a Docker container to Heroku. # Your custom step name
         uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
