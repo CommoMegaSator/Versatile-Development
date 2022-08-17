@@ -1,0 +1,35 @@
+# Your workflow name.
+name: Deploy to heroku.
+
+# Run workflow on every push to master branch.
+on:
+  push:
+    branches: [master]
+
+# Your workflows jobs.
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Check-out your repository.
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup jdk-17
+        uses: actions/setup-java@main
+        with:
+          java-version: 17
+          distribution: 'adopt'
+      - run: mvn clean install
+      - run: mkdir app && cp target/*.jar app
+
+      - name: Build, Push and Release a Docker container to Heroku.
+        uses: gonuit/heroku-docker-deploy@v1.3.3
+        with:
+          email: valentyn.vivcharyk@gmail.com
+          heroku_api_key: 8d366313-45b8-4caf-9561-3b978b0d3165
+          heroku_app_name: versatile-development
+          dockerfile_directory: ./
+          dockerfile_name: Dockerfile
+          docker_options: "--no-cache"
+          process_type: web

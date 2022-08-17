@@ -19,7 +19,9 @@ public class DataConfig {
     @Bean
     public Jedis jedis(){
         Jedis jedis = new Jedis(host, Integer.valueOf(port));
-        jedis.auth(password);
+        if(!password.isEmpty()){
+            jedis.auth(password);
+        }
         return jedis;
     }
 }
